@@ -83,7 +83,7 @@
       border-radius: 2px;
     }
     .lead {
-      font-size: 1.35rem;
+      font-size: 1.5rem;
       line-height: 1.4;
       margin: 1.4rem 0 0;
     }
@@ -96,7 +96,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-top: 1.6rem;
+      margin-top: 1.4rem;
     }
     nav a {
       font: 500 0.85rem/1 system-ui, sans-serif;
@@ -118,8 +118,13 @@
       text-underline-offset: 3px;
     }
     article a:hover, footer a:hover { text-decoration-color: var(--accent); }
-    h2 a { text-decoration: none; color: var(--ink); }
-    h2 a:hover { color: var(--accent); }
+    h2 a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      text-underline-offset: 3px;
+    }
+    h2 a:hover { color: var(--accent); text-decoration-color: var(--accent); }
     .section-label {
       font: 600 0.72rem/1 ui-monospace, "SF Mono", Menlo, monospace;
       letter-spacing: 0.14em;
@@ -135,10 +140,22 @@
     article p { margin: 0.7rem 0 0; font-size: 0.97rem; }
     .sub {
       color: var(--ink-2);
-      font-size: 0.88rem !important;
-      margin-top: 0.15rem !important;
+      font-size: 0.88rem;
+      margin-top: 0.15rem;
     }
-    .flow-wrap { margin: 1.2rem 0 0.2rem; overflow-x: auto; }
+    .flow-wrap { position: relative; margin: 1.2rem 0 0.2rem; overflow-x: auto; }
+    @media (max-width: 600px) {
+      .flow-wrap::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 24px;
+        background: linear-gradient(to right, transparent, var(--paper));
+        pointer-events: none;
+      }
+    }
     .flow { display: block; width: 100%; min-width: 540px; height: auto; }
     .flow rect { fill: var(--code-bg); stroke: var(--hairline); }
     .flow text {
@@ -151,7 +168,7 @@
     .flow .gate text { fill: var(--accent); }
     .flow .arrows line { stroke: var(--ink-2); stroke-width: 1.5; }
     .flow .arrows polygon { fill: var(--ink-2); }
-    .flow .annot { font-size: 10px; }
+    .flow .annot { font-size: 11px; }
     .flow .gate-note { fill: var(--accent); }
     .flow .dashed { stroke: var(--hairline); stroke-width: 1.5; stroke-dasharray: 3 4; }
     .tags {
@@ -164,13 +181,9 @@
       font: 500 0.72rem/1 ui-monospace, "SF Mono", Menlo, monospace;
       color: var(--ink-2);
       background: var(--code-bg);
+      border: 1px solid var(--hairline);
       padding: 0.3rem 0.6rem;
       border-radius: 999px;
-    }
-    .tags .soon {
-      background: transparent;
-      border: 1px dashed var(--hairline);
-      font-style: italic;
     }
     code {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -194,6 +207,10 @@
     <h1>Pat Jerus</h1>
     <p class="lead">Putting a human gate between AI output and anything
     that matters.</p>
+    <nav>
+      <a href="https://github.com/pjerus" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a>
+    </nav>
     <p>I build agentic pipelines and the guardrails around them — durable
     workflow orchestration, quarantined non-determinism, evidence over
     assertion — with projects spanning healthcare interoperability,
@@ -202,10 +219,6 @@
     food (and eat it with enthusiasm), travel for great coffee, and
     disappear down research rabbit holes — most recently helium
     production and autonomous materials-discovery labs.</p>
-    <nav>
-      <a href="https://github.com/pjerus" rel="me">GitHub</a>
-      <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a>
-    </nav>
   </header>
 
   <p class="section-label">Projects</p>
@@ -216,17 +229,17 @@
     <figure class="flow-wrap">
       <svg class="flow" viewBox="0 0 664 96" role="img" aria-label="Process flow: policy PDF, LLM extract, Neo4j graph, human review gate, FHIR artifacts, then the HL7 validator">
         <rect x="1" y="8" width="112" height="40" rx="8"/>
-        <text x="57" y="32">policy PDF</text>
+        <text x="57" y="28">policy PDF</text>
         <rect x="139" y="8" width="112" height="40" rx="8"/>
-        <text x="195" y="32">LLM extract</text>
+        <text x="195" y="28">LLM extract</text>
         <rect x="277" y="8" width="112" height="40" rx="8"/>
-        <text x="333" y="32">Neo4j graph</text>
+        <text x="333" y="28">Neo4j graph</text>
         <g class="gate">
           <rect x="415" y="8" width="112" height="40" rx="8"/>
-          <text x="471" y="32">human review</text>
+          <text x="471" y="28">human review</text>
         </g>
         <rect x="551" y="8" width="112" height="40" rx="8"/>
-        <text x="607" y="32">FHIR artifacts</text>
+        <text x="607" y="28">FHIR artifacts</text>
         <g class="arrows">
           <line x1="116" y1="28" x2="130" y2="28"/><polygon points="129,24 129,32 136,28"/>
           <line x1="254" y1="28" x2="268" y2="28"/><polygon points="267,24 267,32 274,28"/>
@@ -264,6 +277,7 @@
 
   <article>
     <h2>fhir-zod-gen</h2>
+    <p class="sub">v0.1, in active development — source coming soon</p>
     <p>
       The complementary half of the validation story: a code generator that
       turns FHIR Implementation Guide profiles into
@@ -283,18 +297,19 @@
       loop. v0.1 covers cardinality, nested elements, required bindings, and
       choice types; the roadmap starts at automatic IG-package resolution.
     </p>
-    <p class="tags"><span>TypeScript</span><span>Zod</span><span>FHIR Schema</span><span class="soon">source coming soon</span></p>
+    <p class="tags"><span>TypeScript</span><span>Zod</span><span>FHIR Schema</span></p>
   </article>
 
   <article>
     <h2>Pantastic</h2>
+    <p class="sub">early days — source coming soon</p>
     <p>
       A different kind of side project: a companion for watercolor
       painters, focused on complementary color — finding the right
       complements for the pans in your palette before the water hits the
       paper. Grew out of painting coastal landscapes; early days.
     </p>
-    <p class="tags"><span>watercolor</span><span>color theory</span><span class="soon">early days — source coming soon</span></p>
+    <p class="tags"><span>watercolor</span><span>color theory</span></p>
   </article>
 
   <footer>
