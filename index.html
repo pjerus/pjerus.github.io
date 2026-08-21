@@ -154,6 +154,30 @@
     <p class="stack">TypeScript · Neo4j · Temporal · Ollama · MIT license</p>
   </article>
 
+  <article>
+    <h2>fhir-zod-gen</h2>
+    <p>
+      The complementary half of the validation story: a code generator that
+      turns FHIR Implementation Guide profiles into
+      <a href="https://zod.dev">Zod</a> schemas — a runtime validator and an
+      inferred TypeScript type in one plain, readable declaration. FHIR's
+      mature validation tooling lives in Java; an ever-growing share of
+      health-tech code (SMART on FHIR apps, Node backends, AI agents) lives
+      in TypeScript, with no equivalent. It consumes the
+      <a href="https://github.com/fhir-schema/fhir-schema">FHIR Schema</a>
+      intermediate format rather than raw StructureDefinitions, aiming to be
+      the TypeScript sibling of Health Samurai's Python/Pydantic generator.
+    </p>
+    <p>
+      Where pa-fhir-poc uses the official HL7 validator as the offline
+      oracle, generated Zod schemas are the in-process guardrail — profile
+      conformance checked on every projection, no Java or Docker in the
+      loop. v0.1 covers cardinality, nested elements, required bindings, and
+      choice types; the roadmap starts at automatic IG-package resolution.
+    </p>
+    <p class="stack">TypeScript · Zod · FHIR Schema · source coming soon</p>
+  </article>
+
   <footer>
     <p>© 2026 Pat Jerus · <a href="https://github.com/pjerus/pjerus.github.io">source</a></p>
   </footer>
