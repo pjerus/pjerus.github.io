@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pat Jerus — Projects</title>
-  <meta name="description" content="Projects by Pat Jerus. Currently: pa-fhir-poc, a governed-AI reference pipeline that turns Medicare coverage-policy PDFs into validator-clean Da Vinci CRD/DTR FHIR artifacts ahead of the CMS-0057-F January 2027 prior-authorization API deadline.">
+  <meta name="description" content="Pat Jerus builds AI pipelines with a human gate between model output and anything that matters — agentic workflow systems, healthcare interoperability, game platforms, and market-research automation. Featuring pa-fhir-poc, a governed-AI policy-digitization pipeline ahead of CMS-0057-F's January 2027 deadline.">
   <link rel="canonical" href="https://pjerus.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pat Jerus — Projects">
-  <meta property="og:description" content="Governed-AI healthcare interoperability projects: policy-PDF-to-FHIR pipelines with a human approval gate between LLM output and anything FHIR.">
+  <meta property="og:description" content="AI pipelines with a human gate between model output and anything that matters — agentic workflows, healthcare interoperability, game platforms, and market-research automation.">
+
   <meta property="og:url" content="https://pjerus.github.io/">
   <script type="application/ld+json">
   {
@@ -69,7 +70,7 @@
     }
     h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
     h2 { font-size: 1.15rem; margin: 0 0 0.35rem; }
-    header p { color: var(--ink-2); margin: 0; }
+    header p { color: var(--ink-2); margin: 0 0 0.75rem; }
     nav { margin: 1rem 0 0; font-size: 0.95rem; }
     nav a { margin-right: 1.25rem; }
     a { color: var(--accent); text-decoration: none; }
@@ -111,7 +112,13 @@
 <main>
   <header>
     <h1>Pat Jerus</h1>
-    <p>Healthcare interoperability engineering — putting a human gate between AI output and anything that matters.</p>
+    <p>Putting a human gate between AI output and anything that matters.
+    I build agentic pipelines and the guardrails around them — durable
+    workflow orchestration, quarantined non-determinism, evidence over
+    assertion — with projects spanning healthcare interoperability,
+    multiplayer game platforms, and market-research automation.</p>
+    <p>Off the clock I disappear down research rabbit holes — most
+    recently helium production and autonomous materials-discovery labs.</p>
     <nav>
       <a href="https://github.com/pjerus" rel="me">GitHub</a>
       <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a>
@@ -123,22 +130,25 @@
   <article>
     <h2><a href="https://github.com/pjerus/pa-fhir-poc">pa-fhir-poc</a></h2>
     <p>
-      A reference pipeline for the bottleneck of prior-authorization
-      interoperability: getting coverage policy out of PDFs. A local LLM
-      extracts requirements from a Medicare coverage policy, a Neo4j graph
-      holds them as reviewable facts, and a durable Temporal workflow blocks
-      until a named human approves — only then are Da&nbsp;Vinci CRD/DTR FHIR
-      artifacts projected, validated with zero errors against the official
-      HL7 validator.
+      A reference pipeline for a general problem: turning authoritative
+      prose documents into validated, machine-readable artifacts without
+      ever trusting an LLM unsupervised. A local model extracts
+      requirements from the source PDF, a Neo4j graph holds them as
+      reviewable facts, and a durable Temporal workflow blocks until a
+      named human approves — only then are artifacts projected, and every
+      claim of correctness is backed by an official validator rather than
+      asserted.
     </p>
     <p>
-      Why now: the
+      The domain instance is healthcare prior authorization: Medicare
+      coverage policies in, Da&nbsp;Vinci CRD/DTR FHIR artifacts out,
+      validated with zero errors. The
       <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS
       Interoperability and Prior Authorization Final Rule (CMS-0057-F)</a>
-      requires impacted payers to stand up prior-authorization APIs by
-      <strong>January&nbsp;1,&nbsp;2027</strong> — and every one of them faces
-      the same unsolved first step this pipeline demonstrates: digitizing
-      prose policy into FHIR artifacts, with governance.
+      gives the pattern a deadline — impacted payers must stand up
+      prior-authorization APIs by <strong>January&nbsp;1,&nbsp;2027</strong>,
+      and each faces this same first step: digitizing prose policy into
+      FHIR, with governance.
     </p>
     <p class="stack">TypeScript · Neo4j · Temporal · Ollama · MIT license</p>
   </article>
