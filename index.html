@@ -133,6 +133,27 @@
       padding: 1.9rem 0;
     }
     article p { margin: 0.7rem 0 0; font-size: 0.97rem; }
+    .sub {
+      color: var(--ink-2);
+      font-size: 0.88rem !important;
+      margin-top: 0.15rem !important;
+    }
+    .flow-wrap { margin: 1.2rem 0 0.2rem; overflow-x: auto; }
+    .flow { display: block; width: 100%; min-width: 540px; height: auto; }
+    .flow rect { fill: var(--code-bg); stroke: var(--hairline); }
+    .flow text {
+      fill: var(--ink-2);
+      font: 500 11.5px ui-monospace, "SF Mono", Menlo, monospace;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .flow .gate rect { fill: transparent; stroke: var(--accent); stroke-width: 1.5; }
+    .flow .gate text { fill: var(--accent); }
+    .flow .arrows line { stroke: var(--ink-2); stroke-width: 1.5; }
+    .flow .arrows polygon { fill: var(--ink-2); }
+    .flow .annot { font-size: 10px; }
+    .flow .gate-note { fill: var(--accent); }
+    .flow .dashed { stroke: var(--hairline); stroke-width: 1.5; stroke-dasharray: 3 4; }
     .tags {
       display: flex;
       flex-wrap: wrap;
@@ -191,6 +212,32 @@
 
   <article>
     <h2><a href="https://github.com/pjerus/pa-fhir-poc">pa-fhir-poc</a></h2>
+    <p class="sub">"pa" as in prior authorization — a policy-to-FHIR proof of concept</p>
+    <figure class="flow-wrap">
+      <svg class="flow" viewBox="0 0 664 96" role="img" aria-label="Process flow: policy PDF, LLM extract, Neo4j graph, human review gate, FHIR artifacts, then the HL7 validator">
+        <rect x="1" y="8" width="112" height="40" rx="8"/>
+        <text x="57" y="32">policy PDF</text>
+        <rect x="139" y="8" width="112" height="40" rx="8"/>
+        <text x="195" y="32">LLM extract</text>
+        <rect x="277" y="8" width="112" height="40" rx="8"/>
+        <text x="333" y="32">Neo4j graph</text>
+        <g class="gate">
+          <rect x="415" y="8" width="112" height="40" rx="8"/>
+          <text x="471" y="32">human review</text>
+        </g>
+        <rect x="551" y="8" width="112" height="40" rx="8"/>
+        <text x="607" y="32">FHIR artifacts</text>
+        <g class="arrows">
+          <line x1="116" y1="28" x2="130" y2="28"/><polygon points="129,24 129,32 136,28"/>
+          <line x1="254" y1="28" x2="268" y2="28"/><polygon points="267,24 267,32 274,28"/>
+          <line x1="392" y1="28" x2="406" y2="28"/><polygon points="405,24 405,32 412,28"/>
+          <line x1="530" y1="28" x2="544" y2="28"/><polygon points="543,24 543,32 550,28"/>
+        </g>
+        <text class="annot gate-note" x="471" y="66">blocks until a named human approves</text>
+        <line class="dashed" x1="607" y1="48" x2="607" y2="76"/>
+        <text class="annot" x="607" y="90">HL7 validator ✓</text>
+      </svg>
+    </figure>
     <p>
       A reference pipeline for a general problem: turning authoritative
       prose documents into validated, machine-readable artifacts without
@@ -237,6 +284,17 @@
       choice types; the roadmap starts at automatic IG-package resolution.
     </p>
     <p class="tags"><span>TypeScript</span><span>Zod</span><span>FHIR Schema</span><span class="soon">source coming soon</span></p>
+  </article>
+
+  <article>
+    <h2>Pantastic</h2>
+    <p>
+      A different kind of side project: a companion for watercolor
+      painters, focused on complementary color — finding the right
+      complements for the pans in your palette before the water hits the
+      paper. Grew out of painting coastal landscapes; early days.
+    </p>
+    <p class="tags"><span>watercolor</span><span>color theory</span><span class="soon">early days — source coming soon</span></p>
   </article>
 
   <footer>
