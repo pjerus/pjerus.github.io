@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RaveAtPeach — Projects</title>
+  <meta name="description" content="Projects by RaveAtPeach. Currently: pa-fhir-poc, a governed-AI reference pipeline that turns Medicare coverage-policy PDFs into validator-clean Da Vinci CRD/DTR FHIR artifacts ahead of the CMS-0057-F January 2027 prior-authorization API deadline.">
+  <link rel="canonical" href="https://pjerus.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RaveAtPeach — Projects">
+  <meta property="og:description" content="Governed-AI healthcare interoperability projects: policy-PDF-to-FHIR pipelines with a human approval gate between LLM output and anything FHIR.">
+  <meta property="og:url" content="https://pjerus.github.io/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "RaveAtPeach",
+    "url": "https://pjerus.github.io/",
+    "sameAs": [
+      "https://github.com/pjerus",
+      "https://www.linkedin.com/in/patjerus"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "pa-fhir-poc",
+    "codeRepository": "https://github.com/pjerus/pa-fhir-poc",
+    "programmingLanguage": "TypeScript",
+    "license": "https://opensource.org/license/mit",
+    "description": "Reference pipeline turning a Medicare coverage-policy PDF into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
+    "author": { "@type": "Person", "name": "RaveAtPeach", "url": "https://pjerus.github.io/" }
+  }
+  </script>
+  <style>
+    :root {
+      --paper: #FAFAF8;
+      --ink: #1C2126;
+      --ink-2: #5B6670;
+      --accent: #C2452D;
+      --hairline: #E3E1DC;
+      --code-bg: #F1F0EC;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #16191D;
+        --ink: #E8E6E1;
+        --ink-2: #9BA4AC;
+        --accent: #E06A4F;
+        --hairline: #2C3138;
+        --code-bg: #21262C;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 4rem 1.25rem 5rem;
+      background: var(--paper);
+      color: var(--ink);
+      font: 17px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 42rem; margin: 0 auto; }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+    h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.15rem; margin: 0 0 0.35rem; }
+    header p { color: var(--ink-2); margin: 0; }
+    nav { margin: 1rem 0 0; font-size: 0.95rem; }
+    nav a { margin-right: 1.25rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .section-label {
+      font: 600 0.72rem/1 ui-monospace, "SF Mono", Menlo, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 3.5rem 0 1rem;
+    }
+    article {
+      border-top: 1px solid var(--hairline);
+      padding: 1.5rem 0;
+    }
+    article p { margin: 0.5rem 0 0; }
+    .stack {
+      color: var(--ink-2);
+      font: 0.8rem/1.6 ui-monospace, "SF Mono", Menlo, monospace;
+      margin-top: 0.75rem;
+    }
+    code {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--hairline);
+      color: var(--ink-2);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>RaveAtPeach</h1>
+    <p>Healthcare interoperability engineering — putting a human gate between AI output and anything that matters.</p>
+    <nav>
+      <a href="https://github.com/pjerus" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a>
+    </nav>
+  </header>
+
+  <p class="section-label">Projects</p>
+
+  <article>
+    <h2><a href="https://github.com/pjerus/pa-fhir-poc">pa-fhir-poc</a></h2>
+    <p>
+      A reference pipeline for the bottleneck of prior-authorization
+      interoperability: getting coverage policy out of PDFs. A local LLM
+      extracts requirements from a Medicare coverage policy, a Neo4j graph
+      holds them as reviewable facts, and a durable Temporal workflow blocks
+      until a named human approves — only then are Da&nbsp;Vinci CRD/DTR FHIR
+      artifacts projected, validated with zero errors against the official
+      HL7 validator.
+    </p>
+    <p>
+      Why now: the
+      <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS
+      Interoperability and Prior Authorization Final Rule (CMS-0057-F)</a>
+      requires impacted payers to stand up prior-authorization APIs by
+      <strong>January&nbsp;1,&nbsp;2027</strong> — and every one of them faces
+      the same unsolved first step this pipeline demonstrates: digitizing
+      prose policy into FHIR artifacts, with governance.
+    </p>
+    <p class="stack">TypeScript · Neo4j · Temporal · Ollama · MIT license</p>
+  </article>
+
+  <footer>
+    <p>© 2026 RaveAtPeach · <a href="https://github.com/pjerus/pjerus.github.io">source</a></p>
+  </footer>
+</main>
+</body>
+</html>
