@@ -348,16 +348,20 @@
       validation becomes a plain import.
     </p>
     <p>
-      You point it at a profile and get a readable schema: call
+      You name a published IG package — <code>npx fhir-zod-gen
+      hl7.fhir.us.core#6.1.0</code> — and it resolves that package and its
+      dependencies, then writes one readable schema file per profile. Call
       <code>.parse()</code> on incoming data to validate it, and the
       TypeScript type comes free from the same declaration. That's useful
       anywhere FHIR crosses a boundary — checking an API response,
       guarding what an LLM produced, validating before you send. It builds
       on the <a href="https://github.com/fhir-schema/fhir-schema">FHIR
       Schema</a> format, aiming to be the TypeScript sibling of Health
-      Samurai's Python generator. v0.1 covers cardinality, nested
-      elements, required bindings, and choice types; automatic IG-package
-      resolution is next.
+      Samurai's Python generator. It covers cardinality, nested elements,
+      required bindings, choice types, slice cardinality, primitive
+      regexes and the mechanically-translatable FHIRPath invariants — and
+      the generated schemas accept all 441 published conformance examples
+      across the four packages it is tested against.
     </p>
     <p class="tags"><span>TypeScript</span><span>Zod</span><span>FHIR Schema</span><span>MIT license</span></p>
   </article>
