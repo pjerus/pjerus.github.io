@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pat Jerus — Projects</title>
-  <meta name="description" content="Pat Jerus builds AI pipelines with a human gate between model output and anything that matters — agentic workflow systems, healthcare interoperability, game platforms, and market-research automation. Featuring pa-fhir-poc, a governed-AI policy-digitization pipeline ahead of CMS-0057-F's January 2027 deadline.">
+  <meta name="description" content="Pat Jerus builds AI pipelines with a human gate between model output and anything that matters — agentic workflow systems, healthcare interoperability, game platforms, and market-research automation. Featuring pa-fhir-poc, a governed-AI policy-digitization pipeline demonstrated on Medicare LCDs and a commercial Cigna policy, ahead of CMS-0057-F's January 2027 deadline.">
   <link rel="canonical" href="https://pjerus.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pat Jerus — Projects">
@@ -31,7 +31,7 @@
     "codeRepository": "https://github.com/pjerus/pa-fhir-poc",
     "programmingLanguage": "TypeScript",
     "license": "https://opensource.org/license/mit",
-    "description": "Reference pipeline turning a Medicare coverage-policy PDF into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
+    "description": "Reference pipeline turning payer coverage-policy PDFs — Medicare LCDs and commercial policies — into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
     "author": { "@type": "Person", "name": "Pat Jerus", "url": "https://pjerus.github.io/" }
   }
   </script>
@@ -246,7 +246,7 @@
 
   <article>
     <h2><a href="https://github.com/pjerus/pa-fhir-poc">pa-fhir-poc</a></h2>
-    <p class="sub">"pa" as in prior authorization — a policy-to-FHIR proof of concept</p>
+    <p class="sub">"pa" as in prior authorization — an agentic-workflow POC applied to policy digitization</p>
     <figure class="flow-wrap">
       <svg class="flow" viewBox="0 0 664 96" role="img" aria-label="Process flow: policy PDF, LLM extract, Neo4j graph, human review gate, FHIR artifacts, then the HL7 validator">
         <rect x="1" y="8" width="112" height="40" rx="8"/>
@@ -273,25 +273,52 @@
       </svg>
     </figure>
     <p>
-      A reference pipeline for a general problem: turning authoritative
-      prose documents into validated, machine-readable artifacts without
-      ever trusting an LLM unsupervised. A local model extracts
-      requirements from the source PDF, a Neo4j graph holds them as
-      reviewable facts, and a durable Temporal workflow blocks until a
-      named human approves — only then are artifacts projected, and every
-      claim of correctness is backed by an official validator rather than
-      asserted.
+      A proof of concept for agentic AI workflows applied to a real
+      regulatory problem. A local LLM does the reading — pulling coverage
+      requirements out of payer policy PDFs — but it works inside a
+      structure that never takes its word for anything: extraction is
+      quarantined behind snapshots, its output lands in a Neo4j graph as
+      facts a reviewer can inspect, and a durable Temporal workflow blocks
+      until a named human approves. Only then are Da&nbsp;Vinci CRD/DTR
+      FHIR artifacts projected, and nothing is called conformant until
+      the official HL7 validator agrees.
     </p>
     <p>
-      The domain instance is healthcare prior authorization: Medicare
-      coverage policies in, Da&nbsp;Vinci CRD/DTR FHIR artifacts out,
-      validated with zero errors. The
+      <strong>Medicare.</strong> Two real Local Coverage Determinations —
+      glucose monitors (L33822) and PAP devices for sleep apnea (L33718) —
+      go in as LCD + policy-article PDF pairs and come out as a CRD
+      coverage card, a DTR Questionnaire, and a PlanDefinition. Each
+      Questionnaire passes the validator against the Da&nbsp;Vinci DTR
+      profile with zero errors and zero warnings
+      (<a href="https://github.com/pjerus/pa-fhir-poc/tree/main/docs/conformance">conformance
+      reports</a>); the second LCD went in as a fixtures-only change — no
+      new code.
+    </p>
+    <p>
+      <strong>Commercial payers.</strong> Cigna's surgical sleep-apnea
+      policy is a structurally different document: no companion article,
+      and criteria organized as CPT/HCPCS code tables whose headings
+      <em>are</em> the coverage stances. A per-publisher
+      <a href="https://github.com/pjerus/pa-fhir-poc/blob/main/docs/superpowers/specs/2026-08-22-payer-dialect-seam-design.md">dialect
+      seam</a>, sniffed from the document itself, absorbs the format
+      difference; everything downstream runs unchanged, and denial reasons
+      come out deterministically — no LLM involved. One honest finding: a
+      policy that states no documentation requirements projects
+      <strong>no</strong> Questionnaire at all (the DTR profile requires
+      at least one item) — the pipeline won't fabricate one to look
+      complete.
+    </p>
+    <p>
+      The
       <a href="https://www.cms.gov/initiatives/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f">CMS
       Interoperability and Prior Authorization Final Rule (CMS-0057-F)</a>
-      gives the pattern a deadline — impacted payers must stand up
+      puts a deadline on this: impacted payers must stand up
       prior-authorization APIs by <strong>January&nbsp;1,&nbsp;2027</strong>,
-      and each faces this same first step: digitizing prose policy into
-      FHIR, with governance.
+      and each starts from the same place — coverage policy written as
+      prose. Medicare contractors and commercial plans alike face it;
+      that's the pair demonstrated here. The projected artifacts for all
+      three policies are committed at
+      <a href="https://github.com/pjerus/pa-fhir-poc/tree/main/docs/examples">docs/examples</a>.
     </p>
     <p class="tags"><span>TypeScript</span><span>Neo4j</span><span>Temporal</span><span>Ollama</span><span>MIT license</span></p>
   </article>
