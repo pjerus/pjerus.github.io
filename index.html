@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pat Jerus — Projects</title>
-  <meta name="description" content="Pat Jerus builds AI pipelines with a human gate between model output and anything that matters — agentic workflow systems, healthcare interoperability, game platforms, and market-research automation. Featuring pa-fhir-poc, a governed-AI policy-digitization pipeline demonstrated on Medicare LCDs and a commercial Cigna policy, ahead of CMS-0057-F's January 2027 deadline.">
+  <meta name="description" content="Pat Jerus builds agentic AI pipelines where a person signs off before anything ships — healthcare interoperability, automated news research, and market-research automation. Featuring pa-fhir-poc, a governed policy-digitization pipeline demonstrated on Medicare LCDs and a commercial Cigna policy, ahead of CMS-0057-F's January 2027 deadline.">
   <link rel="canonical" href="https://pjerus.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pat Jerus — Projects">
-  <meta property="og:description" content="AI pipelines with a human gate between model output and anything that matters — agentic workflows, healthcare interoperability, game platforms, and market-research automation.">
+  <meta property="og:description" content="Agentic AI pipelines where a person signs off before anything ships — healthcare interoperability, automated news research, and market-research automation.">
 
   <meta property="og:url" content="https://pjerus.github.io/">
   <script type="application/ld+json">
@@ -92,6 +92,14 @@
       font-size: 1.5rem;
       line-height: 1.4;
       margin: 1.4rem 0 0;
+    }
+    blockquote.lead p { margin: 0; }
+    blockquote.lead cite {
+      display: block;
+      margin-top: 0.5rem;
+      font: 400 0.85rem/1.4 system-ui, sans-serif;
+      font-style: normal;
+      color: var(--ink-2);
     }
     header p:not(.lead) {
       color: var(--ink-2);
@@ -226,20 +234,23 @@
 <main>
   <header>
     <h1>Pat Jerus</h1>
-    <p class="lead">Putting a human gate between AI output and anything
-    that matters.</p>
+    <blockquote class="lead">
+      <p>&ldquo;Computers are useless. They can only give you
+      answers.&rdquo;</p>
+      <cite>&mdash; attributed to Pablo Picasso</cite>
+    </blockquote>
     <nav>
       <a href="https://github.com/pjerus" rel="me">GitHub</a>
       <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a>
     </nav>
-    <p>I build agentic pipelines and the guardrails around them — durable
-    workflow orchestration, quarantined non-determinism, evidence over
-    assertion — with projects spanning healthcare interoperability,
-    multiplayer game platforms, and market-research automation.</p>
-    <p>Off the clock I paint coastal landscapes in watercolor, cook Thai
-    food (and eat it with enthusiasm), travel for great coffee, and
-    disappear down research rabbit holes — most recently helium
-    production and autonomous materials-discovery labs.</p>
+    <p>I'm currently working on agentic automation focused on healthcare
+    interoperability — turning payer coverage policies into FHIR with a
+    person signing off before anything ships. Other projects span
+    automated news research and market-research automation.</p>
+    <p>Off the clock I paint coastal landscapes in watercolor, cook a lot
+    of Thai food, and plan trips around good coffee. Lately I've been
+    reading everything I can find on helium production and self-driving
+    materials labs.</p>
   </header>
 
   <p class="section-label">Projects</p>
@@ -327,23 +338,26 @@
     <h2><a href="https://github.com/pjerus/fhir-zod-gen">fhir-zod-gen</a></h2>
     <p class="sub">v0.1, early — seeking contributors</p>
     <p>
-      The complementary half of the validation story: a code generator that
-      turns FHIR Implementation Guide profiles into
-      <a href="https://zod.dev">Zod</a> schemas — a runtime validator and an
-      inferred TypeScript type in one plain, readable declaration. FHIR's
-      mature validation tooling lives in Java; an ever-growing share of
-      health-tech code (SMART on FHIR apps, Node backends, AI agents) lives
-      in TypeScript, with no equivalent. It consumes the
-      <a href="https://github.com/fhir-schema/fhir-schema">FHIR Schema</a>
-      intermediate format rather than raw StructureDefinitions, aiming to be
-      the TypeScript sibling of Health Samurai's Python/Pydantic generator.
+      This one exists because of a gap I kept hitting while building
+      pa-fhir-poc: the only serious FHIR validator is a Java tool, so
+      checking an artifact meant spinning up Docker every time. Meanwhile
+      most new health-tech code — SMART on FHIR apps, Node backends, AI
+      agents — is written in TypeScript, which has nothing equivalent.
+      fhir-zod-gen closes that gap by generating
+      <a href="https://zod.dev">Zod</a> schemas from FHIR profiles, so
+      validation becomes a plain import.
     </p>
     <p>
-      Where pa-fhir-poc uses the official HL7 validator as the offline
-      oracle, generated Zod schemas are the in-process guardrail — profile
-      conformance checked on every projection, no Java or Docker in the
-      loop. v0.1 covers cardinality, nested elements, required bindings, and
-      choice types; the roadmap starts at automatic IG-package resolution.
+      You point it at a profile and get a readable schema: call
+      <code>.parse()</code> on incoming data to validate it, and the
+      TypeScript type comes free from the same declaration. That's useful
+      anywhere FHIR crosses a boundary — checking an API response,
+      guarding what an LLM produced, validating before you send. It builds
+      on the <a href="https://github.com/fhir-schema/fhir-schema">FHIR
+      Schema</a> format, aiming to be the TypeScript sibling of Health
+      Samurai's Python generator. v0.1 covers cardinality, nested
+      elements, required bindings, and choice types; automatic IG-package
+      resolution is next.
     </p>
     <p class="tags"><span>TypeScript</span><span>Zod</span><span>FHIR Schema</span><span>MIT license</span></p>
   </article>
