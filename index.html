@@ -394,7 +394,7 @@ SCENES.policy = () => {
       } else if (e >= 9.8) {
         JSON_OUT.forEach((s, i) => { if (e > 9.9 + i * 0.18) put(s.slice(0, Math.floor(art.w / CW)), art.x, art.y + i * LH, "n"); });
       }
-      term.caption = e < 9.0 ? "NOTHING SHIPS UNTIL A NAMED PERSON APPROVES IT." : "CONFORMANT ONLY WHEN THE OFFICIAL HL7 VALIDATOR AGREES.";
+      term.caption = e < 9.0 ? "A PERSON CHECKS THE GRAPH BEFORE ANY FHIR IS MADE." : "CONFORMANT ONLY WHEN THE OFFICIAL HL7 VALIDATOR AGREES.";
     },
   };
 };
