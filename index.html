@@ -55,6 +55,8 @@
 
     .console { height: 100dvh; display: grid; grid-template-rows: 1fr auto; gap: 10px; padding: clamp(8px, 2vw, 22px); max-width: 1240px; margin: 0 auto; }
     .tube { position: relative; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--glass); box-shadow: 0 0 0 1px #2a2722, 0 0 0 10px #171512, 0 0 0 11px #2a2722, 0 20px 60px rgba(0,0,0,0.7); cursor: text; }
+    .tube.linked { cursor: pointer; }
+    .tube.linked .prompt { cursor: text; }
     .tube canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     /* scanlines and the tube's darker edges */
     .tube::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; background: repeating-linear-gradient(180deg, transparent 0 2px, rgba(0,0,0,0.22) 2px 3px); }
@@ -233,7 +235,7 @@ class Stop extends Error {}
 let run = 0; // bumping it stops whatever script is running
 const check = gen => { if (gen !== run) throw new Stop(); };
 const sleep = (ms, gen) => new Promise((res, rej) => setTimeout(() => (gen !== run ? rej(new Stop()) : res()), RM ? 0 : ms));
-function clearScreen() { term.lines = []; term.caption = ""; term.hint = ""; scene = null; g.fillStyle = C.glass; g.fillRect(0, 0, W, H); }
+function clearScreen() { term.lines = []; term.caption = ""; term.hint = ""; scene = null; tube.classList.remove("linked"); g.fillStyle = C.glass; g.fillRect(0, 0, W, H); }
 function print(s, style) { for (const l of wrap(s)) term.lines.push({ t: l, shown: l.length, style }); }
 async function type(s, gen, { style, speed = 26, human = false } = {}) {
   const parts = wrap(s);
@@ -331,13 +333,14 @@ SCENES.policy = () => {
     [9.8, "EMIT   CRD CARD, DTR QUESTIONNAIRE, PLANDEFINITION"],
     [11.6, "CHECK  HL7 VALIDATOR: 0 ERRORS, 0 WARNINGS"],
   ];
-  const POLICY = [
-    ["COVERAGE INDICATIONS, LIMITATIONS AND/OR", "dim"], ["MEDICAL NECESSITY", "dim"], ["", "dim"],
-    ["THE BENEFICIARY HAS DIABETES MELLITUS", "hl"], ["", "dim"],
-    ["AND IS INSULIN-TREATED, OR HAS A HISTORY", "hl"], ["OF PROBLEMATIC HYPOGLYCEMIA", "hl"], ["", "dim"],
-    ["WITHIN SIX MONTHS BEFORE ORDERING, THE", "hl"], ["TREATING PRACTITIONER HAS SEEN THE", "hl"], ["BENEFICIARY IN PERSON OR BY TELEHEALTH", "hl"],
-    ["", "dim"], ["DOCUMENTATION REQUIREMENTS", "dim"], ["SECTION 1861(S) OF THE SOCIAL SECURITY", "dim"], ["ACT ...", "dim"],
+  const POLICY = [ // paragraphs, wrapped to the space available
+    ["COVERAGE INDICATIONS, LIMITATIONS AND/OR MEDICAL NECESSITY", "dim"],
+    ["THE BENEFICIARY HAS DIABETES MELLITUS", "hl"],
+    ["AND IS INSULIN-TREATED, OR HAS A HISTORY OF PROBLEMATIC HYPOGLYCEMIA", "hl"],
+    ["WITHIN SIX MONTHS BEFORE ORDERING, THE TREATING PRACTITIONER HAS SEEN THE BENEFICIARY IN PERSON OR BY TELEHEALTH", "hl"],
+    ["DOCUMENTATION REQUIREMENTS: SECTION 1861(S) OF THE SOCIAL SECURITY ACT ...", "dim"],
   ];
+  const policyLines = cols => POLICY.flatMap(([t, k]) => [...wrap(t, cols).map(l => [l, k]), ["", "dim"]]);
   const JSON_OUT = ['{ "resourceType": "Questionnaire",', '  "item": [', '    { "linkId": "diabetes",', '      "type": "boolean" },', '    { "linkId": "insulin-or-hypo",', '      "type": "boolean" },', '    { "linkId": "visit-6-months",', '      "type": "date" } ] }'];
   const REQ = ["DIABETES", "INSULIN OR HYPO", "VISIT <= 6 MONTHS"];
   const split = B => {
@@ -370,11 +373,11 @@ SCENES.policy = () => {
         put(line.slice(0, Math.floor(log.w / CW)), log.x, log.y + i * LH * 1.4, st || (i === LOG.length - 1 ? "hi" : "n"));
       });
       if (e >= 1.0 && e < 4.2) { // the policy scrolls past; the requirements light up
+        const lines = policyLines(Math.max(12, Math.floor(art.w / CW) - 1));
         const off = (e - 1.0) * 2.2, rows = Math.max(3, Math.floor(art.h / LH));
         for (let r = 0; r < rows; r++) {
-          const [s, kind] = POLICY[(Math.floor(off) + r) % POLICY.length];
-          const lit = kind === "hl" && e > 2.2;
-          put(s.slice(0, Math.floor(art.w / CW)), art.x, art.y + r * LH, lit ? "inv" : "dim");
+          const [s, kind] = lines[(Math.floor(off) + r) % lines.length];
+          put(s, art.x, art.y + r * LH, kind === "hl" && e > 2.2 ? "inv" : "dim");
         }
       } else if (e >= 4.2 && e < 9.8) { // the graph, then the gate
         const N = nodes(art);
@@ -492,7 +495,7 @@ SCENES.paint = () => {
 let cur = -1, auto = !RM, idle = null, sceneStart = 0, screenKind = "boot";
 const statusEl = $("#status"), said = $("#said"), input = $("#cmd");
 function status() { statusEl.textContent = (cur >= 0 && screenKind === "game" ? `GAME ${cur + 1} OF ${PROJECTS.length}` : "") + (auto ? "  AUTOPLAY" : "  PAUSED"); }
-function hintLine() { return PROJECTS[cur].href ? "[ENTER] OPEN   [N] NEXT   [P] PREV   [HELP]" : "[N] NEXT   [P] PREV   [HELP]"; }
+function hintLine() { return PROJECTS[cur].href ? "[CLICK] OPEN  [N] NEXT  [P] PREV  [HELP]" : "[N] NEXT   [P] PREV   [HELP]"; }
 
 async function play(i, gen) {
   cur = (i + PROJECTS.length) % PROJECTS.length; screenKind = "game"; status();
@@ -502,6 +505,7 @@ async function play(i, gen) {
   print(p.line.toUpperCase(), "dim");
   const s = SCENES[p.scene](); s.headRows = Math.max(3, term.lines.length + 1);
   sceneStart = RM ? performance.now() - 1e6 : performance.now(); scene = s; term.hint = hintLine();
+  tube.classList.toggle("linked", !!p.href);
   await sleep(s.secs * 1000, gen);
 }
 async function boot(gen) {
@@ -588,7 +592,11 @@ input.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); command("NEXT"); }
   if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); command("PREV"); }
 });
-tube.addEventListener("click", () => { if (matchMedia("(pointer: fine)").matches) input.focus(); });
+tube.addEventListener("click", e => {
+  if (e.target.closest("#prompt")) return;
+  if (screenKind === "game") return command("OPEN"); // clicking a game opens its page
+  if (matchMedia("(pointer: fine)").matches) input.focus();
+});
 addEventListener("keydown", e => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   if (screenKind === "boot" && auto) { // any key skips the boot
