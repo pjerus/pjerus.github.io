@@ -19,7 +19,7 @@
     "url": "https://pjerus.github.io/",
     "sameAs": [
       "https://github.com/pjerus",
-      "https://www.linkedin.com/in/patjerus"
+      "https://www.linkedin.com/in/patjerus/"
     ]
   }
   </script>
@@ -37,7 +37,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;700&display=swap">
   <script>document.documentElement.classList.add("js")</script>
   <style>
     :root {
@@ -51,7 +51,7 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--room); color: var(--p1); }
-    body { font-family: "VT323", ui-monospace, monospace; }
+    body { font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 300; }
 
     .console { height: 100dvh; display: grid; grid-template-rows: 1fr auto; gap: 10px; padding: clamp(8px, 2vw, 22px); max-width: 1240px; margin: 0 auto; }
     .tube { position: relative; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--glass); box-shadow: 0 0 0 1px #2a2722, 0 0 0 10px #171512, 0 0 0 11px #2a2722, 0 20px 60px rgba(0,0,0,0.7); cursor: text; }
@@ -60,13 +60,13 @@
     .tube::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; background: repeating-linear-gradient(180deg, transparent 0 2px, rgba(0,0,0,0.22) 2px 3px); }
     .tube::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; border-radius: inherit; background: radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.55) 100%); }
 
-    .prompt { position: absolute; z-index: 3; left: var(--pad); right: var(--pad); bottom: calc(var(--pad) * 0.6); display: flex; gap: 0.5ch; align-items: baseline; font-size: var(--fs); text-shadow: 0 0 6px rgba(61,255,106,0.55); }
+    .prompt { position: absolute; z-index: 3; left: var(--pad); right: var(--pad); bottom: calc(var(--pad) * 0.6); display: flex; gap: 0.5ch; align-items: baseline; font-size: var(--fs); font-weight: 500; text-shadow: 0 0 6px rgba(61,255,106,0.55); }
     .prompt label { color: var(--p1); }
     .prompt input { flex: 1; min-width: 0; font: inherit; color: var(--p1); background: transparent; border: 0; padding: 0; caret-color: var(--p1); text-transform: uppercase; text-shadow: inherit; }
     .prompt input:focus { outline: none; }
     .prompt input::placeholder { color: var(--p1-dim); opacity: 1; }
 
-    .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 20px; }
+    .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; }
     .keys button, .keys a { font: inherit; color: var(--p1-dim); background: transparent; border: 1px solid var(--p1-ghost); border-radius: 4px; padding: 2px 12px; min-height: 36px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
     .keys button:hover, .keys a:hover { color: var(--p1); border-color: var(--p1-dim); }
     .keys button:focus-visible, .keys a:focus-visible { outline: 2px solid var(--p1); outline-offset: 2px; color: var(--p1); }
@@ -74,15 +74,15 @@
     .keys .links { display: flex; gap: 10px; }
 
     /* the plain version: read by search engines and screen readers, shown when scripts are off */
-    .plain { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; font-size: 22px; line-height: 1.35; }
+    .plain { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; font-size: 16px; line-height: 1.6; }
+    .plain h1, .plain h2 { font-weight: 700; }
     .plain a { color: var(--p1); }
-    .plain h1, .plain h2 { font-weight: 400; }
     .plain blockquote { margin: 1rem 0; color: var(--p1-dim); }
     .js .plain, .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
     html:not(.js) .console { display: none; }
 
     @media (max-width: 600px) {
-      .keys { font-size: 18px; gap: 6px; }
+      .keys { font-size: 13px; gap: 6px; }
       .keys button, .keys a { padding: 2px 9px; }
       .keys .status { width: 100%; order: -1; margin: 0; }
     }
@@ -105,7 +105,7 @@
     <button type="button" data-cmd="LIST">LIST</button>
     <button type="button" data-cmd="ABOUT">ABOUT</button>
     <button type="button" data-cmd="HELP">HELP</button>
-    <span class="links"><a href="https://github.com/pjerus" rel="me">GITHUB</a><a href="https://www.linkedin.com/in/patjerus" rel="me">LINKEDIN</a></span>
+    <span class="links"><a href="https://github.com/pjerus" rel="me">GITHUB</a><a href="https://www.linkedin.com/in/patjerus/" rel="me">LINKEDIN</a></span>
   </nav>
   <p class="sr" id="keys-help">Type a command and press Enter: NEXT, PREV, OPEN, LIST, ABOUT or HELP. The same commands are buttons below the screen.</p>
   <p class="sr" id="said" aria-live="polite"></p>
@@ -119,7 +119,7 @@
   <blockquote><p>“The truth is rarely pure and never simple.” — Oscar Wilde, <cite>The Importance of Being Earnest</cite></p></blockquote>
   <h2>Projects</h2>
   <ul id="plain-list"></ul>
-  <p><a href="https://github.com/pjerus" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/patjerus" rel="me">LinkedIn</a></p>
+  <p><a href="https://github.com/pjerus" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/patjerus/" rel="me">LinkedIn</a></p>
 </section>
 
 <script>
@@ -185,9 +185,9 @@ function metrics() {
   for (const c of [cv, glow]) { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); }
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0); g.setTransform(DPR, 0, 0, DPR, 0, 0);
   PAD = W < 600 ? 14 : 24;
-  const target = W < 600 ? 42 : 80;
-  FS = Math.max(15, Math.min(30, Math.floor((W - 2 * PAD) / (target * RATIO))));
-  CW = FS * RATIO; LH = Math.round(FS * 1.02);
+  const target = W < 600 ? 42 : 84;
+  FS = Math.max(12, Math.min(22, Math.floor((W - 2 * PAD) / (target * RATIO))));
+  CW = FS * RATIO; LH = Math.round(FS * 1.45);
   COLS = Math.floor((W - 2 * PAD) / CW);
   ROWS = Math.floor((H - 2 * PAD - LH * 1.4) / LH); // the last line belongs to the prompt
   document.documentElement.style.setProperty("--fs", FS + "px");
@@ -212,16 +212,17 @@ function wrap(s, cols = COLS) {
 function put(s, x, y, style = "n") {
   // x, y in px (y = top of the line); styles: n normal, dim, hi bright, inv inverse
   s = String(s);
-  ctx.font = `${FS}px VT323, monospace`; ctx.textBaseline = "top";
+  const weight = { h: 700, hi: 500, inv: 500 }[style] || 300;
+  ctx.font = `${weight} ${FS}px "IBM Plex Mono", monospace`; ctx.textBaseline = "top";
   if (style === "inv") {
     ctx.shadowBlur = 8; ctx.shadowColor = C.halo; ctx.fillStyle = C.p1;
     ctx.fillRect(x - 2, y, s.length * CW + 4, LH);
-    ctx.shadowBlur = 0; ctx.fillStyle = C.glass; ctx.fillText(s, x, y + FS * 0.02);
+    ctx.shadowBlur = 0; ctx.fillStyle = C.glass; ctx.fillText(s, x, y + (LH - FS) / 2);
     return;
   }
   ctx.fillStyle = style === "dim" ? C.dim : style === "hi" ? C.hi : C.p1;
-  ctx.shadowColor = C.halo; ctx.shadowBlur = style === "dim" ? 0 : 6;
-  ctx.fillText(s, x, y + FS * 0.02);
+  ctx.shadowColor = C.halo; ctx.shadowBlur = style === "h" ? 10 : style === "dim" ? 0 : 3;
+  ctx.fillText(s, x, y + (LH - FS) / 2);
   ctx.shadowBlur = 0;
 }
 const putRow = (s, col, row, style) => put(String(s).slice(0, Math.max(0, COLS - col)), PAD + col * CW, rowY(row), style);
@@ -497,7 +498,7 @@ async function play(i, gen) {
   cur = (i + PROJECTS.length) % PROJECTS.length; screenKind = "game"; status();
   const p = PROJECTS[cur];
   clearScreen(); term.cursor = false;
-  await type(`RUN ${p.key}`, gen, { speed: 40 });
+  await type(`RUN ${p.key}`, gen, { speed: 40, style: "h" });
   print(p.line.toUpperCase(), "dim");
   const s = SCENES[p.scene](); s.headRows = Math.max(3, term.lines.length + 1);
   sceneStart = RM ? performance.now() - 1e6 : performance.now(); scene = s; term.hint = hintLine();
@@ -513,43 +514,44 @@ async function boot(gen) {
     while (l.shown < l.t.length) { check(gen); l.shown++; await sleep(110 + Math.random() * 120, gen); }
     await sleep(700, gen); print("");
   }
-  await type("GREETINGS PLAYER ONE.", gen); print(""); await sleep(600, gen);
-  await type("SHALL WE PLAY A GAME?", gen); await sleep(1400, gen);
+  await type("GREETINGS PLAYER ONE.", gen, { style: "h" }); print(""); await sleep(600, gen);
+  await type("SHALL WE PLAY A GAME?", gen, { style: "h" }); await sleep(1400, gen);
   await listGames(gen, false);
   await sleep(RM ? 0 : 2600, gen);
 }
 async function listGames(gen, fresh = true) {
   if (fresh) { clearScreen(); term.cursor = true; }
   screenKind = "list"; status();
-  print(""); await type("LIST GAMES", gen, { speed: 40 }); print("");
+  print(""); await type("LIST GAMES", gen, { speed: 40, style: "h" }); print("");
   for (const p of PROJECTS) { await type(p.name.toUpperCase(), gen, { speed: 14 }); }
   print(""); print(RM ? "TYPE A NAME OR PRESS NEXT TO RUN A GAME." : "", "dim");
 }
 async function show(lines, gen, kind) {
   clearScreen(); screenKind = kind; term.cursor = true; status();
-  for (const l of lines) await type(l, gen, { speed: 8 });
+  for (const [i, l] of lines.entries()) await type(l, gen, { speed: 8, style: i === 0 ? "h" : undefined });
   said.textContent = lines.join(" ");
 }
-async function autoplay() {
-  const gen = ++run; auto = true; status();
-  try {
-    if (cur < 0) await boot(gen);
-    for (;;) {
-      await play(cur + 1, gen);
-      if (cur === PROJECTS.length - 1) {
-        clearScreen(); term.cursor = true; screenKind = "end"; status();
-        await type("A STRANGE GAME.", gen); await sleep(800, gen);
-        await type("THE ONLY WINNING MOVE IS TO KEEP BUILDING.", gen); await sleep(3200, gen);
-      }
+const quiet = e => { if (!(e instanceof Stop)) throw e; };
+async function loop(gen) {
+  for (;;) {
+    await play(cur + 1, gen);
+    if (cur === PROJECTS.length - 1) {
+      clearScreen(); term.cursor = true; screenKind = "end"; status();
+      await type("A STRANGE GAME.", gen, { style: "h" }); await sleep(800, gen);
+      await type("THE ONLY WINNING MOVE IS TO KEEP BUILDING.", gen, { style: "h" }); await sleep(3200, gen);
     }
-  } catch (e) { if (!(e instanceof Stop)) throw e; }
+  }
+}
+function autoplay(fromBoot = false) {
+  const gen = ++run; auto = true; status();
+  (async () => { if (fromBoot) await boot(gen); await loop(gen); })().catch(quiet);
 }
 function takeOver() {
   auto = false; status();
   clearTimeout(idle);
   if (!RM) idle = setTimeout(autoplay, 30000);
 }
-function manual(fn) { takeOver(); const gen = ++run; fn(gen).catch(e => { if (!(e instanceof Stop)) throw e; }); }
+function manual(fn) { takeOver(); const gen = ++run; fn(gen).catch(quiet); }
 
 async function openCurrent(gen) {
   const p = PROJECTS[cur];
@@ -571,7 +573,7 @@ function command(raw) {
   if (c === "ABOUT" || c === "WHOAMI") return manual(gen => show(ABOUT.flatMap(l => l ? wrap(l) : [""]), gen, "about"));
   if (c === "HELP" || c === "?") return manual(gen => show(HELP, gen, "help"));
   if (c === "GITHUB") return manual(gen => go("https://github.com/pjerus", gen));
-  if (c === "LINKEDIN") return manual(gen => go("https://www.linkedin.com/in/patjerus", gen));
+  if (c === "LINKEDIN") return manual(gen => go("https://www.linkedin.com/in/patjerus/", gen));
   if (c === "GLOBAL THERMONUCLEAR WAR") return manual(gen => show(["WOULDN'T YOU PREFER A GOOD GAME OF CHESS?", "", "TYPE LIST FOR THE GAMES THIS TERMINAL CAN PLAY."], gen, "war"));
   const i = find(c.replace(/^RUN /, ""));
   if (i >= 0) return manual(gen => play(i, gen));
@@ -588,12 +590,12 @@ input.addEventListener("keydown", e => {
 });
 tube.addEventListener("click", () => { if (matchMedia("(pointer: fine)").matches) input.focus(); });
 addEventListener("keydown", e => {
-  // any key during the boot skips it
-  if (screenKind === "boot" && auto && !e.metaKey && !e.ctrlKey) { run++; cur = -1; const gen = ++run; listGames(gen).then(() => autoplayFrom0()).catch(() => {}); }
-  if (!auto) takeOver();
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (screenKind === "boot" && auto) { // any key skips the boot
+    const gen = ++run;
+    (async () => { await listGames(gen); await sleep(1500, gen); await loop(gen); })().catch(quiet);
+  } else if (!auto) takeOver(); // typing keeps the show paused
 });
-function autoplayFrom0() { cur = -1; screenKind = "list"; autoplay2(); }
-async function autoplay2() { const gen = ++run; auto = true; status(); try { for (;;) { await play(cur + 1, gen); if (cur === PROJECTS.length - 1) { clearScreen(); term.cursor = true; screenKind = "end"; status(); await type("A STRANGE GAME.", gen); await sleep(800, gen); await type("THE ONLY WINNING MOVE IS TO KEEP BUILDING.", gen); await sleep(3200, gen); } } } catch (e) { if (!(e instanceof Stop)) throw e; } }
 
 /* ---------- frame loop ---------- */
 let frameNo = 0;
@@ -611,15 +613,15 @@ function frame(now) {
 }
 
 async function start() {
-  try { await document.fonts.load(`40px VT323`); } catch (_) {}
-  ctx.font = "100px VT323, monospace"; RATIO = ctx.measureText("M").width / 100 || 0.5;
+  try { await Promise.all([300, 500, 700].map(w => document.fonts.load(`${w} 40px "IBM Plex Mono"`))); } catch (_) {}
+  ctx.font = '300 100px "IBM Plex Mono", monospace'; RATIO = ctx.measureText("M").width / 100 || 0.6;
   metrics();
   let t = null;
   addEventListener("resize", () => { clearTimeout(t); t = setTimeout(metrics, 120); });
   requestAnimationFrame(frame);
   if (matchMedia("(pointer: fine)").matches) input.focus({ preventScroll: true });
-  if (RM) { const gen = ++run; boot(gen).then(() => status()); }
-  else autoplay();
+  if (RM) { auto = false; const gen = ++run; boot(gen).then(status).catch(quiet); }
+  else autoplay(true);
 }
 start();
 </script>
