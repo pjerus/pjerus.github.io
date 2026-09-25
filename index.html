@@ -153,7 +153,7 @@ const HELP = [
   "  OPEN        OPEN THIS GAME'S PAGE",
   "              (OR PRESS ENTER)",
   "  LIST        LIST ALL GAMES",
-  "  ABOUT       WHO IS PROFESSOR JERUS",
+  "  ABOUT       WHO BUILT THESE GAMES",
   "  <NAME>      RUN A GAME BY NAME",
   "",
   "ARROW KEYS ALSO STEP THROUGH THE GAMES.",
@@ -508,12 +508,12 @@ async function boot(gen) {
   let seen = false; try { seen = sessionStorage.getItem("wopr") === "1"; sessionStorage.setItem("wopr", "1"); } catch (_) {}
   if (!seen) {
     await type("LOGON:  ", gen, { speed: 30 }); await sleep(500, gen);
-    term.lines[term.lines.length - 1].t += "PJERUS"; // typed by the visitor, one key at a time
+    term.lines[term.lines.length - 1].t += "PLAYER1"; // typed by the visitor, one key at a time
     const l = term.lines[term.lines.length - 1];
     while (l.shown < l.t.length) { check(gen); l.shown++; await sleep(110 + Math.random() * 120, gen); }
     await sleep(700, gen); print("");
   }
-  await type("GREETINGS PROFESSOR JERUS.", gen); print(""); await sleep(600, gen);
+  await type("GREETINGS PLAYER ONE.", gen); print(""); await sleep(600, gen);
   await type("SHALL WE PLAY A GAME?", gen); await sleep(1400, gen);
   await listGames(gen, false);
   await sleep(RM ? 0 : 2600, gen);
