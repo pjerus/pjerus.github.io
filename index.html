@@ -129,6 +129,8 @@
 const PROJECTS = [
   { key: "ML-LINEAGE", name: "Machine Learning Lineage", href: "ml-lineage/", host: "PJERUS.GITHUB.IO/ML-LINEAGE",
     line: "123 ideas from Bayes (1763) to coding agents (2025), and what each one built on.", scene: "lineage", secs: 15 },
+  { key: "ML-EXPLAINERS", name: "Machine Learning Explainers", href: "ml-explainers/", host: "PJERUS.GITHUB.IO/ML-EXPLAINERS",
+    line: "Ten pages by other people that show how the Lineage's ideas work, each tied to the ideas it covers.", scene: "explainers", secs: 18 },
   { key: "PA-FHIR-POC", name: "pa-fhir-poc", href: "https://github.com/pjerus/pa-fhir-poc", host: "GITHUB.COM/PJERUS/PA-FHIR-POC",
     line: "Payer coverage policies into FHIR. A local model reads them; a named person signs off before anything ships.", scene: "policy", secs: 14 },
   { key: "FHIR-ZOD-GEN", name: "fhir-zod-gen", href: "https://github.com/pjerus/fhir-zod-gen", host: "GITHUB.COM/PJERUS/FHIR-ZOD-GEN",
@@ -318,6 +320,73 @@ SCENES.lineage = () => {
       const f = clamp01(e / T), year = yearAt(f);
       let last = null; for (const a of arcs) if (e > a.t + FLY) last = a;
       term.caption = `YEAR ${year}` + (last ? `   ${LINEAGE[last.to][0].toUpperCase()} (${LINEAGE[last.to][1]}) FROM ${LINEAGE[last.from][0].toUpperCase()}` : "");
+    },
+  };
+};
+
+// Machine Learning Explainers: each page in turn sends a pulse to the Lineage ideas it covers
+SCENES.explainers = () => {
+  // [label, year, level above the time axis]
+  const IDEAS = [["PERCEPTRON", 1958, 0], ["BACKPROPAGATION", 1986, 0], ["SGD", 1951, 1], ["ATTENTION", 2014, 1], ["TRANSFORMER", 2017, 1], ["GPT", 2018, 0], ["SEQ2SEQ", 2014, 2], ["DEEPSEEK-V2/V3", 2024, 1], ["STATE-SPACE MODELS", 2021, 1], ["MIXTURE OF EXPERTS", 1991, 1], ["SPARSE MOE", 2017, 2], ["MIXTRAL", 2024, 2], ["BPE TOKENISATION", 2015, 0], ["TOWARDS MONOSEMANTICITY", 2023, 0], ["WORD2VEC", 2013, 0]];
+  // [page, who made it, indexes into IDEAS]
+  const PAGES = [
+    ["A NEURAL NETWORK PLAYGROUND", "DANIEL SMILKOV AND SHAN CARTER", [0, 1, 2]],
+    ["3BLUE1BROWN", "GRANT SANDERSON", [1, 2, 3, 4]],
+    ["TRANSFORMER EXPLAINER", "POLO CLUB, GEORGIA TECH", [4, 3, 5]],
+    ["LLM VISUALIZATION", "BRENDAN BYCROFT", [4, 5]],
+    ["THE ILLUSTRATED TRANSFORMER", "JAY ALAMMAR", [4, 3, 6]],
+    ["A VISUAL GUIDE TO ATTENTION VARIANTS", "SEBASTIAN RASCHKA", [3, 7, 8]],
+    ["A VISUAL GUIDE TO MIXTURE OF EXPERTS", "MAARTEN GROOTENDORST", [9, 10, 11]],
+    ["LLM INFERENCE HANDBOOK", "MODULAR", [12, 4]],
+    ["NEURONPEDIA", "NEURONPEDIA", [13]],
+    ["EMBEDDING ATLAS", "APPLE", [14]],
+  ];
+  const STEP = 1.7, FLY = 0.55, launch = j => 0.35 + j * 0.14;
+  const frac = y => (y <= 2010 ? 0.3 * (y - 1950) / 60 : 0.3 + 0.7 * (y - 2010) / 16); // most of these ideas are recent, so the last years get the room
+  const geo = B => {
+    const axis = B.y + B.h - LH * 1.3, listTop = B.y + LH * 3.7;
+    const gap = Math.max(7, Math.min(LH * 2.2, (axis - listTop - LH * 4.4) / 3));
+    return { axis, listTop, at: k => [B.x + 8 + frac(IDEAS[k][1]) * (B.w - 16), axis - (IDEAS[k][2] + 1) * gap], from: j => [B.x + CW * 0.5, listTop + j * LH + LH / 2] };
+  };
+  const curve = ([x1, y1], [x2, y2]) => [(x1 + x2) / 2 + (y2 - y1) * 0.25, (y1 + y2) / 2 - (x2 - x1) * 0.12];
+  const now = e => { const i = Math.max(0, Math.min(PAGES.length - 1, Math.floor(e / STEP))); return [i, e - i * STEP]; };
+  return {
+    headRows: 3, secs: 17.8,
+    gfx(e, B) {
+      const [i, le] = now(e), G = geo(B);
+      PAGES[i][2].forEach((k, j) => {
+        const u = (le - launch(j)) / FLY;
+        if (u < 0 || u > 1.15) return;
+        const a = G.from(j), b = G.at(k), [cx, cy] = curve(a, b), t = Math.min(1, u);
+        if (u <= 1) dot(g, (1 - t) ** 2 * a[0] + 2 * (1 - t) * t * cx + t * t * b[0], (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * cy + t * t * b[1], 1.8, C.p1, 10);
+        else { g.strokeStyle = C.p1; g.lineWidth = 1.2; g.beginPath(); g.arc(b[0], b[1], 3 + (u - 1) * 70, 0, Math.PI * 2); g.stroke(); } // impact ring
+      });
+    },
+    text(e, B) {
+      const [i, le] = now(e), G = geo(B), [name, by, ideas] = PAGES[i], cols = Math.floor(B.w / CW);
+      // one tile per page: lit once it has had its turn
+      const s = Math.round(LH * 0.5);
+      PAGES.forEach((_, n) => { ctx.fillStyle = n < i ? C.dim : n === i ? C.p1 : C.ghost; ctx.fillRect(B.x + n * s * 1.6, B.y + (LH - s) / 2, s, s); });
+      put(`${i + 1}/${PAGES.length}`, B.x + PAGES.length * s * 1.6 + CW, B.y, "dim");
+      put(name.slice(0, RM ? cols : Math.min(cols, Math.floor(le * 90))), B.x, B.y + LH * 1.3, "hi");
+      if (le > 0.2) put(by.slice(0, cols), B.x, B.y + LH * 2.3, "dim");
+      // the time axis and every idea on it; the ones a page has reached stay lit
+      ctx.strokeStyle = C.ghost; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(B.x, G.axis); ctx.lineTo(B.x + B.w, G.axis); ctx.stroke();
+      for (const y of [1950, 1990, 2010, 2026]) { const x = B.x + 8 + frac(y) * (B.w - 16); put(y, Math.max(B.x, Math.min(x - 2 * CW, B.x + B.w - 4 * CW)), G.axis + 3, "dim"); }
+      const landed = j => le > launch(j) + FLY, lit = new Set(PAGES.slice(0, i).flatMap(p => p[2]));
+      ideas.forEach((k, j) => {
+        if (!landed(j)) return;
+        const a = G.from(j), b = G.at(k), [cx, cy] = curve(a, b);
+        ctx.strokeStyle = C.dim; ctx.beginPath(); ctx.moveTo(...a); ctx.quadraticCurveTo(cx, cy, ...b); ctx.stroke();
+        put(`> ${IDEAS[k][0]} ${IDEAS[k][1]}`.slice(0, cols), B.x, G.listTop + j * LH, "n");
+      });
+      IDEAS.forEach((_, k) => {
+        const j = ideas.indexOf(k), [x, y] = G.at(k);
+        if (j >= 0 && landed(j)) dot(ctx, x, y, 4, C.hi);
+        else if (lit.has(k)) dot(ctx, x, y, 3, C.p1, 4);
+        else dot(ctx, x, y, 2.2, C.dim, 0);
+      });
+      term.caption = i < 5 ? "PAGES BY OTHER PEOPLE THAT LET YOU WATCH THE IDEAS RUN." : "EACH ONE POINTS BACK TO THE LINEAGE IDEAS IT COVERS.";
     },
   };
 };
