@@ -107,6 +107,7 @@
     <button type="button" data-cmd="LIST">LIST</button>
     <button type="button" data-cmd="ABOUT">ABOUT</button>
     <button type="button" data-cmd="HELP">HELP</button>
+    <a href="./" id="look-new">PHYSICS</a>
     <span class="links"><a href="https://github.com/pjerus" rel="me">GITHUB</a><a href="https://www.linkedin.com/in/patjerus/" rel="me">LINKEDIN</a></span>
   </nav>
   <p class="sr" id="keys-help">Type a command and press Enter: NEXT, PREV, OPEN, LIST, ABOUT or HELP. The same commands are buttons below the screen.</p>
@@ -124,6 +125,7 @@
   <p><a href="https://github.com/pjerus" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/patjerus/" rel="me">LinkedIn</a></p>
 </section>
 
+<script>document.getElementById("look-new").addEventListener("click", () => { try { localStorage.setItem("look", "new"); } catch (e) {} });</script>
 <script>
 /* ---------- the projects ---------- */
 const PROJECTS = [
