@@ -53,7 +53,7 @@
     html, body { margin: 0; background: var(--room); color: var(--p1); }
     body { font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 300; }
 
-    .console { height: 100dvh; display: grid; grid-template-rows: 1fr auto; gap: 10px; padding: clamp(8px, 2vw, 22px); max-width: 1240px; margin: 0 auto; }
+    .console { height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; gap: 10px; padding: clamp(8px, 2vw, 22px); max-width: 1240px; margin: 0 auto; }
     .tube { position: relative; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--glass); box-shadow: 0 0 0 1px #2a2722, 0 0 0 10px #171512, 0 0 0 11px #2a2722, 0 20px 60px rgba(0,0,0,0.7); cursor: text; }
     .tube.linked { cursor: pointer; }
     .tube.linked .prompt { cursor: text; }
@@ -67,6 +67,13 @@
     .prompt input { flex: 1; min-width: 0; font: inherit; color: var(--p1); background: transparent; border: 0; padding: 0; caret-color: var(--p1); text-transform: uppercase; text-shadow: inherit; }
     .prompt input:focus { outline: none; }
     .prompt input::placeholder { color: var(--p1-dim); opacity: 1; }
+
+    /* the switch between the two looks of the home page, as plain terminal text */
+    .look { display: flex; justify-content: flex-end; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; }
+    .look > * { padding: 2px 10px; text-decoration: none; color: var(--p1-dim); }
+    .look a:hover { color: var(--p1); }
+    .look a:focus-visible { outline: 2px solid var(--p1); outline-offset: 2px; color: var(--p1); }
+    .look [aria-current] { background: var(--p1-dim); color: var(--glass); }
 
     .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; }
     .keys button, .keys a { font: inherit; color: var(--p1-dim); background: transparent; border: 1px solid var(--p1-ghost); border-radius: 4px; padding: 2px 12px; min-height: 36px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
@@ -92,6 +99,7 @@
 </head>
 <body>
 <main class="console" aria-label="Pat Jerus, projects, shown as a 1983 computer terminal">
+  <nav class="look" aria-label="Choose a look"><a href="./" id="look-new">PHYSICS</a><span aria-current="true">TERMINAL</span></nav>
   <div class="tube" id="tube">
     <canvas id="screen" aria-hidden="true"></canvas>
     <form class="prompt" id="prompt" autocomplete="off">
@@ -107,10 +115,9 @@
     <button type="button" data-cmd="LIST">LIST</button>
     <button type="button" data-cmd="ABOUT">ABOUT</button>
     <button type="button" data-cmd="HELP">HELP</button>
-    <a href="./" id="look-new">PHYSICS</a>
     <span class="links"><a href="https://github.com/pjerus" rel="me">GITHUB</a><a href="https://www.linkedin.com/in/patjerus/" rel="me">LINKEDIN</a></span>
   </nav>
-  <p class="sr" id="keys-help">Type a command and press Enter: NEXT, PREV, OPEN, LIST, ABOUT or HELP. The same commands are buttons below the screen.</p>
+  <p class="sr" id="keys-help">Type a command and press Enter: NEXT, PREV, OPEN, LIST, ABOUT, PHYSICS or HELP. The same commands are buttons below the screen.</p>
   <p class="sr" id="said" aria-live="polite"></p>
 </main>
 
@@ -160,6 +167,7 @@ const HELP = [
   "              (OR PRESS ENTER)",
   "  LIST        LIST ALL GAMES",
   "  ABOUT       WHO BUILT THESE GAMES",
+  "  PHYSICS     SWITCH TO THE PHYSICS VIEW",
   "  <NAME>      RUN A GAME BY NAME",
   "",
   "ARROW KEYS ALSO STEP THROUGH THE GAMES.",
@@ -647,6 +655,7 @@ function command(raw) {
   if (c === "LIST" || c === "LIST GAMES" || c === "LS") return manual(gen => listGames(gen).then(() => { said.textContent = "Games: " + PROJECTS.map(p => p.name).join(", ") + "."; }));
   if (c === "ABOUT" || c === "WHOAMI") return manual(gen => show(ABOUT.flatMap(l => l ? wrap(l) : [""]), gen, "about"));
   if (c === "HELP" || c === "?") return manual(gen => show(HELP, gen, "help"));
+  if (c === "PHYSICS") return manual(gen => { term.hint = "LOADING THE PHYSICS VIEW ..."; return sleep(600, gen).then(() => document.getElementById("look-new").click()); });
   if (c === "GITHUB") return manual(gen => go("https://github.com/pjerus", gen));
   if (c === "LINKEDIN") return manual(gen => go("https://www.linkedin.com/in/patjerus/", gen));
   if (c === "GLOBAL THERMONUCLEAR WAR") return manual(gen => show(["WOULDN'T YOU PREFER A GOOD GAME OF CHESS?", "", "TYPE LIST FOR THE GAMES THIS TERMINAL CAN PLAY."], gen, "war"));
