@@ -1,706 +1,324 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pat Jerus — Projects</title>
-  <meta name="description" content="Pat Jerus builds agentic AI pipelines where a person signs off before anything ships — healthcare interoperability, plus automated news and market research. Featuring pa-fhir-poc, a governed policy-digitization pipeline demonstrated on Medicare LCDs and a commercial Cigna policy, ahead of CMS-0057-F's January 2027 deadline.">
-  <link rel="canonical" href="https://pjerus.github.io/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Pat Jerus — Projects">
-  <meta property="og:description" content="Agentic AI pipelines where a person signs off before anything ships — healthcare interoperability, plus automated news and market research.">
-  <meta property="og:url" content="https://pjerus.github.io/">
-  <meta name="theme-color" content="#0e0d0b">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Pat Jerus",
-    "url": "https://pjerus.github.io/",
-    "sameAs": [
-      "https://github.com/pjerus",
-      "https://www.linkedin.com/in/patjerus/"
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    "name": "pa-fhir-poc",
-    "codeRepository": "https://github.com/pjerus/pa-fhir-poc",
-    "programmingLanguage": "TypeScript",
-    "license": "https://opensource.org/license/mit",
-    "description": "Reference pipeline turning payer coverage-policy PDFs — Medicare LCDs and commercial policies — into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
-    "author": { "@type": "Person", "name": "Pat Jerus", "url": "https://pjerus.github.io/" }
-  }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;700&display=swap">
-  <script>document.documentElement.classList.add("js")</script>
-  <style>
-    :root {
-      --room: #0e0d0b;
-      --glass: #061008;
-      --p1: #3dff6a;
-      --p1-dim: #1f9e3c;
-      --p1-ghost: #0d3b19;
-      --fs: 22px;
-      --pad: 22px;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; background: var(--room); color: var(--p1); }
-    body { font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 300; }
+<meta charset="utf-8">
+<script>try { if (localStorage.getItem("look") === "terminal") location.replace("terminal.html"); } catch (e) {} // a visitor who chose the terminal goes straight there</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pat Jerus</title>
+<meta name="description" content="Pat Jerus works with data and AI in healthcare. Projects: Machine Learning Lineage, Machine Learning Explainers, pa-fhir-poc, fhir-zod-gen and Pantastic.">
+<link rel="canonical" href="https://pjerus.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pat Jerus">
+<meta property="og:description" content="Data and AI in healthcare by day; Thai food, travel, watercolors and good coffee the rest of the time.">
+<meta property="og:url" content="https://pjerus.github.io/">
+<meta name="theme-color" content="#060915">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pat Jerus",
+  "url": "https://pjerus.github.io/",
+  "sameAs": [
+    "https://github.com/pjerus",
+    "https://www.linkedin.com/in/patjerus/"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "pa-fhir-poc",
+  "codeRepository": "https://github.com/pjerus/pa-fhir-poc",
+  "programmingLanguage": "TypeScript",
+  "license": "https://opensource.org/license/mit",
+  "description": "Reference pipeline turning payer coverage-policy PDFs — Medicare LCDs and commercial policies — into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
+  "author": { "@type": "Person", "name": "Pat Jerus", "url": "https://pjerus.github.io/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #060915; --ink: #f3f5fb; --ink-2: #b9c1d6; --accent: #ffb65c; --line: rgba(255,255,255,0.16);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-snap-type: y proximity; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 18px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-    .console { height: 100dvh; display: grid; grid-template-rows: 1fr auto; gap: 10px; padding: clamp(8px, 2vw, 22px); max-width: 1240px; margin: 0 auto; }
-    .tube { position: relative; min-height: 0; border-radius: 22px; overflow: hidden; background: var(--glass); box-shadow: 0 0 0 1px #2a2722, 0 0 0 10px #171512, 0 0 0 11px #2a2722, 0 20px 60px rgba(0,0,0,0.7); cursor: text; }
-    .tube.linked { cursor: pointer; }
-    .tube.linked .prompt { cursor: text; }
-    .tube canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    /* scanlines and the tube's darker edges */
-    .tube::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; background: repeating-linear-gradient(180deg, transparent 0 2px, rgba(0,0,0,0.22) 2px 3px); }
-    .tube::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; border-radius: inherit; background: radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.55) 100%); }
+/* the picture: one canvas behind everything. If it can't be drawn, the page is the same words on the plain background */
+#stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
 
-    .prompt { position: absolute; z-index: 3; left: var(--pad); right: var(--pad); bottom: calc(var(--pad) * 0.6); display: flex; gap: 0.5ch; align-items: baseline; font-size: var(--fs); font-weight: 500; text-shadow: 0 0 6px rgba(61,255,106,0.55); }
-    .prompt label { color: var(--p1); }
-    .prompt input { flex: 1; min-width: 0; font: inherit; color: var(--p1); background: transparent; border: 0; padding: 0; caret-color: var(--p1); text-transform: uppercase; text-shadow: inherit; }
-    .prompt input:focus { outline: none; }
-    .prompt input::placeholder { color: var(--p1-dim); opacity: 1; }
+.top { position: fixed; z-index: 5; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px clamp(20px, 7vw, 96px); }
+.top .me { font: 600 17px var(--display); text-decoration: none; }
+.view { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(8px); font-size: 14px; }
+.view > * { padding: 6px 14px; border-radius: 999px; text-decoration: none; color: var(--ink-2); }
+.view [aria-current] { background: var(--ink); color: var(--bg); font-weight: 600; }
 
-    .keys { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; }
-    .keys button, .keys a { font: inherit; color: var(--p1-dim); background: transparent; border: 1px solid var(--p1-ghost); border-radius: 4px; padding: 2px 12px; min-height: 36px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
-    .keys button:hover, .keys a:hover { color: var(--p1); border-color: var(--p1-dim); }
-    .keys button:focus-visible, .keys a:focus-visible { outline: 2px solid var(--p1); outline-offset: 2px; color: var(--p1); }
-    .keys .status { color: var(--p1-dim); margin-left: auto; padding: 0 4px; }
-    .keys .links { display: flex; gap: 10px; }
+main { position: relative; z-index: 2; }
+.panel { min-height: 100svh; scroll-snap-align: start; display: flex; align-items: center; padding: 96px clamp(20px, 7vw, 96px); }
+.panel > div { max-width: min(62rem, 100%); }
+h1, h2 { font-family: var(--display); font-weight: 700; margin: 0 0 0.35em; line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
+h1 { font-size: clamp(3.4rem, 12vw, 9.5rem); }
+h2 { font-size: clamp(2.6rem, 9vw, 7.2rem); }
+h2.long { font-size: clamp(2rem, 5.4vw, 4.4rem); } /* a title that is a whole phrase */
+.panel p { margin: 0 0 1em; color: var(--ink-2); max-width: 46ch; font-size: clamp(1.1rem, 2vw, 1.7rem); }
+.panel p.lead { color: var(--ink); }
+.go { display: inline-block; margin-top: 0.4em; padding: 14px 28px; border-radius: 999px; background: var(--accent); color: #0a0a12; font-weight: 600; font-size: clamp(1rem, 1.5vw, 1.25rem); text-decoration: none; }
+.go:hover { filter: brightness(1.08); }
+.panel p.soon { color: var(--ink-2); font-size: 1rem; border-left: 2px solid var(--accent); padding-left: 12px; }
+blockquote { margin: 0 0 1em; padding-left: 14px; border-left: 2px solid var(--line); color: var(--ink-2); font-size: clamp(1.05rem, 1.6vw, 1.35rem); max-width: 50ch; }
+.links a { margin-right: 18px; font-weight: 600; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+:is(h1, h2, .panel p, blockquote) { text-shadow: 0 0 5px var(--bg), 0 0 22px var(--bg); } /* a soft dark halo keeps each letter clear of the picture */
 
-    /* the plain version: read by search engines and screen readers, shown when scripts are off */
-    .plain { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; font-size: 16px; line-height: 1.6; }
-    .plain h1, .plain h2 { font-weight: 700; }
-    .plain a { color: var(--p1); }
-    .plain blockquote { margin: 1rem 0; color: var(--p1-dim); }
-    .js .plain, .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-    html:not(.js) .console { display: none; }
-
-    @media (max-width: 600px) {
-      .keys { font-size: 13px; gap: 6px; }
-      .keys button, .keys a { padding: 2px 9px; }
-      .keys .status { width: 100%; order: -1; margin: 0; }
-    }
-  </style>
+@media (max-width: 859px) {
+  .panel { align-items: flex-end; padding-bottom: 92px; }
+}
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
 </head>
 <body>
-<main class="console" aria-label="Pat Jerus, projects, shown as a 1983 computer terminal">
-  <div class="tube" id="tube">
-    <canvas id="screen" aria-hidden="true"></canvas>
-    <form class="prompt" id="prompt" autocomplete="off">
-      <label for="cmd">&gt;</label>
-      <input id="cmd" name="cmd" type="text" spellcheck="false" autocapitalize="characters" enterkeyhint="go" placeholder="TYPE HELP" aria-describedby="keys-help">
-    </form>
-  </div>
-  <nav class="keys" aria-label="Terminal controls">
-    <span class="status" id="status" aria-hidden="true"></span>
-    <button type="button" data-cmd="PREV">PREV</button>
-    <button type="button" data-cmd="NEXT">NEXT</button>
-    <button type="button" data-cmd="OPEN">OPEN</button>
-    <button type="button" data-cmd="LIST">LIST</button>
-    <button type="button" data-cmd="ABOUT">ABOUT</button>
-    <button type="button" data-cmd="HELP">HELP</button>
-    <span class="links"><a href="https://github.com/pjerus" rel="me">GITHUB</a><a href="https://www.linkedin.com/in/patjerus/" rel="me">LINKEDIN</a></span>
-  </nav>
-  <p class="sr" id="keys-help">Type a command and press Enter: NEXT, PREV, OPEN, LIST, ABOUT or HELP. The same commands are buttons below the screen.</p>
-  <p class="sr" id="said" aria-live="polite"></p>
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="me" href="#top">Pat Jerus</a>
+  <nav class="view" aria-label="Choose a look"><span aria-current="true">Physics</span><a href="terminal.html" id="look-terminal">Terminal</a></nav>
+</header>
+
+<main id="top">
+  <section class="panel"><div>
+    <h1>Pat Jerus</h1>
+    <p class="lead">I spend my days working with data and AI in healthcare, and the rest on cooking Thai food, traveling, watercolors and good coffee.</p>
+    <p>Scroll for the projects.</p>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Machine Learning Lineage</h2>
+    <p>A collection of concepts around AI in a timeline, from Bayes in 1763 to coding agents in 2025.</p>
+    <a class="go" href="ml-lineage/">Open the Lineage</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Machine Learning Explainers</h2>
+    <p>Ten pages by other people that show how the Lineage's ideas work, each tied to the ideas it covers.</p>
+    <a class="go" href="ml-explainers/">Browse the explainers</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2 class="long">Proof of Concept for Automating Ontologies about Prior-Auths</h2>
+    <p>Payer coverage policies into FHIR. A local model reads them; a named person signs off before anything ships.</p>
+    <a class="go" href="https://github.com/pjerus/pa-fhir-poc">View pa-fhir-poc on GitHub</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2 class="long">Generating Data Validators from Healthcare Standards</h2>
+    <p>Zod schemas generated from the FHIR Implementation Guide you have to conform to. Validation becomes a plain import.</p>
+    <a class="go" href="https://github.com/pjerus/fhir-zod-gen">View fhir-zod-gen on GitHub</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Pantastic</h2>
+    <p>A companion for watercolor painters: finding the right complements for the pans in your palette.</p>
+    <p class="soon">The source isn't published yet.</p>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>About</h2>
+    <p>Off the clock I paint coastal landscapes in watercolor, cook a lot of Thai food, and plan trips around good coffee.</p>
+    <blockquote>“Computers are useless. They can only give you answers.” Attributed to Pablo Picasso</blockquote>
+    <p class="links"><a href="https://github.com/pjerus">GitHub</a><a href="https://www.linkedin.com/in/patjerus/">LinkedIn</a></p>
+  </div></section>
+</main>
 </main>
 
-<section class="plain" id="plain">
-  <h1>Pat Jerus</h1>
-  <p>I'm currently working on agentic automation focused on healthcare interoperability — turning payer coverage policies into FHIR with a person signing off before anything ships. Other projects automate news and market research.</p>
-  <p>Off the clock I paint coastal landscapes in watercolor, cook a lot of Thai food, and plan trips around good coffee. Lately I've been reading everything I can find on helium production and self-driving materials labs.</p>
-  <blockquote><p>“Computers are useless. They can only give you answers.” — attributed to Pablo Picasso</p></blockquote>
-  <blockquote><p>“The truth is rarely pure and never simple.” — Oscar Wilde, <cite>The Importance of Being Earnest</cite></p></blockquote>
-  <h2>Projects</h2>
-  <ul id="plain-list"></ul>
-  <p><a href="https://github.com/pjerus" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/patjerus/" rel="me">LinkedIn</a></p>
-</section>
+<script>document.getElementById("look-terminal").addEventListener("click", () => { try { localStorage.setItem("look", "terminal"); } catch (e) {} });</script>
+<script type="module">
+import * as THREE from "three";
 
-<script>
-/* ---------- the projects ---------- */
-const PROJECTS = [
-  { key: "ML-LINEAGE", name: "Machine Learning Lineage", href: "ml-lineage/", host: "PJERUS.GITHUB.IO/ML-LINEAGE",
-    line: "123 ideas from Bayes (1763) to coding agents (2025), and what each one built on.", scene: "lineage", secs: 15 },
-  { key: "ML-EXPLAINERS", name: "Machine Learning Explainers", href: "ml-explainers/", host: "PJERUS.GITHUB.IO/ML-EXPLAINERS",
-    line: "Ten pages by other people that show how the Lineage's ideas work, each tied to the ideas it covers.", scene: "explainers", secs: 18 },
-  { key: "PA-FHIR-POC", name: "pa-fhir-poc", href: "https://github.com/pjerus/pa-fhir-poc", host: "GITHUB.COM/PJERUS/PA-FHIR-POC",
-    line: "Payer coverage policies into FHIR. A local model reads them; a named person signs off before anything ships.", scene: "policy", secs: 14 },
-  { key: "FHIR-ZOD-GEN", name: "fhir-zod-gen", href: "https://github.com/pjerus/fhir-zod-gen", host: "GITHUB.COM/PJERUS/FHIR-ZOD-GEN",
-    line: "Zod schemas generated from the FHIR Implementation Guide you have to conform to. Validation becomes a plain import.", scene: "zod", secs: 13 },
-  { key: "PANTASTIC", name: "Pantastic", href: null,
-    line: "A companion for watercolor painters: finding the right complements for the pans in your palette.", scene: "paint", secs: 11 },
-];
-const ABOUT = [
-  "PAT JERUS",
-  "",
-  "I'M CURRENTLY WORKING ON AGENTIC AUTOMATION FOCUSED ON HEALTHCARE INTEROPERABILITY: TURNING PAYER COVERAGE POLICIES INTO FHIR WITH A PERSON SIGNING OFF BEFORE ANYTHING SHIPS. OTHER PROJECTS AUTOMATE NEWS AND MARKET RESEARCH.",
-  "",
-  "OFF THE CLOCK I PAINT COASTAL LANDSCAPES IN WATERCOLOR, COOK A LOT OF THAI FOOD, AND PLAN TRIPS AROUND GOOD COFFEE.",
-  "",
-  "\"COMPUTERS ARE USELESS. THEY CAN ONLY GIVE YOU ANSWERS.\" (ATTRIBUTED TO PICASSO)",
-  "\"THE TRUTH IS RARELY PURE AND NEVER SIMPLE.\" (OSCAR WILDE)",
-  "",
-  "TYPE GITHUB OR LINKEDIN, OR USE THE LINKS BELOW THE SCREEN.",
-];
-const HELP = [
-  "COMMANDS",
-  "  NEXT, N     RUN THE NEXT GAME",
-  "  PREV, P     RUN THE PREVIOUS GAME",
-  "  OPEN        OPEN THIS GAME'S PAGE",
-  "              (OR PRESS ENTER)",
-  "  LIST        LIST ALL GAMES",
-  "  ABOUT       WHO BUILT THESE GAMES",
-  "  <NAME>      RUN A GAME BY NAME",
-  "",
-  "ARROW KEYS ALSO STEP THROUGH THE GAMES.",
-  "THE SHOW RESUMES AFTER 30 SECONDS.",
-];
-// Machine Learning Lineage: [label, year, lane (0 foundations … 5 agents), parent indexes]
-const LINEAGE = [["Bayes' theorem",1763,0,[]],["Least squares",1805,0,[]],["PCA",1901,0,[1]],["Markov chains",1906,0,[]],["Maximum likelihood",1922,0,[1]],["LDA",1936,0,[]],["Information theory",1948,0,[3]],["Turing test",1950,0,[]],["SGD",1951,0,[]],["k-NN",1951,0,[]],["Bradley–Terry",1952,0,[4]],["Dartmouth workshop",1956,0,[]],["k-means clustering",1957,0,[]],["HMMs",1966,0,[3]],["VC theory",1968,0,[]],["EM algorithm",1977,0,[4]],["PAC learning",1984,0,[]],["Decision trees",1984,0,[6]],["Bayesian networks",1985,0,[0]],["SVMs",1992,0,[14,103]],["AdaBoost",1995,0,[16]],["Bagging",1994,0,[17,104]],["Gradient boosting",1999,0,[20,17]],["Random forests",1995,0,[21,17]],["XGBoost",2016,0,[22]],["McCulloch–Pitts neuron",1943,1,[]],["Hebbian learning",1949,1,[]],["Perceptron",1958,1,[25]],["ADALINE",1960,1,[27,1]],["Perceptrons (book)",1969,1,[27]],["Neocognitron",1979,1,[]],["Hopfield network",1982,1,[26]],["Boltzmann machine",1985,1,[31]],["Backpropagation",1986,1,[28]],["Universal approximation",1989,1,[33]],["CNNs (LeNet)",1989,1,[30,33]],["Mixture of experts",1991,1,[15]],["Vanishing gradients",1991,1,[33]],["Deep belief nets",2006,1,[32]],["ImageNet",2009,1,[]],["Dropout",2012,1,[33]],["AlexNet",2012,1,[35,39,40]],["VAEs",2013,1,[33]],["Adam",2014,1,[8]],["GANs",2014,1,[33]],["ResNet",2015,1,[35]],["NCE → InfoNCE",2010,1,[]],["Diffusion models",2020,1,[]],["ViT",2020,1,[77]],["CLIP",2021,1,[46,77,48]],["Law of effect",1898,2,[]],["Bellman equation",1957,2,[]],["MDPs",1957,2,[3,51]],["Samuel's checkers",1959,2,[]],["Policy iteration",1960,2,[52]],["MENACE",1961,2,[50]],["Actor-critic",1983,2,[]],["TD learning",1988,2,[56,51]],["Q-learning",1989,2,[57,51]],["TD-Gammon",1992,2,[57,33]],["REINFORCE",1992,2,[]],["Policy gradient theorem",1999,2,[60,56]],["MCTS",2006,2,[98]],["DQN",2013,2,[58,35]],["TRPO",2015,2,[61]],["AlphaGo",2015,2,[62,61]],["A3C",2016,2,[56]],["PPO",2017,2,[64]],["AlphaZero",2017,2,[65]],["IBM speech recognition",1976,3,[6,13]],["Recurrent nets",1986,3,[33]],["LSTM",1997,3,[70,37]],["Neural language model",2003,3,[69,33]],["word2vec",2013,3,[72,46]],["Seq2seq",2014,3,[71]],["Attention",2014,3,[74,70]],["Sparse MoE",2017,3,[36]],["Transformer",2017,3,[75,45,74]],["GPT (generative pre-training)",2018,3,[77,72]],["BERT",2018,3,[77]],["Scaling laws",2020,3,[78]],["GPT-3",2020,3,[78,80]],["RAG",2020,3,[79,74]],["State-space models",2021,3,[70]],["Chain of thought",2022,3,[81]],["ChatGPT",2022,3,[90,81]],["LLaMA",2023,3,[81,80]],["RLHF",2017,2,[10,64,66]],["Instruction tuning",2021,4,[81]],["LoRA",2021,4,[81]],["InstructGPT",2022,4,[87,67,81]],["Constitutional AI",2022,4,[87]],["DPO",2023,4,[87,10]],["GRPO",2024,2,[67]],["Reasoning models",2024,4,[93,84,67]],["Lenz–Ising model",1925,0,[]],["Minimax theorem",1928,0,[]],["Tikhonov regularisation",1963,0,[1]],["Monte Carlo method",1946,0,[]],["Gaussian processes",1951,0,[]],["MCMC (Metropolis)",1953,0,[98,3]],["Logistic regression",1958,0,[4]],["Kalman filter",1960,0,[1]],["Kernel methods",1964,0,[]],["Bootstrap",1979,0,[]],["Score matching",2005,0,[4]],["Turing's unorganised machines",1948,1,[]],["Ivakhnenko's deep networks",1965,1,[]],["Amari's deep SGD",1967,1,[8,27]],["BPE tokenisation",2015,3,[]],["MuZero",2019,2,[68]],["AlphaFold 2",2020,1,[]],["RoPE",2021,3,[77]],["FlashAttention",2022,3,[75]],["Mixtral",2024,3,[76]],["DeepSeek-V2/V3",2024,3,[76]],["Arcade Learning Env.",2012,5,[]],["OpenAI Gym",2016,5,[116]],["ReAct",2022,5,[84]],["Tool use",2023,5,[81]],["SWE-agent",2024,5,[118]],["MCP",2024,5,[119]],["Coding agents",2025,5,[]]];
-
-/* ---------- the plain list ---------- */
-for (const p of PROJECTS) {
-  const li = document.createElement("li");
-  if (p.href) { const a = document.createElement("a"); a.href = p.href; a.textContent = p.name; li.append(a); }
-  else li.append(p.name + " (source coming soon)");
-  li.append(": " + p.line);
-  document.getElementById("plain-list").append(li);
-}
-
-/* ---------- screen ---------- */
-const $ = s => document.querySelector(s);
-const tube = $("#tube"), cv = $("#screen"), ctx = cv.getContext("2d");
-const glow = document.createElement("canvas"), g = glow.getContext("2d"); // the phosphor layer: it fades rather than clears
-const C = { glass: "#061008", p1: "#3dff6a", dim: "#1f9e3c", ghost: "#0d3b19", hi: "#c4ffd2", halo: "rgba(61,255,106,0.55)" };
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-let W = 0, H = 0, DPR = 1, FS = 22, CW = 11, LH = 23, PAD = 22, COLS = 80, ROWS = 30, RATIO = 0.5;
+const canvas = document.getElementById("stage");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+renderer.setClearColor(getComputedStyle(document.body).backgroundColor);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.z = 16;
+const rig = new THREE.Group(); scene.add(rig);
+const panels = [...document.querySelectorAll(".panel")];
+const pointer = { x: 0, y: 0, moved: false };
+addEventListener("pointermove", e => { pointer.moved = true; pointer.x = (e.clientX / innerWidth) * 2 - 1; pointer.y = -((e.clientY / innerHeight) * 2 - 1); });
 
-function metrics() {
-  const r = tube.getBoundingClientRect();
-  DPR = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
-  for (const c of [cv, glow]) { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); }
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0); g.setTransform(DPR, 0, 0, DPR, 0, 0);
-  PAD = W < 600 ? 14 : 24;
-  const target = W < 600 ? 42 : 84;
-  FS = Math.max(12, Math.min(22, Math.floor((W - 2 * PAD) / (target * RATIO))));
-  CW = FS * RATIO; LH = Math.round(FS * 1.45);
-  COLS = Math.floor((W - 2 * PAD) / CW);
-  ROWS = Math.floor((H - 2 * PAD - LH * 1.4) / LH); // the last line belongs to the prompt
-  document.documentElement.style.setProperty("--fs", FS + "px");
-  document.documentElement.style.setProperty("--pad", PAD + "px");
-  g.fillStyle = C.glass; g.fillRect(0, 0, W, H);
-}
-const rowY = r => PAD + r * LH;
-const capRows = () => (COLS < 60 ? 2 : 1);
-function wrap(s, cols = COLS) {
-  const out = [];
-  for (const para of String(s).split("\n")) {
-    if (para.length <= cols) { out.push(para); continue; }
-    let line = "";
-    for (const w of para.split(" ")) {
-      if (line && (line + " " + w).length > cols) { out.push(line); line = w; }
-      else line = line ? line + " " + w : w;
-    }
-    out.push(line);
-  }
-  return out;
-}
-function put(s, x, y, style = "n") {
-  // x, y in px (y = top of the line); styles: n normal, dim, hi bright, inv inverse
-  s = String(s);
-  const weight = { h: 700, hi: 500, inv: 500 }[style] || 300;
-  ctx.font = `${weight} ${FS}px "IBM Plex Mono", monospace`; ctx.textBaseline = "top";
-  if (style === "inv") {
-    ctx.shadowBlur = 8; ctx.shadowColor = C.halo; ctx.fillStyle = C.p1;
-    ctx.fillRect(x - 2, y, s.length * CW + 4, LH);
-    ctx.shadowBlur = 0; ctx.fillStyle = C.glass; ctx.fillText(s, x, y + (LH - FS) / 2);
-    return;
-  }
-  ctx.fillStyle = style === "dim" ? C.dim : style === "hi" ? C.hi : C.p1;
-  ctx.shadowColor = C.halo; ctx.shadowBlur = style === "h" ? 10 : style === "dim" ? 0 : 3;
-  ctx.fillText(s, x, y + (LH - FS) / 2);
-  ctx.shadowBlur = 0;
-}
-const putRow = (s, col, row, style) => put(String(s).slice(0, Math.max(0, COLS - col)), PAD + col * CW, rowY(row), style);
+const rng = seed => () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const hex = h => { const c = new THREE.Color(h); return [c.r, c.g, c.b]; };
+// DIM: the picture sits back behind the words. Each point is faint, and where many overlap they still add up to light
+const DIM = 0.5;
+const SPRITE = `float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d) * ${DIM}; if (a < 0.005) discard;`;
 
-/* ---------- terminal text ---------- */
-const term = { lines: [], cursor: true, caption: "", hint: "" };
-class Stop extends Error {}
-let run = 0; // bumping it stops whatever script is running
-const check = gen => { if (gen !== run) throw new Stop(); };
-const sleep = (ms, gen) => new Promise((res, rej) => setTimeout(() => (gen !== run ? rej(new Stop()) : res()), RM ? 0 : ms));
-function clearScreen() { term.lines = []; term.caption = ""; term.hint = ""; scene = null; tube.classList.remove("linked"); g.fillStyle = C.glass; g.fillRect(0, 0, W, H); }
-function print(s, style) { for (const l of wrap(s)) term.lines.push({ t: l, shown: l.length, style }); }
-async function type(s, gen, { style, speed = 26, human = false } = {}) {
-  const parts = wrap(s);
-  for (const t of parts) {
-    const line = { t, shown: 0, style }; term.lines.push(line);
-    if (RM) { line.shown = t.length; continue; }
-    while (line.shown < t.length) {
-      check(gen); line.shown++;
-      await sleep(human ? speed * (1.4 + Math.random() * 2.2) : speed, gen);
-    }
-  }
+let pxScale = 1;
+function layout() {
+  const w = innerWidth, h = innerHeight, dpr = Math.min(2, devicePixelRatio || 1);
+  renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  const halfH = 16 * Math.tan(THREE.MathUtils.degToRad(22.5));
+  rig.scale.setScalar(Math.max(halfH * camera.aspect, halfH) / 5 * 1.05); // fills the whole background
+  pxScale = h * dpr * 0.5;
 }
-function drawTerm(now) {
-  const maxRows = scene ? scene.headRows : ROWS - 1;
-  const vis = term.lines.slice(-maxRows);
-  vis.forEach((l, i) => putRow(l.t.slice(0, l.shown), 0, i, l.style));
-  const blink = RM || Math.floor(now / 530) % 2 === 0;
-  if (term.cursor && blink && !scene) {
-    const last = vis[vis.length - 1], col = last ? Math.min(last.shown, COLS - 1) : 0, row = Math.max(0, vis.length - 1);
-    ctx.shadowBlur = 8; ctx.shadowColor = C.halo; ctx.fillStyle = C.p1;
-    ctx.fillRect(PAD + col * CW + (last && last.shown ? CW * 0.25 : 0), rowY(row) + LH * 0.12, CW * 0.9, LH * 0.8);
-    ctx.shadowBlur = 0;
-  }
-  if (term.caption) { const cap = wrap(term.caption).slice(0, capRows()); cap.forEach((l, i) => putRow(l, 0, ROWS - 1 - cap.length + i, "hi")); }
-  if (term.hint) putRow(term.hint, 0, ROWS - 1, "dim");
+// which panel is on screen, and how far through it the page has scrolled
+function where() {
+  const y = scrollY; let i = 0;
+  for (let k = 0; k < panels.length; k++) if (panels[k].offsetTop <= y + 1) i = k;
+  return [i, Math.min(1, Math.max(0, (y - panels[i].offsetTop) / panels[i].offsetHeight))];
 }
 
-/* ---------- scenes: each draws from the seconds since it started, so a still frame is just a late moment ---------- */
-let scene = null;
-function body() {
-  // the area between a project's header lines and its caption
-  const top = rowY(scene.headRows) + LH * 0.5, bottom = rowY(ROWS - 1 - capRows()) - LH * 0.3;
-  return { x: PAD, y: top, w: W - 2 * PAD, h: Math.max(40, bottom - top) };
-}
-const ease = t => (t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t));
-const clamp01 = t => Math.max(0, Math.min(1, t));
-function dot(c, x, y, r, color, blur = 8) { c.shadowBlur = blur; c.shadowColor = color; c.fillStyle = color; c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill(); c.shadowBlur = 0; }
-
-const SCENES = {};
-
-// Machine Learning Lineage: every link flies in like a track on the big board
-SCENES.lineage = () => {
-  const STOPS = [[1755, 0], [1900, 0.05], [1940, 0.105], [1960, 0.225], [1980, 0.345], [2000, 0.49], [2010, 0.61], [2020, 0.87], [2026, 1]];
-  const frac = y => { for (let i = 1; i < STOPS.length; i++) { const [y0, f0] = STOPS[i - 1], [y1, f1] = STOPS[i]; if (y <= y1) return f0 + (f1 - f0) * (y - y0) / (y1 - y0); } return 1; };
-  const yearAt = f => { for (let i = 1; i < STOPS.length; i++) { const [y0, f0] = STOPS[i - 1], [y1, f1] = STOPS[i]; if (f <= f1) return Math.round(y0 + (y1 - y0) * (f - f0) / (f1 - f0)); } return 2026; };
-  const T = 12, FLY = 1.1, LANES = ["FOUND", "NEURAL", "RL", "LANG", "ALIGN", "AGENTS"];
-  const arcs = [];
-  LINEAGE.forEach((n, i) => n[3].forEach(p => arcs.push({ from: p, to: i, t: Math.max(0.2, T * frac(n[1]) - FLY * 0.6) })));
-  arcs.sort((a, b) => a.t - b.t);
-  const pos = (i, B) => {
-    const n = LINEAGE[i], lab = 7 * CW, band = B.h / 6;
-    const jitter = (((i * 7919) % 5) - 2) * band * 0.14;
-    return [B.x + lab + frac(n[1]) * (B.w - lab - 6), B.y + (5 - n[2] + 0.5) * band + jitter];
-  };
-  return {
-    headRows: 3, secs: 14.5,
-    gfx(e, B) {
-      for (const a of arcs) {
-        const k = (e - a.t) / FLY;
-        if (k < 0 || k > 1.15) continue;
-        const [x1, y1] = pos(a.from, B), [x2, y2] = pos(a.to, B);
-        const lift = Math.min(B.h * 0.45, 18 + Math.hypot(x2 - x1, y2 - y1) * 0.35);
-        const cx = (x1 + x2) / 2, cy = Math.min(y1, y2) - lift, u = Math.min(1, k);
-        const x = (1 - u) ** 2 * x1 + 2 * (1 - u) * u * cx + u * u * x2, y = (1 - u) ** 2 * y1 + 2 * (1 - u) * u * cy + u * u * y2;
-        if (k <= 1) dot(g, x, y, 1.8, C.p1, 10);
-        if (k > 1) { g.strokeStyle = C.p1; g.lineWidth = 1.2; g.beginPath(); g.arc(x2, y2, 3 + (k - 1) * 70, 0, Math.PI * 2); g.stroke(); } // impact ring
-      }
-    },
-    text(e, B) {
-      const band = B.h / 6;
-      LANES.forEach((l, i) => put(l, B.x, B.y + (5 - i + 0.5) * band - LH / 2, "dim"));
-      // the ideas that exist so far, and the links that have landed
-      ctx.strokeStyle = C.ghost; ctx.lineWidth = 1;
-      for (const a of arcs) if (e > a.t + FLY) {
-        const [x1, y1] = pos(a.from, B), [x2, y2] = pos(a.to, B);
-        const lift = Math.min(B.h * 0.45, 18 + Math.hypot(x2 - x1, y2 - y1) * 0.35);
-        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo((x1 + x2) / 2, Math.min(y1, y2) - lift, x2, y2); ctx.stroke();
-      }
-      LINEAGE.forEach((n, i) => { if (e >= T * frac(n[1]) - 0.1) { const [x, y] = pos(i, B); dot(ctx, x, y, 2.2, C.dim, 0); } });
-      const f = clamp01(e / T), year = yearAt(f);
-      let last = null; for (const a of arcs) if (e > a.t + FLY) last = a;
-      term.caption = `YEAR ${year}` + (last ? `   ${LINEAGE[last.to][0].toUpperCase()} (${LINEAGE[last.to][1]}) FROM ${LINEAGE[last.from][0].toUpperCase()}` : "");
-    },
-  };
-};
-
-// Machine Learning Explainers: each page in turn sends a pulse to the Lineage ideas it covers
-SCENES.explainers = () => {
-  // [label, year, level above the time axis]
-  const IDEAS = [["PERCEPTRON", 1958, 0], ["BACKPROPAGATION", 1986, 0], ["SGD", 1951, 1], ["ATTENTION", 2014, 1], ["TRANSFORMER", 2017, 1], ["GPT", 2018, 0], ["SEQ2SEQ", 2014, 2], ["DEEPSEEK-V2/V3", 2024, 1], ["STATE-SPACE MODELS", 2021, 1], ["MIXTURE OF EXPERTS", 1991, 1], ["SPARSE MOE", 2017, 2], ["MIXTRAL", 2024, 2], ["BPE TOKENISATION", 2015, 0], ["TOWARDS MONOSEMANTICITY", 2023, 0], ["WORD2VEC", 2013, 0]];
-  // [page, who made it, indexes into IDEAS]
-  const PAGES = [
-    ["A NEURAL NETWORK PLAYGROUND", "DANIEL SMILKOV AND SHAN CARTER", [0, 1, 2]],
-    ["3BLUE1BROWN", "GRANT SANDERSON", [1, 2, 3, 4]],
-    ["TRANSFORMER EXPLAINER", "POLO CLUB, GEORGIA TECH", [4, 3, 5]],
-    ["LLM VISUALIZATION", "BRENDAN BYCROFT", [4, 5]],
-    ["THE ILLUSTRATED TRANSFORMER", "JAY ALAMMAR", [4, 3, 6]],
-    ["A VISUAL GUIDE TO ATTENTION VARIANTS", "SEBASTIAN RASCHKA", [3, 7, 8]],
-    ["A VISUAL GUIDE TO MIXTURE OF EXPERTS", "MAARTEN GROOTENDORST", [9, 10, 11]],
-    ["LLM INFERENCE HANDBOOK", "MODULAR", [12, 4]],
-    ["NEURONPEDIA", "NEURONPEDIA", [13]],
-    ["EMBEDDING ATLAS", "APPLE", [14]],
+/* ================= The collision: seeded tracks and the detector around them ================= */
+function colliderKit() {
+  const AMBER = "#ffb65c", CYAN = "#5ad8ff", ROSE = "#ff6aa8", MINT = "#7dffb8", WHITE = "#e8eeff";
+  // jets: the directions the spray clusters around; n: how many tracks
+  const EVENTS = [
+    { n: 150, jets: [0.6, 3.6], pal: [AMBER, CYAN, WHITE] },
+    { n: 230, jets: [0.3, 2.2, 4.3], pal: [CYAN, AMBER, ROSE, MINT] },
+    { n: 150, jets: [0, 0.63, 1.26, 1.88, 2.51, 3.14, 3.77, 4.4, 5.03, 5.65], pal: [MINT, CYAN] },
+    { n: 140, jets: [1.0, 4.14], pal: [CYAN, AMBER] },
+    { n: 170, jets: [0.5, 2.6, 4.7], pal: [MINT, AMBER, WHITE] },
+    { n: 130, jets: [0, Math.PI], pal: ["#4d6dff", "#e0763e", "#b4aca4"] },
+    { n: 90, jets: [], pal: [WHITE, AMBER] },
   ];
-  const STEP = 1.7, FLY = 0.55, launch = j => 0.35 + j * 0.14;
-  const frac = y => (y <= 2010 ? 0.3 * (y - 1950) / 60 : 0.3 + 0.7 * (y - 2010) / 16); // most of these ideas are recent, so the last years get the room
-  const geo = B => {
-    const axis = B.y + B.h - LH * 1.3, listTop = B.y + LH * 3.7;
-    const gap = Math.max(7, Math.min(LH * 2.2, (axis - listTop - LH * 4.4) / 3));
-    return { axis, listTop, at: k => [B.x + 8 + frac(IDEAS[k][1]) * (B.w - 16), axis - (IDEAS[k][2] + 1) * gap], from: j => [B.x + CW * 0.5, listTop + j * LH + LH / 2] };
-  };
-  const curve = ([x1, y1], [x2, y2]) => [(x1 + x2) / 2 + (y2 - y1) * 0.25, (y1 + y2) / 2 - (x2 - x1) * 0.12];
-  const now = e => { const i = Math.max(0, Math.min(PAGES.length - 1, Math.floor(e / STEP))); return [i, e - i * STEP]; };
-  return {
-    headRows: 3, secs: 17.8,
-    gfx(e, B) {
-      const [i, le] = now(e), G = geo(B);
-      PAGES[i][2].forEach((k, j) => {
-        const u = (le - launch(j)) / FLY;
-        if (u < 0 || u > 1.15) return;
-        const a = G.from(j), b = G.at(k), [cx, cy] = curve(a, b), t = Math.min(1, u);
-        if (u <= 1) dot(g, (1 - t) ** 2 * a[0] + 2 * (1 - t) * t * cx + t * t * b[0], (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * cy + t * t * b[1], 1.8, C.p1, 10);
-        else { g.strokeStyle = C.p1; g.lineWidth = 1.2; g.beginPath(); g.arc(b[0], b[1], 3 + (u - 1) * 70, 0, Math.PI * 2); g.stroke(); } // impact ring
-      });
-    },
-    text(e, B) {
-      const [i, le] = now(e), G = geo(B), [name, by, ideas] = PAGES[i], cols = Math.floor(B.w / CW);
-      // one tile per page: lit once it has had its turn
-      const s = Math.round(LH * 0.5);
-      PAGES.forEach((_, n) => { ctx.fillStyle = n < i ? C.dim : n === i ? C.p1 : C.ghost; ctx.fillRect(B.x + n * s * 1.6, B.y + (LH - s) / 2, s, s); });
-      put(`${i + 1}/${PAGES.length}`, B.x + PAGES.length * s * 1.6 + CW, B.y, "dim");
-      put(name.slice(0, RM ? cols : Math.min(cols, Math.floor(le * 90))), B.x, B.y + LH * 1.3, "hi");
-      if (le > 0.2) put(by.slice(0, cols), B.x, B.y + LH * 2.3, "dim");
-      // the time axis and every idea on it; the ones a page has reached stay lit
-      ctx.strokeStyle = C.ghost; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(B.x, G.axis); ctx.lineTo(B.x + B.w, G.axis); ctx.stroke();
-      for (const y of [1950, 1990, 2010, 2026]) { const x = B.x + 8 + frac(y) * (B.w - 16); put(y, Math.max(B.x, Math.min(x - 2 * CW, B.x + B.w - 4 * CW)), G.axis + 3, "dim"); }
-      const landed = j => le > launch(j) + FLY, lit = new Set(PAGES.slice(0, i).flatMap(p => p[2]));
-      ideas.forEach((k, j) => {
-        if (!landed(j)) return;
-        const a = G.from(j), b = G.at(k), [cx, cy] = curve(a, b);
-        ctx.strokeStyle = C.dim; ctx.beginPath(); ctx.moveTo(...a); ctx.quadraticCurveTo(cx, cy, ...b); ctx.stroke();
-        put(`> ${IDEAS[k][0]} ${IDEAS[k][1]}`.slice(0, cols), B.x, G.listTop + j * LH, "n");
-      });
-      IDEAS.forEach((_, k) => {
-        const j = ideas.indexOf(k), [x, y] = G.at(k);
-        if (j >= 0 && landed(j)) dot(ctx, x, y, 4, C.hi);
-        else if (lit.has(k)) dot(ctx, x, y, 3, C.p1, 4);
-        else dot(ctx, x, y, 2.2, C.dim, 0);
-      });
-      term.caption = i < 5 ? "PAGES BY OTHER PEOPLE THAT LET YOU WATCH THE IDEAS RUN." : "EACH ONE POINTS BACK TO THE LINEAGE IDEAS IT COVERS.";
-    },
-  };
-};
-
-// pa-fhir-poc: policy text in, a graph, a person's approval, FHIR out
-SCENES.policy = () => {
-  const LOG = [
-    [0.0, "LOAD   LCD L33822 GLUCOSE MONITORS (PDF)"],
-    [1.0, "READ   LOCAL MODEL EXTRACTS REQUIREMENTS"],
-    [4.2, "GRAPH  3 REQUIREMENTS INTO NEO4J"],
-    [6.4, "GATE   WAITING FOR HUMAN REVIEW"],
-    [9.0, "GATE   APPROVED BY A NAMED REVIEWER", "inv"],
-    [9.8, "EMIT   CRD CARD, DTR QUESTIONNAIRE, PLANDEFINITION"],
-    [11.6, "CHECK  HL7 VALIDATOR: 0 ERRORS, 0 WARNINGS"],
-  ];
-  const POLICY = [ // paragraphs, wrapped to the space available
-    ["COVERAGE INDICATIONS, LIMITATIONS AND/OR MEDICAL NECESSITY", "dim"],
-    ["THE BENEFICIARY HAS DIABETES MELLITUS", "hl"],
-    ["AND IS INSULIN-TREATED, OR HAS A HISTORY OF PROBLEMATIC HYPOGLYCEMIA", "hl"],
-    ["WITHIN SIX MONTHS BEFORE ORDERING, THE TREATING PRACTITIONER HAS SEEN THE BENEFICIARY IN PERSON OR BY TELEHEALTH", "hl"],
-    ["DOCUMENTATION REQUIREMENTS: SECTION 1861(S) OF THE SOCIAL SECURITY ACT ...", "dim"],
-  ];
-  const policyLines = cols => POLICY.flatMap(([t, k]) => [...wrap(t, cols).map(l => [l, k]), ["", "dim"]]);
-  const JSON_OUT = ['{ "resourceType": "Questionnaire",', '  "item": [', '    { "linkId": "diabetes",', '      "type": "boolean" },', '    { "linkId": "insulin-or-hypo",', '      "type": "boolean" },', '    { "linkId": "visit-6-months",', '      "type": "date" } ] }'];
-  const REQ = ["DIABETES", "INSULIN OR HYPO", "VISIT <= 6 MONTHS"];
-  const split = B => {
-    const wide = B.w / CW >= 76, logCols = 50;
-    return wide ? { log: { ...B, w: logCols * CW }, art: { x: B.x + (logCols + 2) * CW, y: B.y, w: B.w - (logCols + 2) * CW, h: B.h } }
-                : { log: { ...B, h: LOG.length * LH * 1.4 }, art: { x: B.x, y: B.y + LOG.length * LH * 1.5, w: B.w, h: B.h - LOG.length * LH * 1.5 } };
-  };
-  const nodes = A => {
-    const px = A.x + A.w * 0.12, py = A.y + A.h * 0.5;
-    return { policy: [px, py], reqs: REQ.map((_, i) => [A.x + A.w * 0.55, A.y + A.h * (0.2 + i * 0.3)]) };
-  };
-  return {
-    headRows: 3, secs: 13.5,
-    gfx(e, B) {
-      const { art } = split(B), N = nodes(art);
-      if (e > 4.2 && e < 9.8) REQ.forEach((_, i) => {
-        const k = clamp01((e - 4.4 - i * 0.5) / 0.9); if (k <= 0 || k >= 1) return;
-        const [x1, y1] = N.policy, [x2, y2] = N.reqs[i];
-        dot(g, x1 + (x2 - x1) * k, y1 + (y2 - y1) * k, 2, C.p1, 10);
-      });
-    },
-    text(e, B) {
-      const { log, art } = split(B);
-      LOG.forEach(([t, s, st], i) => {
-        if (e < t) return;
-        const chars = RM ? s.length : Math.floor((e - t) * 45);
-        let line = s.slice(0, chars);
-        if (i === 3 && e < 9.0 && e > 6.8) line += Math.floor(e * 2) % 2 ? " ..." : "";
-        if (i === 3 && e >= 9.0) return put("GATE   HUMAN REVIEW", log.x, log.y + i * LH * 1.4, "dim");
-        put(line.slice(0, Math.floor(log.w / CW)), log.x, log.y + i * LH * 1.4, st || (i === LOG.length - 1 ? "hi" : "n"));
-      });
-      if (e >= 1.0 && e < 4.2) { // the policy scrolls past; the requirements light up
-        const lines = policyLines(Math.max(12, Math.floor(art.w / CW) - 1));
-        const off = (e - 1.0) * 2.2, rows = Math.max(3, Math.floor(art.h / LH));
-        for (let r = 0; r < rows; r++) {
-          const [s, kind] = lines[(Math.floor(off) + r) % lines.length];
-          put(s, art.x, art.y + r * LH, kind === "hl" && e > 2.2 ? "inv" : "dim");
-        }
-      } else if (e >= 4.2 && e < 9.8) { // the graph, then the gate
-        const N = nodes(art);
-        ctx.strokeStyle = C.dim; ctx.lineWidth = 1;
-        REQ.forEach((r, i) => {
-          if (e < 4.4 + i * 0.5 + 0.9) return;
-          ctx.beginPath(); ctx.moveTo(...N.policy); ctx.lineTo(...N.reqs[i]); ctx.stroke();
-          dot(ctx, ...N.reqs[i], 4, C.p1); put(r.slice(0, Math.floor((art.x + art.w - N.reqs[i][0]) / CW) - 1), N.reqs[i][0] + 10, N.reqs[i][1] - LH / 2, "n");
-        });
-        dot(ctx, ...N.policy, 5, C.p1); put("L33822", N.policy[0] - 3 * CW, N.policy[1] + 8, "dim");
-        if (e > 6.4) { // a box closes around the graph until someone approves it
-          const on = e >= 9.0 || Math.floor(e * 2) % 2 === 0;
-          ctx.strokeStyle = e >= 9.0 ? C.p1 : on ? C.p1 : C.dim; ctx.setLineDash(e >= 9.0 ? [] : [6, 5]);
-          ctx.strokeRect(art.x - 6, art.y - 4, art.w, art.h + 4); ctx.setLineDash([]);
-          const label = e >= 9.0 ? " APPROVED " : " HUMAN REVIEW ";
-          put(label, art.x + art.w - label.length * CW - 12, art.y - LH * 0.6, e >= 9.0 ? "inv" : "n");
-        }
-      } else if (e >= 9.8) {
-        JSON_OUT.forEach((s, i) => { if (e > 9.9 + i * 0.18) put(s.slice(0, Math.floor(art.w / CW)), art.x, art.y + i * LH, "n"); });
+  const RMAX = 5, ZMAX = 5;
+  const mat = () => new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uReveal: { value: 0 }, uFade: { value: 1 }, uPx: { value: 1 } },
+    vertexShader: `attribute vec3 aCol; attribute float aT; uniform float uReveal, uPx; varying vec3 vCol; varying float vA;
+      void main() { float head = 1.0 - clamp((uReveal - aT) * 7.0, 0.0, 1.0); // the leading edge of each track burns brighter
+        vA = step(aT, uReveal) * (0.5 + 0.5 * head); vCol = aCol * (1.0 + head);
+        vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv;
+        gl_PointSize = uPx * 0.085 * (1.0 + 1.6 * head) / -mv.z; }`,
+    fragmentShader: `uniform float uFade; varying vec3 vCol; varying float vA; void main() { ${SPRITE} gl_FragColor = vec4(vCol, a * vA * uFade); }`,
+  });
+  function build(k) {
+    const E = EVENTS[k % EVENTS.length], r = rng(101 + k * 977), P = [], C = [], T = [];
+    const gauss = () => r() + r() + r() - 1.5;
+    for (let n = 0; n < E.n; n++) {
+      const j = E.jets.length && r() < 0.8 ? Math.floor(r() * E.jets.length) : -1;
+      const phi = j < 0 ? r() * Math.PI * 2 : E.jets[j] + gauss() * 0.22;
+      const curl = r() < 0.22, R = curl ? 0.35 + r() * 1.1 : 5 + r() * 40, q = r() < 0.5 ? -1 : 1; // slow particles spiral, fast ones run nearly straight
+      const slope = gauss() * (curl ? 0.25 : 0.5), col = hex(E.pal[(j < 0 ? n : j) % E.pal.length]), dim = curl ? 0.55 : 1;
+      const smax = curl ? Math.PI * 2 * R * 3.2 : 12;
+      for (let s = 0; s < smax; s += 0.025) {
+        const th = phi + q * s / R, x = (R / q) * (Math.sin(th) - Math.sin(phi)), y = -(R / q) * (Math.cos(th) - Math.cos(phi)), z = slope * s;
+        if (Math.hypot(x, y) > RMAX || Math.abs(z) > ZMAX) break;
+        P.push(x, y, z); C.push(col[0] * dim, col[1] * dim, col[2] * dim); T.push(Math.min(1, s / 10));
       }
-      term.caption = e < 9.0 ? "A PERSON CHECKS THE GRAPH BEFORE ANY FHIR IS MADE." : "CONFORMANT ONLY WHEN THE OFFICIAL HL7 VALIDATOR AGREES.";
-    },
-  };
-};
-
-// fhir-zod-gen: a profile becomes a schema, then the published examples run through it
-SCENES.zod = () => {
-  const CMD = "$ npx fhir-zod-gen hl7.fhir.us.core#6.1.0";
-  const TREE = ["US CORE PATIENT PROFILE", "+- identifier  1..*", "+- name        1..*", "+- gender      1..1  REQUIRED", "`- birthDate   0..1"];
-  const ZOD = ["const USCorePatient = z.object({", '  resourceType: z.literal("Patient"),', "  identifier: z.array(Identifier).min(1),", "  name: z.array(HumanName).min(1),", "  gender: z.enum(AdministrativeGender),", "  birthDate: FhirDate.optional(),", "});"];
-  const TOTAL = 441, V0 = 7.6, V1 = 11.4;
-  const layout = B => {
-    const wide = B.w / CW >= 84;
-    const tree = { x: B.x, y: B.y + LH * 2.2 };
-    const zod = wide ? { x: B.x + 34 * CW, y: tree.y } : { x: B.x, y: tree.y + LH * (TREE.length + 0.8) };
-    const gridTop = zod.y + LH * (ZOD.length + 1.2);
-    return { tree, zod, grid: { x: B.x, y: gridTop, w: B.w, h: B.y + B.h - gridTop } };
-  };
-  const cell = (i, G) => { // one square per published example, spread to fill the space below the schema
-    const h = Math.max(20, G.h - LH * 1.6), s = Math.max(4, Math.min(14, Math.sqrt((G.w * h) / TOTAL) * 0.92));
-    const cols = Math.max(1, Math.floor(G.w / s));
-    return [G.x + (i % cols) * s, G.y + LH * 1.5 + Math.floor(i / cols) * s, s * 0.72];
-  };
-  return {
-    headRows: 3, secs: 12.5,
-    gfx(e, B) {
-      const { grid } = layout(B);
-      const done = Math.floor(TOTAL * clamp01((e - V0) / (V1 - V0)));
-      for (let i = Math.max(0, done - 12); i < done; i++) { const [x, y, s] = cell(i, grid); g.shadowBlur = 8; g.shadowColor = C.p1; g.fillStyle = C.p1; g.fillRect(x, y, s, s); g.shadowBlur = 0; }
-    },
-    text(e, B) {
-      const L = layout(B);
-      put(CMD.slice(0, RM ? CMD.length : Math.floor(e * 30)), B.x, B.y, "hi");
-      if (e > 1.8) put("RESOLVING PACKAGE AND DEPENDENCIES ... OK", B.x, B.y + LH, "dim");
-      TREE.forEach((s, i) => { if (e > 2.4 + i * 0.25) put(s, L.tree.x, L.tree.y + i * LH, i ? "n" : "dim"); });
-      ZOD.forEach((s, i) => { if (e > 4.0 + i * 0.4) put(s.slice(0, Math.floor((W - PAD - L.zod.x) / CW)), L.zod.x, L.zod.y + i * LH, "n"); });
-      if (e > V0 - 0.4) {
-        const done = Math.floor(TOTAL * clamp01((e - V0) / (V1 - V0)));
-        put(done < TOTAL ? `VALIDATING PUBLISHED EXAMPLES  ${done}/${TOTAL}` : `${TOTAL}/${TOTAL} PUBLISHED EXAMPLES ACCEPTED`, L.grid.x, L.grid.y, done < TOTAL ? "n" : "inv");
-        for (let i = 0; i < done; i++) { const [x, y, s] = cell(i, L.grid); ctx.fillStyle = C.dim; ctx.fillRect(x, y, s, s); }
-      }
-      term.caption = e < V0 ? "ONE READABLE SCHEMA FILE PER PROFILE." : "CALL .parse() TO VALIDATE. THE TYPESCRIPT TYPE COMES FREE.";
-    },
-  };
-};
-
-// Pantastic: the one moment the screen shows colour
-SCENES.paint = () => {
-  const A = { name: "ULTRAMARINE", code: "PB29", rgb: [43, 63, 170] }, Z = { name: "BURNT SIENNA", code: "PBR7", rgb: [178, 88, 48] };
-  const GREY = [118, 112, 106];
-  const rgb = c => `rgb(${c.map(Math.round).join(",")})`;
-  const mix = t => A.rgb.map((v, i) => { const m = (v + Z.rgb[i]) / 2; return m + (GREY[i] - m) * t; });
-  const WHEEL = ["#c9302c", "#e0572a", "#e8952b", "#e3c53a", "#9cbf3b", "#3f9a4a", "#2a8c86", "#2d6fb3", "#2b3faa", "#5b3a9e", "#8e3a8a", "#b8325a"];
-  const geo = B => {
-    const tall = B.h > B.w, r = tall ? Math.min(B.w * 0.15, B.h * 0.09) : Math.min(B.h * 0.16, B.w * 0.1);
-    const gap = tall ? Math.min(B.h * 0.34, r * 3.6) : Math.min(B.w * 0.32, r * 3.4);
-    return { r, cx: B.x + B.w / 2, cy: B.y + B.h * 0.5, gap, dir: tall ? [0, 1] : [1, 0], tall };
-  };
-  return {
-    headRows: 3, secs: 10.5,
-    gfx(e, B) {
-      const { r, cx, cy, gap, dir } = geo(B);
-      if (e < 1.4 || e > 5.2) return;
-      for (let k = 0; k < 3; k++) for (const [src, sgn] of [[A, -1], [Z, 1]]) { // drops run from each pan to the middle
-        const u = ((e * 0.9 + k / 3) % 1), along = sgn * gap * (1 - u), bulge = Math.sin(u * Math.PI) * r * 1.1;
-        dot(g, cx + dir[0] * along + dir[1] * bulge, cy + dir[1] * along - dir[0] * bulge, 2.6, rgb(src.rgb), 12);
-      }
-    },
-    text(e, B) {
-      const { r, cx, cy, gap, dir, tall } = geo(B);
-      for (const [p, sgn] of [[A, -1], [Z, 1]]) {
-        const a = ease(clamp01(e / 1.0)), x = cx + dir[0] * sgn * gap, y = cy + dir[1] * sgn * gap;
-        ctx.globalAlpha = a; ctx.fillStyle = rgb(p.rgb); ctx.shadowBlur = 16; ctx.shadowColor = rgb(p.rgb);
-        ctx.beginPath(); ctx.roundRect(x - r * 0.8, y - r * 0.55, r * 1.6, r * 1.1, 6); ctx.fill(); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
-        if (tall) { put(p.name, x + r * 1.0, y - LH, "n"); put(p.code, x + r * 1.0, y, "dim"); }
-        else { put(p.name, x - (p.name.length * CW) / 2, y + r * 0.75, "n"); put(p.code, x - (p.code.length * CW) / 2, y + r * 0.75 + LH, "dim"); }
-      }
-      if (e > 2.0) {
-        const t = ease(clamp01((e - 2.4) / 3)), rr = r * 0.9 * ease(clamp01((e - 2.0) / 1.2));
-        ctx.fillStyle = rgb(mix(t)); ctx.shadowBlur = 20; ctx.shadowColor = rgb(mix(t)); ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-        if (e > 5.6) { const s = "NEUTRAL"; if (tall) put(s, B.x, cy - LH / 2, "hi"); else put(s, cx - (s.length * CW) / 2, cy + r * 0.75, "hi"); }
-      }
-      if (e > 6.4) { // the wheel the pair sits on: blue beside the ultramarine, orange beside the sienna, the neutral between
-        const R = tall ? Math.min(B.w * 0.4, gap * 0.62) : Math.min(B.h * 0.44, gap * 0.62);
-        const base = Math.atan2(-dir[1], -dir[0]), at = i => base + ((i - 8) / 12) * Math.PI * 2; // blue points at the ultramarine pan
-        if (e > 7.5) { ctx.strokeStyle = C.dim; ctx.setLineDash([4, 6]); ctx.beginPath(); ctx.moveTo(cx - dir[0] * R, cy - dir[1] * R); ctx.lineTo(cx + dir[0] * R, cy + dir[1] * R); ctx.stroke(); ctx.setLineDash([]); }
-        WHEEL.forEach((c, i) => { if (e > 6.4 + i * 0.08) dot(ctx, cx + Math.cos(at(i)) * R, cy + Math.sin(at(i)) * R, Math.max(4, r * 0.15), c, 10); });
-      }
-      term.caption = e < 5.6 ? "MIX A PAIR OF TRUE COMPLEMENTS AND YOU GET A NEUTRAL." : "PANTASTIC FINDS THAT PARTNER FOR EACH PAN YOU OWN.";
-    },
-  };
-};
-
-/* ---------- the show ---------- */
-let cur = -1, auto = !RM, idle = null, sceneStart = 0, screenKind = "boot";
-const statusEl = $("#status"), said = $("#said"), input = $("#cmd");
-function status() { statusEl.textContent = (cur >= 0 && screenKind === "game" ? `GAME ${cur + 1} OF ${PROJECTS.length}` : "") + (auto ? "  AUTOPLAY" : "  PAUSED"); }
-function hintLine() { return PROJECTS[cur].href ? "[CLICK] OPEN  [N] NEXT  [P] PREV  [HELP]" : "[N] NEXT   [P] PREV   [HELP]"; }
-
-async function play(i, gen) {
-  cur = (i + PROJECTS.length) % PROJECTS.length; screenKind = "game"; status();
-  const p = PROJECTS[cur];
-  clearScreen(); term.cursor = false;
-  await type(`RUN ${p.key}`, gen, { speed: 40, style: "h" });
-  print(p.line.toUpperCase(), "dim");
-  const s = SCENES[p.scene](); s.headRows = Math.max(3, term.lines.length + 1);
-  sceneStart = RM ? performance.now() - 1e6 : performance.now(); scene = s; term.hint = hintLine();
-  tube.classList.toggle("linked", !!p.href);
-  await sleep(s.secs * 1000, gen);
-}
-async function boot(gen) {
-  clearScreen(); screenKind = "boot"; term.cursor = true;
-  let seen = false; try { seen = sessionStorage.getItem("wopr") === "1"; sessionStorage.setItem("wopr", "1"); } catch (_) {}
-  if (!seen) {
-    await type("LOGON:  ", gen, { speed: 30 }); await sleep(500, gen);
-    term.lines[term.lines.length - 1].t += "PLAYER1"; // typed by the visitor, one key at a time
-    const l = term.lines[term.lines.length - 1];
-    while (l.shown < l.t.length) { check(gen); l.shown++; await sleep(110 + Math.random() * 120, gen); }
-    await sleep(700, gen); print("");
-  }
-  await type("GREETINGS PLAYER ONE.", gen, { style: "h" }); print(""); await sleep(600, gen);
-  await type("SHALL WE PLAY A GAME?", gen, { style: "h" }); await sleep(1400, gen);
-  await listGames(gen, false);
-  await sleep(RM ? 0 : 2600, gen);
-}
-async function listGames(gen, fresh = true) {
-  if (fresh) { clearScreen(); term.cursor = true; }
-  screenKind = "list"; status();
-  print(""); await type("LIST GAMES", gen, { speed: 40, style: "h" }); print("");
-  for (const p of PROJECTS) { await type(p.name.toUpperCase(), gen, { speed: 14 }); }
-  print(""); print(RM ? "TYPE A NAME OR PRESS NEXT TO RUN A GAME." : "", "dim");
-}
-async function show(lines, gen, kind) {
-  clearScreen(); screenKind = kind; term.cursor = true; status();
-  for (const [i, l] of lines.entries()) await type(l, gen, { speed: 8, style: i === 0 ? "h" : undefined });
-  said.textContent = lines.join(" ");
-}
-const quiet = e => { if (!(e instanceof Stop)) throw e; };
-async function loop(gen) {
-  for (;;) {
-    await play(cur + 1, gen);
-    if (cur === PROJECTS.length - 1) {
-      clearScreen(); term.cursor = true; screenKind = "end"; status();
-      await type("A STRANGE GAME.", gen, { style: "h" }); await sleep(800, gen);
-      await type("THE ONLY WINNING MOVE IS TO KEEP BUILDING.", gen, { style: "h" }); await sleep(3200, gen);
     }
+    E.jets.forEach((a, j) => { // energy towers where each jet meets the outer wall
+      const col = hex(E.pal[j % E.pal.length]);
+      for (let t = 0; t < 9; t++) { const p = a + (t - 4) * 0.05 + gauss() * 0.02, len = (0.3 + r() * 1.5) * Math.exp(-((t - 4) ** 2) / 8), z = gauss() * 1.2;
+        for (let d = 0; d < len; d += 0.03) { P.push(Math.cos(p) * (RMAX + 0.15 + d), Math.sin(p) * (RMAX + 0.15 + d), z); C.push(...col); T.push(0.5 + d * 0.08); } }
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(P, 3)); g.setAttribute("aCol", new THREE.Float32BufferAttribute(C, 3)); g.setAttribute("aT", new THREE.Float32BufferAttribute(T, 1));
+    const pts = new THREE.Points(g, mat()); pts.frustumCulled = false; return pts;
   }
-}
-function autoplay(fromBoot = false) {
-  const gen = ++run; auto = true; status();
-  (async () => { if (fromBoot) await boot(gen); await loop(gen); })().catch(quiet);
-}
-function takeOver() {
-  auto = false; status();
-  clearTimeout(idle);
-  if (!RM) idle = setTimeout(autoplay, 30000);
-}
-function manual(fn) { takeOver(); const gen = ++run; fn(gen).catch(quiet); }
-
-async function openCurrent(gen) {
-  const p = PROJECTS[cur];
-  if (!p) return listGames(gen);
-  if (!p.href) { term.hint = "SOURCE NOT PUBLISHED YET. CHECK BACK SOON."; said.textContent = "Pantastic's source isn't published yet."; return; }
-  said.textContent = `Opening ${p.name}.`;
-  term.hint = `CONNECTING TO ${p.host} ...`;
-  await sleep(700, gen); location.href = p.href;
-}
-function go(where, gen) { term.hint = `CONNECTING TO ${where.toUpperCase().replace(/^HTTPS:\/\/(WWW\.)?/, "")} ...`; return sleep(600, gen).then(() => { location.href = where; }); }
-
-function command(raw) {
-  const c = raw.trim().toUpperCase().replace(/\s+/g, " ");
-  const find = s => PROJECTS.findIndex((p, i) => s === String(i + 1) || p.key === s || p.name.toUpperCase() === s || p.key.startsWith(s) || p.name.toUpperCase().startsWith(s));
-  if (c === "" || c === "OPEN") return manual(gen => screenKind === "game" ? openCurrent(gen) : play(cur + 1, gen));
-  if (c === "N" || c === "NEXT") return manual(gen => play(cur + 1, gen));
-  if (c === "P" || c === "PREV" || c === "BACK") return manual(gen => play(cur < 0 ? PROJECTS.length - 1 : cur - 1, gen));
-  if (c === "LIST" || c === "LIST GAMES" || c === "LS") return manual(gen => listGames(gen).then(() => { said.textContent = "Games: " + PROJECTS.map(p => p.name).join(", ") + "."; }));
-  if (c === "ABOUT" || c === "WHOAMI") return manual(gen => show(ABOUT.flatMap(l => l ? wrap(l) : [""]), gen, "about"));
-  if (c === "HELP" || c === "?") return manual(gen => show(HELP, gen, "help"));
-  if (c === "GITHUB") return manual(gen => go("https://github.com/pjerus", gen));
-  if (c === "LINKEDIN") return manual(gen => go("https://www.linkedin.com/in/patjerus/", gen));
-  if (c === "GLOBAL THERMONUCLEAR WAR") return manual(gen => show(["WOULDN'T YOU PREFER A GOOD GAME OF CHESS?", "", "TYPE LIST FOR THE GAMES THIS TERMINAL CAN PLAY."], gen, "war"));
-  const i = find(c.replace(/^RUN /, ""));
-  if (i >= 0) return manual(gen => play(i, gen));
-  manual(gen => show([`UNKNOWN COMMAND: ${c.slice(0, 30)}`, "TYPE HELP FOR THE LIST OF COMMANDS."], gen, "error"));
+  // the detector: faint barrel layers
+  const ringMat = new THREE.LineBasicMaterial({ color: 0x8fa3ff, transparent: true, opacity: 0.13 * DIM });
+  const rings = () => { const g = new THREE.Group();
+    for (const z of [-3.2, 0, 3.2]) for (const rad of [1.3, 2.6, 3.8, RMAX]) {
+      const pts = []; for (let i = 0; i <= 96; i++) pts.push(new THREE.Vector3(Math.cos(i / 96 * Math.PI * 2) * rad, Math.sin(i / 96 * Math.PI * 2) * rad, z));
+      g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), ringMat));
+    }
+    return g; };
+  return { build, rings };
 }
 
-/* ---------- input ---------- */
-$("#prompt").addEventListener("submit", e => { e.preventDefault(); const v = input.value; input.value = ""; command(v); });
-for (const b of document.querySelectorAll("[data-cmd]")) b.addEventListener("click", () => command(b.dataset.cmd));
-input.addEventListener("keydown", e => {
-  if (input.value) return;
-  if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); command("NEXT"); }
-  if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); command("PREV"); }
-});
-tube.addEventListener("click", e => {
-  if (e.target.closest("#prompt")) return;
-  if (screenKind === "game") return command("OPEN"); // clicking a game opens its page
-  if (matchMedia("(pointer: fine)").matches) input.focus();
-});
-addEventListener("keydown", e => {
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  if (screenKind === "boot" && auto) { // any key skips the boot
-    const gen = ++run;
-    (async () => { await listGames(gen); await sleep(1500, gen); await loop(gen); })().catch(quiet);
-  } else if (!auto) takeOver(); // typing keeps the show paused
-});
+/* ================= Mixed: a different kind of physics for every panel ================= */
+function mixed() {
+  const kit = colliderKit(), r = rng(31), gauss = () => r() + r() + r() - 1.5;
+  const LANES = ["#3987e5", "#eb6834", "#1baf7a", "#9085e9", "#e87ba4", "#d9a93a"].map(hex), WARM = [1, 0.93, 0.75], CYAN = hex("#5ad8ff"), AMBER = hex("#ffb65c");
+  // one shader for every scene. aB.x says how a point moves: 0 still, 1 in orbit, 2 lit by a pulse running along its line, 3 on a wave, 4 in a stream through a gate
+  const mat = () => new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uFade: { value: 1 }, uPx: { value: 1 } },
+    vertexShader: `attribute vec3 aCol; attribute vec4 aA, aB; uniform float uTime, uReveal, uPx; varying vec3 vCol; varying float vA;
+      void main() { vec3 p = position; vec3 col = aCol; float al = 1.0; float m = aB.x;
+        if (m > 3.5) { float x = mix(-6.5, 6.5, fract(aB.y + uTime * 0.05)); float g = smoothstep(-0.9, 0.2, x); // loose before the gate, in rows after it
+          p = vec3(x, mix(aA.zw, aA.xy, g)); col = mix(aCol, vec3(0.36, 1.0, 0.63), g); }
+        else if (m > 2.5) { p.y += sin(p.x * 1.1 + uTime * 0.8) * 0.25 + sin(p.z * 1.7 + uTime * 0.6) * 0.18; }
+        else if (m > 1.5) { al = 0.4 + pow(fract(aB.y - uTime * aB.z), 6.0); col *= 0.7 + al; }
+        else if (m > 0.5) { float th = aA.y + uTime * aB.z * pow(aA.x, -1.5); // closer in means faster round, as with planets
+          vec3 o = aA.x * vec3(cos(th), 0.0, sin(th)); o = vec3(o.x, -o.z * sin(aA.z), o.z * cos(aA.z));
+          p += vec3(o.x * cos(aA.w) - o.z * sin(aA.w), o.y, o.x * sin(aA.w) + o.z * cos(aA.w)); }
+        vCol = col; vA = al * clamp(uReveal * 2.0, 0.0, 1.0);
+        vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = uPx * aB.w * 1.8 / -mv.z; }`,
+    fragmentShader: `uniform float uFade; varying vec3 vCol; varying float vA; void main() { ${SPRITE} gl_FragColor = vec4(vCol, a * vA * uFade); }`,
+  });
+  const cloud = fill => { const P = [], C = [], A = [], B = [];
+    fill((p, col, size, mode = 0, a = [0, 0, 0, 0], u = 0, speed = 0) => { P.push(p[0], p[1], p[2]); C.push(...col); A.push(...a); B.push(mode, u, speed, size); });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(P, 3)); g.setAttribute("aCol", new THREE.Float32BufferAttribute(C, 3));
+    g.setAttribute("aA", new THREE.Float32BufferAttribute(A, 4)); g.setAttribute("aB", new THREE.Float32BufferAttribute(B, 4));
+    const pts = new THREE.Points(g, mat()); pts.frustumCulled = false; return pts; };
+  // a tight knot of points. Each is faint, so the knot glows instead of turning into a solid white dot over the words
+  const blob = (add, c, rad, n, col, size) => { for (let i = 0; i < n; i++) add([c[0] + gauss() * rad, c[1] + gauss() * rad, c[2] + gauss() * rad], col.map(v => v * 0.3), size); };
+  // a line of points from a to b; a pulse of light runs along it from u0 to u1
+  const line = (add, a, b, n, col, size, speed, u0 = 0, u1 = 1, bow = [0, 0, 0]) => { for (let i = 0; i < n * 3; i++) { const u = r(), s = Math.sin(Math.PI * u);
+    add([a[0] + (b[0] - a[0]) * u + bow[0] * s, a[1] + (b[1] - a[1]) * u + bow[1] * s, a[2] + (b[2] - a[2]) * u + bow[2] * s], col, size, 2, [0, 0, 0, 0], u0 + (u1 - u0) * u, speed); } };
 
-/* ---------- frame loop ---------- */
-let frameNo = 0;
-function frame(now) {
-  // phosphor decay: the glow layer fades toward the glass instead of clearing
-  g.fillStyle = frameNo++ % 24 === 0 ? "rgba(6,16,8,0.5)" : "rgba(6,16,8,0.085)";
-  g.fillRect(0, 0, W, H);
-  const e = (now - sceneStart) / 1000;
-  if (scene) scene.gfx(e, body());
-  ctx.clearRect(0, 0, W, H);
-  ctx.drawImage(glow, 0, 0, W, H);
-  if (scene) scene.text(e, body());
-  drawTerm(now);
-  requestAnimationFrame(frame);
+  // Lineage: gravity. Each big idea is a mass that bends the sheet under it and holds later ideas in orbit
+  const gravity = () => cloud(add => { const M = [[-3, 0, -1, 1.4], [0.5, 0, 1.6, 1], [3.2, 0, -0.8, 1.2], [-0.8, 0, -2.9, 0.7], [2.2, 0, 3, 0.6]];
+    M.forEach(([x, y, z, m], k) => { blob(add, [x, y, z], 0.1 * m, 260, WARM, 0.1);
+      for (let i = 0; i < 2400 * m; i++) add([x, y, z], LANES[k], 0.05, 1, [0.28 + Math.pow(r(), 1.6) * 1.9 * m, r() * 6.283, gauss() * 0.22, r() * 6.283], 0, 0.6);
+      line(add, M[k], M[(k + 1) % M.length], 260, [0.7, 0.8, 1], 0.05, 0.3, 0, 1, [0, 0.8, 0]); });
+    for (let gx = 0; gx < 85; gx++) for (let gz = 0; gz < 85; gz++) { const X = (gx / 84 - 0.5) * 13, Z = (gz / 84 - 0.5) * 13;
+      add([X, -0.9 - M.reduce((d, [x, , z, m]) => d + m * 0.42 / Math.sqrt((X - x) ** 2 + (Z - z) ** 2 + 0.12), 0), Z], [0.16, 0.24, 0.5], 0.04); } });
+  // Explainers: an embedding space. Similar things sit close together; ten bright points are the pages, linked to their nearest neighbours
+  const embed = () => cloud(add => { const cs = [...Array(14)].map(() => [gauss() * 3.6, gauss() * 2.6, gauss() * 2.6]);
+    cs.forEach((c, k) => blob(add, c, 0.42, 520, LANES[k % 6].map(v => v * 0.8), 0.045));
+    for (let i = 0; i < 10; i++) { const c = cs[i]; blob(add, c, 0.05, 40, WARM, 0.14);
+      cs.map((d, k) => [Math.hypot(d[0] - c[0], d[1] - c[1], d[2] - c[2]), k]).sort((a, b) => a[0] - b[0]).slice(1, 3).forEach(([, k]) => line(add, c, cs[k], 160, [0.6, 0.9, 1], 0.045, 0.25)); } });
+  // pa-fhir-poc: a transformer reading. Words along the bottom, layers stacked above, attention running up between them
+  const transformer = () => cloud(add => { const T = 8, L = 5, at = (t, l) => [(t - (T - 1) / 2) * 1.15, (l - (L - 1) / 2) * 1.7, 0];
+    for (let l = 0; l < L; l++) for (let t = 0; t < T; t++) blob(add, at(t, l), 0.07, 70, WARM, 0.09);
+    for (let l = 0; l < L - 1; l++) for (let i = 0; i < T; i++) for (let j = 0; j < T; j++) { const w = Math.pow(r(), 3) + (i === j ? 0.35 : 0); // how strongly word j attends to word i
+      if (w > 0.12) line(add, at(i, l), at(j, l + 1), Math.round(w * 160), i % 2 ? CYAN : AMBER, 0.045, 0.22, l / (L - 1), (l + 1) / (L - 1), [0, 0, (r() - 0.5) * 2]); } });
+  // fhir-zod-gen: validation. Loose data streams in, passes the schema's gate, and comes out in rows
+  const lattice = () => cloud(add => {
+    for (let i = 0; i < 7000; i++) add([0, 0, 0], [0.45, 0.4, 0.9], 0.05, 4, [(Math.floor(r() * 9) - 4) * 0.6, (Math.floor(r() * 9) - 4) * 0.6, gauss() * 2.4, gauss() * 2.4], r());
+    for (let i = 0; i < 900; i++) { const s = (r() - 0.5) * 5.8, e = Math.floor(r() * 4); add(e < 2 ? [-0.35, s, e ? 2.9 : -2.9] : [-0.35, e > 2 ? 2.9 : -2.9, s], AMBER, 0.06); } });
+  // Pantastic: two complementary paints swirl together and turn neutral where they meet
+  const pigment = () => cloud(add => { const U = hex("#4d6dff"), S = hex("#e0763e"), N = hex("#b4aca4");
+    for (let i = 0; i < 11000; i++) { const arm = i % 2, rad = 0.3 + Math.sqrt(r()) * 4.6, k = Math.min(1, Math.max(0, (2.6 - rad) / 2.2));
+      add([0, 0, 0], (arm ? U : S).map((v, j) => v + (N[j] - v) * k), 0.05, 1, [rad, arm * Math.PI + rad * 0.9 + gauss() * 0.4, gauss() * 0.07, 0], 0, 0.5); } });
+  // About: sea running up to sand
+  const wave = () => cloud(add => { for (let gx = 0; gx < 120; gx++) for (let gz = 0; gz < 70; gz++) { const X = (gx / 119 - 0.5) * 14, Z = (gz / 69 - 0.5) * 9, sea = Z < Math.sin(X * 0.7) * 0.8 + 0.6;
+    add([X, -0.6, Z], sea ? [0.2, 0.55, 0.9] : [0.95, 0.8, 0.55], 0.05, sea ? 3 : 0); } });
+
+  // size: how much of the page the scene fills. tilt: how far it leans toward you. spin: a steady turn, or a gentle sway when the scene has a front
+  const SCENES = [
+    { make: () => [kit.rings(), kit.build(0)], tilt: -0.28, spin: true, size: 1 },
+    { make: gravity, tilt: 0.5, spin: true, size: 0.9 }, { make: embed, tilt: 0.1, spin: true, size: 1 }, { make: transformer, tilt: 0 },
+    { make: lattice, tilt: 0.15, yaw: 0.6, size: 0.8 }, { make: pigment, tilt: 1.0, spin: true }, { make: wave, tilt: 0.45, size: 0.8 },
+  ];
+  const start = (k, now) => { const g = new THREE.Group(); [].concat(SCENES[k].make()).forEach(o => g.add(o)); g.userData = { ...SCENES[k], t0: now }; g.scale.setScalar(SCENES[k].size || 0.62); rig.add(g); return g; };
+  const drop = g => { rig.remove(g); g.traverse(o => { if (o.geometry) { o.geometry.dispose(); o.material.dispose(); } }); };
+  const set = (g, now, fade) => { const t = now - g.userData.t0, reveal = RM ? 2 : t / 2.6;
+    g.traverse(o => { const m = o.material; if (!m) return;
+      if (!m.uniforms) { m.opacity = 0.13 * DIM * fade * Math.min(1, reveal * 2); return; }
+      m.uniforms.uPx.value = pxScale * Math.sqrt(rig.scale.x); m.uniforms.uReveal.value = reveal; m.uniforms.uFade.value = fade; if (m.uniforms.uTime) m.uniforms.uTime.value = RM ? 0 : t; });
+    const S = g.userData; g.rotation.set(S.tilt + pointer.y * 0.12, (S.yaw || 0) + (RM ? 0.35 : S.spin ? now * 0.1 : Math.sin(now * 0.2) * 0.3) + pointer.x * 0.18, 0); };
+  let cur = null, old = null, shown = -1, tOld = 0;
+  return now => {
+    const [i, t] = where(), k = t > 0.5 ? Math.min(panels.length - 1, i + 1) : i;
+    if (k !== shown) { if (old) drop(old); old = cur; tOld = now; cur = start(k, now); shown = k; } // a new panel: the old scene fades as the new one arrives
+    set(cur, now, 1);
+    if (old) { const f = 1 - (now - tOld) / 0.6; if (f <= 0) { drop(old); old = null; } else set(old, now, f); }
+  };
 }
 
-async function start() {
-  try { await Promise.all([300, 500, 700].map(w => document.fonts.load(`${w} 40px "IBM Plex Mono"`))); } catch (_) {}
-  ctx.font = '300 100px "IBM Plex Mono", monospace'; RATIO = ctx.measureText("M").width / 100 || 0.6;
-  metrics();
-  let t = null;
-  addEventListener("resize", () => { clearTimeout(t); t = setTimeout(metrics, 120); });
-  requestAnimationFrame(frame);
-  if (matchMedia("(pointer: fine)").matches) input.focus({ preventScroll: true });
-  if (RM) { auto = false; const gen = ++run; boot(gen).then(status).catch(quiet); }
-  else autoplay(true);
-}
-start();
+layout(); addEventListener("resize", layout);
+const tick = mixed();
+renderer.setAnimationLoop(ms => { tick(ms / 1000); renderer.render(scene, camera); });
 </script>
 </body>
 </html>
