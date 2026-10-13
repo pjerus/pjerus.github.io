@@ -8,104 +8,89 @@
 <link rel="canonical" href="https://pjerus.github.io/ml-explainers/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
 <style>
 :root {
-  /* same surfaces, ink and lane colours as the Machine Learning Lineage page */
-  --bg: #eef2f6;
-  --panel: #ffffff;
-  --ink: #0f2e3d;
-  --ink-2: #3d5a70;
-  --ink-3: #52687a;
-  --rule: #cdd6df;
-  --rule-2: #dfe6ec;
-  --lane-foundations: #2a78d6;
-  --lane-neural: #eb6834;
-  --lane-rl: #1baf7a;
-  --lane-lm: #4a3aa7;
-  --lane-alignment: #e87ba4;
-  --lane-agents: #8a6d1e;
-  --bar: #0f2e3d;
-  --bar-ink: #ffffff;
-  --focus: #1059e5;
-  --sans: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-  --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* the home page's night palette; the lane colours match the Machine Learning Lineage page */
+  color-scheme: dark;
+  --bg: #060915; --ink: #f3f5fb; --ink-2: #b9c1d6; --ink-3: #8f99b3; --accent: #ffb65c; --line: rgba(255,255,255,0.16);
+  --lane-foundations: #3987e5; --lane-neural: #eb6834; --lane-lm: #9085e9; --lane-alignment: #e87ba4;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --bg: #121a22; --panel: #1e2a36; --ink: #e8eef3; --ink-2: #b3c2cf; --ink-3: #8ea1b1;
-    --rule: #2e3d4b; --rule-2: #22303c; --bar: #0b1d27; --bar-ink: #e8eef3;
-    --lane-foundations: #3987e5; --lane-neural: #d95926; --lane-rl: #199e70; --lane-lm: #9085e9; --lane-alignment: #d55181; --lane-agents: #a88a3c;
-    --focus: #86b6ef;
-  }
-}
-
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; }
-a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 2px; }
-a:hover { text-decoration-color: var(--ink); }
-:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3, p { margin: 0; }
-h1, h2, h3 { font-weight: 600; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
 
-/* ---------- top bar ---------- */
-.bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 6px 20px; flex-wrap: wrap; padding: 8px clamp(16px, 2vw, 24px); background: var(--bar); color: var(--bar-ink); min-height: 56px; }
-.bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: linear-gradient(90deg, var(--lane-agents) 0 16.6%, var(--lane-alignment) 0 33.3%, var(--lane-lm) 0 50%, var(--lane-rl) 0 66.6%, var(--lane-neural) 0 83.3%, var(--lane-foundations) 0); }
-.bar h1 { font-size: 17px; letter-spacing: 0.01em; }
-.bar .links { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13.5px; }
-.bar .links a { color: var(--bar-ink); text-decoration-color: rgba(255,255,255,0.45); }
-.bar :focus-visible { outline-color: #ffffff; }
+/* the picture: one canvas behind everything. If it can't be drawn, the page is the same words on the plain background */
+#stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
 
-/* ---------- page ---------- */
-main { max-width: 1040px; margin: 0 auto; padding: clamp(28px, 5vw, 56px) clamp(16px, 3vw, 32px) 40px; }
-.intro { max-width: 62ch; font: 18px/1.55 var(--serif); color: var(--ink-2); }
+.top { position: fixed; z-index: 5; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px clamp(20px, 7vw, 96px); background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.top .me { font: 600 17px var(--display); text-decoration: none; }
+.top .links { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; font-size: 14px; }
+.top .links a { padding: 6px 14px; border-radius: 999px; text-decoration: none; color: var(--ink-2); }
+.top .links a:hover { color: var(--ink); }
+
+main, footer { position: relative; z-index: 2; padding-inline: clamp(20px, 7vw, 96px); }
+.hero { min-height: 82svh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 40px; }
+.hero h1 { font-size: clamp(3rem, 9vw, 7.2rem); line-height: 1.02; margin-bottom: 0.35em; }
+.intro { max-width: 46ch; font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--ink-2); }
 .intro b { font-weight: 500; color: var(--ink); }
+:is(.hero h1, .intro, .group-head h2, .group-head p) { text-shadow: 0 0 5px var(--bg), 0 0 22px var(--bg); } /* a soft dark halo keeps each letter clear of the picture */
 
-.group { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px 40px; padding-top: 28px; margin-top: 36px; border-top: 1px solid var(--rule); }
-.group-head { align-self: start; position: sticky; top: 84px; display: grid; gap: 6px; }
-.group-head h2 { font-size: 20px; line-height: 1.2; }
-.group-head p { font-size: 14px; color: var(--ink-3); }
-.entries { display: grid; gap: 14px; }
+.group { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 20px clamp(24px, 5vw, 72px); padding: 56px 0; max-width: 84rem; }
+.group-head { align-self: start; position: sticky; top: 84px; display: grid; gap: 10px; }
+.group-head h2 { font-size: clamp(2rem, 3.6vw, 3.2rem); line-height: 1.04; }
+.group-head p { font-size: 1.1rem; color: var(--ink-2); }
+.entries { display: grid; gap: 16px; }
 
-.entry { background: var(--panel); border: 1px solid var(--rule-2); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; }
-.entry h3 { font-size: 19px; line-height: 1.25; }
-.entry h3 a { text-decoration-thickness: 1px; }
-.entry h3 a::after { content: " \2197"; font-family: var(--mono); font-size: 0.8em; color: var(--ink-3); }
-.by { font: 12px var(--mono); color: var(--ink-3); letter-spacing: 0.01em; }
-.by .kind { text-transform: uppercase; letter-spacing: 0.06em; }
-.what { font: 15.5px/1.6 var(--serif); color: var(--ink-2); max-width: 64ch; }
-.tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
-.tags .lead { font: 11px var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 2px; }
-.tag { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; padding: 0 11px 0 9px; border: 1px solid var(--rule); border-radius: 999px; font: 500 13px var(--sans); text-decoration: none; white-space: nowrap; }
-.tag:hover { border-color: var(--ink-3); }
+/* each entry is a pane of dark glass, so its text never has to compete with the points behind it */
+.entry { background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 18px; padding: 24px 26px; display: grid; gap: 10px; }
+.entry h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); line-height: 1.12; }
+.entry h3 a { text-decoration-thickness: 2px; }
+.entry h3 a:hover { color: var(--accent); }
+.by { font-size: 0.9rem; color: var(--ink-3); }
+.what { color: var(--ink-2); max-width: 62ch; }
+.tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
+.tags .lead { font-size: 0.85rem; color: var(--ink-3); margin-right: 2px; }
+.tag { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 13px 0 11px; border: 1px solid var(--line); border-radius: 999px; font-weight: 500; font-size: 0.9rem; text-decoration: none; white-space: nowrap; }
+.tag:hover { border-color: var(--c); }
 .tag::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
-.tag .yr { font: 11px var(--mono); color: var(--ink-3); }
+.tag .yr { font-size: 0.8rem; color: var(--ink-3); }
 .foundations { --c: var(--lane-foundations); }
 .neural { --c: var(--lane-neural); }
 .lm { --c: var(--lane-lm); }
 .alignment { --c: var(--lane-alignment); }
 
-footer { max-width: 1040px; margin: 0 auto; padding: 8px clamp(16px, 3vw, 32px) 56px; font-size: 13.5px; color: var(--ink-3); }
-footer p { padding-top: 20px; border-top: 1px solid var(--rule); max-width: none; }
+footer { padding-bottom: 64px; font-size: 0.9rem; color: var(--ink-3); }
+footer p { padding-top: 20px; border-top: 1px solid var(--line); }
 
-@media (max-width: 760px) {
-  .group { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+@media (max-width: 859px) {
+  .group { grid-template-columns: minmax(0, 1fr); padding: 36px 0; }
   .group-head { position: static; }
-  .intro { font-size: 17px; }
+  .hero { min-height: 70svh; justify-content: flex-end; }
+  .entry { padding: 20px; }
 }
 </style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
 </head>
 <body>
-<header class="bar">
-  <h1>Machine Learning Explainers</h1>
-  <nav class="links" aria-label="Site"><a href="../ml-lineage/">Machine Learning Lineage</a><a href="../">pjerus.github.io</a></nav>
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="me" href="../">Pat Jerus</a>
+  <nav class="links" aria-label="Site"><a href="../ml-lineage/">Machine Learning Lineage</a></nav>
 </header>
 
 <main>
+  <div class="hero">
+  <h1>Machine Learning Explainers</h1>
   <p class="intro"><b>Other people's pages that show how these ideas work.</b> The <a href="../ml-lineage/">Machine Learning Lineage</a> says what each idea is and what it built on. These explainers and visualizations let you watch the ideas run. Each one lists the Lineage ideas it covers.</p>
+  </div>
 
   <section class="group" aria-labelledby="g-basics">
     <div class="group-head"><h2 id="g-basics">Neural network basics</h2><p>What a network is and how it learns.</p></div>
@@ -234,5 +219,63 @@ footer p { padding-top: 20px; border-top: 1px solid var(--rule); max-width: none
 </main>
 
 <footer><p>Every page listed here belongs to its authors. Links checked October 2026.</p></footer>
+
+<script type="module">
+import * as THREE from "three";
+
+/* The background is an embedding space: points that are alike sit close together, as in several of the tools listed above.
+   Each coloured cloud is a neighbourhood of ideas; the ten brighter knots stand for the ten pages, joined to their nearest neighbours. */
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canvas = document.getElementById("stage");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+renderer.setClearColor(getComputedStyle(document.body).backgroundColor);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.z = 16;
+const pointer = { x: 0, y: 0 };
+addEventListener("pointermove", e => { pointer.x = (e.clientX / innerWidth) * 2 - 1; pointer.y = -((e.clientY / innerHeight) * 2 - 1); });
+
+const rng = seed => () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const r = rng(31), gauss = () => r() + r() + r() - 1.5;
+const lane = name => { const c = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue("--lane-" + name).trim()); return [c.r, c.g, c.b]; };
+const LANES = ["foundations", "neural", "lm", "alignment"].map(lane), WARM = [1, 0.93, 0.75];
+
+// every point: where it is, its colour, its size, and (for points on a link) how far along the link it sits, so a pulse can run past it
+const P = [], C = [], B = [];
+const add = (p, col, size, u = -1) => { P.push(...p); C.push(...col); B.push(size, u); };
+const cs = [...Array(14)].map(() => [gauss() * 3.6, gauss() * 2.6, gauss() * 2.6]);
+cs.forEach((c, k) => { for (let i = 0; i < 520; i++) add([c[0] + gauss() * 0.42, c[1] + gauss() * 0.42, c[2] + gauss() * 0.42], LANES[k % 4].map(v => v * 0.8), 0.045); });
+for (let i = 0; i < 10; i++) { const c = cs[i];
+  for (let n = 0; n < 40; n++) add([c[0] + gauss() * 0.05, c[1] + gauss() * 0.05, c[2] + gauss() * 0.05], WARM.map(v => v * 0.3), 0.14);
+  cs.map((d, k) => [Math.hypot(d[0] - c[0], d[1] - c[1], d[2] - c[2]), k]).sort((a, b) => a[0] - b[0]).slice(1, 3).forEach(([, k]) => {
+    for (let n = 0; n < 150; n++) { const u = r(); add([c[0] + (cs[k][0] - c[0]) * u, c[1] + (cs[k][1] - c[1]) * u, c[2] + (cs[k][2] - c[2]) * u], [0.45, 0.68, 0.75], 0.04, u); } }); }
+
+const g = new THREE.BufferGeometry();
+g.setAttribute("position", new THREE.Float32BufferAttribute(P, 3)); g.setAttribute("aCol", new THREE.Float32BufferAttribute(C, 3)); g.setAttribute("aB", new THREE.Float32BufferAttribute(B, 2));
+const DIM = 0.3; // quieter than the home page: this page is for reading
+const m = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  uniforms: { uTime: { value: 0 }, uPx: { value: 1 } },
+  vertexShader: `attribute vec3 aCol; attribute vec2 aB; uniform float uTime, uPx; varying vec3 vCol; varying float vA;
+    void main() { vA = 1.0; vCol = aCol;
+      if (aB.y >= 0.0) { vA = 0.4 + pow(fract(aB.y - uTime * 0.25), 6.0); vCol *= 0.7 + vA; }
+      vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = uPx * aB.x * 1.8 / -mv.z; }`,
+  fragmentShader: `varying vec3 vCol; varying float vA; void main() { float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d) * ${DIM}; if (a < 0.005) discard; gl_FragColor = vec4(vCol, a * vA); }`,
+});
+const cloud = new THREE.Points(g, m); cloud.frustumCulled = false; scene.add(cloud);
+
+function layout() {
+  const w = innerWidth, h = innerHeight, dpr = Math.min(2, devicePixelRatio || 1);
+  renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  const halfH = 16 * Math.tan(THREE.MathUtils.degToRad(22.5));
+  cloud.scale.setScalar(Math.max(halfH * camera.aspect, halfH) / 5 * 1.05); // fills the whole background
+  m.uniforms.uPx.value = h * dpr * 0.5 * Math.sqrt(cloud.scale.x);
+}
+layout(); addEventListener("resize", layout);
+renderer.setAnimationLoop(ms => { const now = ms / 1000;
+  m.uniforms.uTime.value = RM ? 0 : now;
+  cloud.rotation.set(0.1 + pointer.y * 0.12, (RM ? 0.35 : now * 0.03) + scrollY * 0.0007 + pointer.x * 0.18, 0); // a slow turn, and scrolling walks you round the space
+  renderer.render(scene, camera); });
+</script>
 </body>
 </html>
