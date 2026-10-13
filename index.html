@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try { if (localStorage.getItem("look") === "terminal") location.replace("terminal.html"); } catch (e) {} // a visitor who chose the terminal goes straight there</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pat Jerus</title>
+<meta name="description" content="Pat Jerus works with data and AI in healthcare. Projects: Machine Learning Lineage, Machine Learning Explainers, pa-fhir-poc, fhir-zod-gen and Pantastic.">
+<link rel="canonical" href="https://pjerus.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pat Jerus">
+<meta property="og:description" content="Data and AI in healthcare by day; Thai food, travel, watercolors and good coffee the rest of the time.">
+<meta property="og:url" content="https://pjerus.github.io/">
+<meta name="theme-color" content="#060915">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pat Jerus",
+  "url": "https://pjerus.github.io/",
+  "sameAs": [
+    "https://github.com/pjerus",
+    "https://www.linkedin.com/in/patjerus/"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "pa-fhir-poc",
+  "codeRepository": "https://github.com/pjerus/pa-fhir-poc",
+  "programmingLanguage": "TypeScript",
+  "license": "https://opensource.org/license/mit",
+  "description": "Reference pipeline turning payer coverage-policy PDFs — Medicare LCDs and commercial policies — into Da Vinci CRD/DTR FHIR artifacts: local-LLM extraction, a Neo4j policy graph, and a durable human approval gate, validated against the official HL7 FHIR validator.",
+  "author": { "@type": "Person", "name": "Pat Jerus", "url": "https://pjerus.github.io/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #060915; --ink: #f3f5fb; --ink-2: #b9c1d6; --accent: #ffb65c; --line: rgba(255,255,255,0.16);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-snap-type: y proximity; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 18px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* the picture: one canvas behind everything. If it can't be drawn, the page is the same words on the plain background */
+#stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+.top { position: fixed; z-index: 5; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px clamp(20px, 7vw, 96px); }
+.top .me { font: 600 17px var(--display); text-decoration: none; }
+.view { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(8px); font-size: 14px; }
+.view > * { padding: 6px 14px; border-radius: 999px; text-decoration: none; color: var(--ink-2); }
+.view [aria-current] { background: var(--ink); color: var(--bg); font-weight: 600; }
+
+main { position: relative; z-index: 2; }
+.panel { min-height: 100svh; scroll-snap-align: start; display: flex; align-items: center; padding: 96px clamp(20px, 7vw, 96px); }
+.panel > div { max-width: min(62rem, 100%); }
+h1, h2 { font-family: var(--display); font-weight: 700; margin: 0 0 0.35em; line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
+h1 { font-size: clamp(3.4rem, 12vw, 9.5rem); }
+h2 { font-size: clamp(2.6rem, 9vw, 7.2rem); }
+h2.long { font-size: clamp(2rem, 5.4vw, 4.4rem); } /* a title that is a whole phrase */
+.panel p { margin: 0 0 1em; color: var(--ink-2); max-width: 46ch; font-size: clamp(1.1rem, 2vw, 1.7rem); }
+.panel p.lead { color: var(--ink); }
+.go { display: inline-block; margin-top: 0.4em; padding: 14px 28px; border-radius: 999px; background: var(--accent); color: #0a0a12; font-weight: 600; font-size: clamp(1rem, 1.5vw, 1.25rem); text-decoration: none; }
+.go:hover { filter: brightness(1.08); }
+.panel p.soon { color: var(--ink-2); font-size: 1rem; border-left: 2px solid var(--accent); padding-left: 12px; }
+blockquote { margin: 0 0 1em; padding-left: 14px; border-left: 2px solid var(--line); color: var(--ink-2); font-size: clamp(1.05rem, 1.6vw, 1.35rem); max-width: 50ch; }
+.links a { margin-right: 18px; font-weight: 600; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+:is(h1, h2, .panel p, blockquote) { text-shadow: 0 0 5px var(--bg), 0 0 22px var(--bg); } /* a soft dark halo keeps each letter clear of the picture */
+
+@media (max-width: 859px) {
+  .panel { align-items: flex-end; padding-bottom: 92px; }
+}
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a class="me" href="#top">Pat Jerus</a>
+  <nav class="view" aria-label="Choose a look"><span aria-current="true">Physics</span><a href="terminal.html" id="look-terminal">Terminal</a></nav>
+</header>
+
+<main id="top">
+  <section class="panel"><div>
+    <h1>Pat Jerus</h1>
+    <p class="lead">I spend my days working with data and AI in healthcare, and the rest on cooking Thai food, traveling, watercolors and good coffee.</p>
+    <p>Scroll for the projects.</p>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Machine Learning Lineage</h2>
+    <p>A collection of concepts around AI in a timeline, from Bayes in 1763 to coding agents in 2025.</p>
+    <a class="go" href="ml-lineage/">Open the Lineage</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Machine Learning Explainers</h2>
+    <p>Ten pages by other people that show how the Lineage's ideas work, each tied to the ideas it covers.</p>
+    <a class="go" href="ml-explainers/">Browse the explainers</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2 class="long">Proof of Concept for Automating Ontologies about Prior-Auths</h2>
+    <p>Payer coverage policies into FHIR. A local model reads them; a named person signs off before anything ships.</p>
+    <a class="go" href="https://github.com/pjerus/pa-fhir-poc">View pa-fhir-poc on GitHub</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2 class="long">Generating Data Validators from Healthcare Standards</h2>
+    <p>Zod schemas generated from the FHIR Implementation Guide you have to conform to. Validation becomes a plain import.</p>
+    <a class="go" href="https://github.com/pjerus/fhir-zod-gen">View fhir-zod-gen on GitHub</a>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>Pantastic</h2>
+    <p>A companion for watercolor painters: finding the right complements for the pans in your palette.</p>
+    <p class="soon">The source isn't published yet.</p>
+  </div></section>
+
+  <section class="panel"><div>
+    <h2>About</h2>
+    <p>Off the clock I paint coastal landscapes in watercolor, cook a lot of Thai food, and plan trips around good coffee.</p>
+    <blockquote>“Computers are useless. They can only give you answers.” Attributed to Pablo Picasso</blockquote>
+    <p class="links"><a href="https://github.com/pjerus">GitHub</a><a href="https://www.linkedin.com/in/patjerus/">LinkedIn</a></p>
+  </div></section>
+</main>
+</main>
+
+<script>document.getElementById("look-terminal").addEventListener("click", () => { try { localStorage.setItem("look", "terminal"); } catch (e) {} });</script>
+<script type="module">
+import * as THREE from "three";
+
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canvas = document.getElementById("stage");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+renderer.setClearColor(getComputedStyle(document.body).backgroundColor);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.z = 16;
+const rig = new THREE.Group(); scene.add(rig);
+const panels = [...document.querySelectorAll(".panel")];
+const pointer = { x: 0, y: 0, moved: false };
+addEventListener("pointermove", e => { pointer.moved = true; pointer.x = (e.clientX / innerWidth) * 2 - 1; pointer.y = -((e.clientY / innerHeight) * 2 - 1); });
+
+const rng = seed => () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const hex = h => { const c = new THREE.Color(h); return [c.r, c.g, c.b]; };
+// DIM: the picture sits back behind the words. Each point is faint, and where many overlap they still add up to light
+const DIM = 0.5;
+const SPRITE = `float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d) * ${DIM}; if (a < 0.005) discard;`;
+
+let pxScale = 1;
+function layout() {
+  const w = innerWidth, h = innerHeight, dpr = Math.min(2, devicePixelRatio || 1);
+  renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  const halfH = 16 * Math.tan(THREE.MathUtils.degToRad(22.5));
+  rig.scale.setScalar(Math.max(halfH * camera.aspect, halfH) / 5 * 1.05); // fills the whole background
+  pxScale = h * dpr * 0.5;
+}
+// which panel is on screen, and how far through it the page has scrolled
+function where() {
+  const y = scrollY; let i = 0;
+  for (let k = 0; k < panels.length; k++) if (panels[k].offsetTop <= y + 1) i = k;
+  return [i, Math.min(1, Math.max(0, (y - panels[i].offsetTop) / panels[i].offsetHeight))];
+}
+
+/* ================= The collision: seeded tracks and the detector around them ================= */
+function colliderKit() {
+  const AMBER = "#ffb65c", CYAN = "#5ad8ff", ROSE = "#ff6aa8", MINT = "#7dffb8", WHITE = "#e8eeff";
+  // jets: the directions the spray clusters around; n: how many tracks
+  const EVENTS = [
+    { n: 150, jets: [0.6, 3.6], pal: [AMBER, CYAN, WHITE] },
+    { n: 230, jets: [0.3, 2.2, 4.3], pal: [CYAN, AMBER, ROSE, MINT] },
+    { n: 150, jets: [0, 0.63, 1.26, 1.88, 2.51, 3.14, 3.77, 4.4, 5.03, 5.65], pal: [MINT, CYAN] },
+    { n: 140, jets: [1.0, 4.14], pal: [CYAN, AMBER] },
+    { n: 170, jets: [0.5, 2.6, 4.7], pal: [MINT, AMBER, WHITE] },
+    { n: 130, jets: [0, Math.PI], pal: ["#4d6dff", "#e0763e", "#b4aca4"] },
+    { n: 90, jets: [], pal: [WHITE, AMBER] },
+  ];
+  const RMAX = 5, ZMAX = 5;
+  const mat = () => new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uReveal: { value: 0 }, uFade: { value: 1 }, uPx: { value: 1 } },
+    vertexShader: `attribute vec3 aCol; attribute float aT; uniform float uReveal, uPx; varying vec3 vCol; varying float vA;
+      void main() { float head = 1.0 - clamp((uReveal - aT) * 7.0, 0.0, 1.0); // the leading edge of each track burns brighter
+        vA = step(aT, uReveal) * (0.5 + 0.5 * head); vCol = aCol * (1.0 + head);
+        vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv;
+        gl_PointSize = uPx * 0.085 * (1.0 + 1.6 * head) / -mv.z; }`,
+    fragmentShader: `uniform float uFade; varying vec3 vCol; varying float vA; void main() { ${SPRITE} gl_FragColor = vec4(vCol, a * vA * uFade); }`,
+  });
+  function build(k) {
+    const E = EVENTS[k % EVENTS.length], r = rng(101 + k * 977), P = [], C = [], T = [];
+    const gauss = () => r() + r() + r() - 1.5;
+    for (let n = 0; n < E.n; n++) {
+      const j = E.jets.length && r() < 0.8 ? Math.floor(r() * E.jets.length) : -1;
+      const phi = j < 0 ? r() * Math.PI * 2 : E.jets[j] + gauss() * 0.22;
+      const curl = r() < 0.22, R = curl ? 0.35 + r() * 1.1 : 5 + r() * 40, q = r() < 0.5 ? -1 : 1; // slow particles spiral, fast ones run nearly straight
+      const slope = gauss() * (curl ? 0.25 : 0.5), col = hex(E.pal[(j < 0 ? n : j) % E.pal.length]), dim = curl ? 0.55 : 1;
+      const smax = curl ? Math.PI * 2 * R * 3.2 : 12;
+      for (let s = 0; s < smax; s += 0.025) {
+        const th = phi + q * s / R, x = (R / q) * (Math.sin(th) - Math.sin(phi)), y = -(R / q) * (Math.cos(th) - Math.cos(phi)), z = slope * s;
+        if (Math.hypot(x, y) > RMAX || Math.abs(z) > ZMAX) break;
+        P.push(x, y, z); C.push(col[0] * dim, col[1] * dim, col[2] * dim); T.push(Math.min(1, s / 10));
+      }
+    }
+    E.jets.forEach((a, j) => { // energy towers where each jet meets the outer wall
+      const col = hex(E.pal[j % E.pal.length]);
+      for (let t = 0; t < 9; t++) { const p = a + (t - 4) * 0.05 + gauss() * 0.02, len = (0.3 + r() * 1.5) * Math.exp(-((t - 4) ** 2) / 8), z = gauss() * 1.2;
+        for (let d = 0; d < len; d += 0.03) { P.push(Math.cos(p) * (RMAX + 0.15 + d), Math.sin(p) * (RMAX + 0.15 + d), z); C.push(...col); T.push(0.5 + d * 0.08); } }
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(P, 3)); g.setAttribute("aCol", new THREE.Float32BufferAttribute(C, 3)); g.setAttribute("aT", new THREE.Float32BufferAttribute(T, 1));
+    const pts = new THREE.Points(g, mat()); pts.frustumCulled = false; return pts;
+  }
+  // the detector: faint barrel layers
+  const ringMat = new THREE.LineBasicMaterial({ color: 0x8fa3ff, transparent: true, opacity: 0.13 * DIM });
+  const rings = () => { const g = new THREE.Group();
+    for (const z of [-3.2, 0, 3.2]) for (const rad of [1.3, 2.6, 3.8, RMAX]) {
+      const pts = []; for (let i = 0; i <= 96; i++) pts.push(new THREE.Vector3(Math.cos(i / 96 * Math.PI * 2) * rad, Math.sin(i / 96 * Math.PI * 2) * rad, z));
+      g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), ringMat));
+    }
+    return g; };
+  return { build, rings };
+}
+
+/* ================= Mixed: a different kind of physics for every panel ================= */
+function mixed() {
+  const kit = colliderKit(), r = rng(31), gauss = () => r() + r() + r() - 1.5;
+  const LANES = ["#3987e5", "#eb6834", "#1baf7a", "#9085e9", "#e87ba4", "#d9a93a"].map(hex), WARM = [1, 0.93, 0.75], CYAN = hex("#5ad8ff"), AMBER = hex("#ffb65c");
+  // one shader for every scene. aB.x says how a point moves: 0 still, 1 in orbit, 2 lit by a pulse running along its line, 3 on a wave, 4 in a stream through a gate
+  const mat = () => new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uReveal: { value: 0 }, uFade: { value: 1 }, uPx: { value: 1 } },
+    vertexShader: `attribute vec3 aCol; attribute vec4 aA, aB; uniform float uTime, uReveal, uPx; varying vec3 vCol; varying float vA;
+      void main() { vec3 p = position; vec3 col = aCol; float al = 1.0; float m = aB.x;
+        if (m > 3.5) { float x = mix(-6.5, 6.5, fract(aB.y + uTime * 0.05)); float g = smoothstep(-0.9, 0.2, x); // loose before the gate, in rows after it
+          p = vec3(x, mix(aA.zw, aA.xy, g)); col = mix(aCol, vec3(0.36, 1.0, 0.63), g); }
+        else if (m > 2.5) { p.y += sin(p.x * 1.1 + uTime * 0.8) * 0.25 + sin(p.z * 1.7 + uTime * 0.6) * 0.18; }
+        else if (m > 1.5) { al = 0.4 + pow(fract(aB.y - uTime * aB.z), 6.0); col *= 0.7 + al; }
+        else if (m > 0.5) { float th = aA.y + uTime * aB.z * pow(aA.x, -1.5); // closer in means faster round, as with planets
+          vec3 o = aA.x * vec3(cos(th), 0.0, sin(th)); o = vec3(o.x, -o.z * sin(aA.z), o.z * cos(aA.z));
+          p += vec3(o.x * cos(aA.w) - o.z * sin(aA.w), o.y, o.x * sin(aA.w) + o.z * cos(aA.w)); }
+        vCol = col; vA = al * clamp(uReveal * 2.0, 0.0, 1.0);
+        vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = uPx * aB.w * 1.8 / -mv.z; }`,
+    fragmentShader: `uniform float uFade; varying vec3 vCol; varying float vA; void main() { ${SPRITE} gl_FragColor = vec4(vCol, a * vA * uFade); }`,
+  });
+  const cloud = fill => { const P = [], C = [], A = [], B = [];
+    fill((p, col, size, mode = 0, a = [0, 0, 0, 0], u = 0, speed = 0) => { P.push(p[0], p[1], p[2]); C.push(...col); A.push(...a); B.push(mode, u, speed, size); });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(P, 3)); g.setAttribute("aCol", new THREE.Float32BufferAttribute(C, 3));
+    g.setAttribute("aA", new THREE.Float32BufferAttribute(A, 4)); g.setAttribute("aB", new THREE.Float32BufferAttribute(B, 4));
+    const pts = new THREE.Points(g, mat()); pts.frustumCulled = false; return pts; };
+  // a tight knot of points. Each is faint, so the knot glows instead of turning into a solid white dot over the words
+  const blob = (add, c, rad, n, col, size) => { for (let i = 0; i < n; i++) add([c[0] + gauss() * rad, c[1] + gauss() * rad, c[2] + gauss() * rad], col.map(v => v * 0.3), size); };
+  // a line of points from a to b; a pulse of light runs along it from u0 to u1
+  const line = (add, a, b, n, col, size, speed, u0 = 0, u1 = 1, bow = [0, 0, 0]) => { for (let i = 0; i < n * 3; i++) { const u = r(), s = Math.sin(Math.PI * u);
+    add([a[0] + (b[0] - a[0]) * u + bow[0] * s, a[1] + (b[1] - a[1]) * u + bow[1] * s, a[2] + (b[2] - a[2]) * u + bow[2] * s], col, size, 2, [0, 0, 0, 0], u0 + (u1 - u0) * u, speed); } };
+
+  // Lineage: gravity. Each big idea is a mass that bends the sheet under it and holds later ideas in orbit
+  const gravity = () => cloud(add => { const M = [[-3, 0, -1, 1.4], [0.5, 0, 1.6, 1], [3.2, 0, -0.8, 1.2], [-0.8, 0, -2.9, 0.7], [2.2, 0, 3, 0.6]];
+    M.forEach(([x, y, z, m], k) => { blob(add, [x, y, z], 0.1 * m, 260, WARM, 0.1);
+      for (let i = 0; i < 2400 * m; i++) add([x, y, z], LANES[k], 0.05, 1, [0.28 + Math.pow(r(), 1.6) * 1.9 * m, r() * 6.283, gauss() * 0.22, r() * 6.283], 0, 0.6);
+      line(add, M[k], M[(k + 1) % M.length], 260, [0.7, 0.8, 1], 0.05, 0.3, 0, 1, [0, 0.8, 0]); });
+    for (let gx = 0; gx < 85; gx++) for (let gz = 0; gz < 85; gz++) { const X = (gx / 84 - 0.5) * 13, Z = (gz / 84 - 0.5) * 13;
+      add([X, -0.9 - M.reduce((d, [x, , z, m]) => d + m * 0.42 / Math.sqrt((X - x) ** 2 + (Z - z) ** 2 + 0.12), 0), Z], [0.16, 0.24, 0.5], 0.04); } });
+  // Explainers: an embedding space. Similar things sit close together; ten bright points are the pages, linked to their nearest neighbours
+  const embed = () => cloud(add => { const cs = [...Array(14)].map(() => [gauss() * 3.6, gauss() * 2.6, gauss() * 2.6]);
+    cs.forEach((c, k) => blob(add, c, 0.42, 520, LANES[k % 6].map(v => v * 0.8), 0.045));
+    for (let i = 0; i < 10; i++) { const c = cs[i]; blob(add, c, 0.05, 40, WARM, 0.14);
+      cs.map((d, k) => [Math.hypot(d[0] - c[0], d[1] - c[1], d[2] - c[2]), k]).sort((a, b) => a[0] - b[0]).slice(1, 3).forEach(([, k]) => line(add, c, cs[k], 160, [0.6, 0.9, 1], 0.045, 0.25)); } });
+  // pa-fhir-poc: a transformer reading. Words along the bottom, layers stacked above, attention running up between them
+  const transformer = () => cloud(add => { const T = 8, L = 5, at = (t, l) => [(t - (T - 1) / 2) * 1.15, (l - (L - 1) / 2) * 1.7, 0];
+    for (let l = 0; l < L; l++) for (let t = 0; t < T; t++) blob(add, at(t, l), 0.07, 70, WARM, 0.09);
+    for (let l = 0; l < L - 1; l++) for (let i = 0; i < T; i++) for (let j = 0; j < T; j++) { const w = Math.pow(r(), 3) + (i === j ? 0.35 : 0); // how strongly word j attends to word i
+      if (w > 0.12) line(add, at(i, l), at(j, l + 1), Math.round(w * 160), i % 2 ? CYAN : AMBER, 0.045, 0.22, l / (L - 1), (l + 1) / (L - 1), [0, 0, (r() - 0.5) * 2]); } });
+  // fhir-zod-gen: validation. Loose data streams in, passes the schema's gate, and comes out in rows
+  const lattice = () => cloud(add => {
+    for (let i = 0; i < 7000; i++) add([0, 0, 0], [0.45, 0.4, 0.9], 0.05, 4, [(Math.floor(r() * 9) - 4) * 0.6, (Math.floor(r() * 9) - 4) * 0.6, gauss() * 2.4, gauss() * 2.4], r());
+    for (let i = 0; i < 900; i++) { const s = (r() - 0.5) * 5.8, e = Math.floor(r() * 4); add(e < 2 ? [-0.35, s, e ? 2.9 : -2.9] : [-0.35, e > 2 ? 2.9 : -2.9, s], AMBER, 0.06); } });
+  // Pantastic: two complementary paints swirl together and turn neutral where they meet
+  const pigment = () => cloud(add => { const U = hex("#4d6dff"), S = hex("#e0763e"), N = hex("#b4aca4");
+    for (let i = 0; i < 11000; i++) { const arm = i % 2, rad = 0.3 + Math.sqrt(r()) * 4.6, k = Math.min(1, Math.max(0, (2.6 - rad) / 2.2));
+      add([0, 0, 0], (arm ? U : S).map((v, j) => v + (N[j] - v) * k), 0.05, 1, [rad, arm * Math.PI + rad * 0.9 + gauss() * 0.4, gauss() * 0.07, 0], 0, 0.5); } });
+  // About: sea running up to sand
+  const wave = () => cloud(add => { for (let gx = 0; gx < 120; gx++) for (let gz = 0; gz < 70; gz++) { const X = (gx / 119 - 0.5) * 14, Z = (gz / 69 - 0.5) * 9, sea = Z < Math.sin(X * 0.7) * 0.8 + 0.6;
+    add([X, -0.6, Z], sea ? [0.2, 0.55, 0.9] : [0.95, 0.8, 0.55], 0.05, sea ? 3 : 0); } });
+
+  // size: how much of the page the scene fills. tilt: how far it leans toward you. spin: a steady turn, or a gentle sway when the scene has a front
+  const SCENES = [
+    { make: () => [kit.rings(), kit.build(0)], tilt: -0.28, spin: true, size: 1 },
+    { make: gravity, tilt: 0.5, spin: true, size: 0.9 }, { make: embed, tilt: 0.1, spin: true, size: 1 }, { make: transformer, tilt: 0 },
+    { make: lattice, tilt: 0.15, yaw: 0.6, size: 0.8 }, { make: pigment, tilt: 1.0, spin: true }, { make: wave, tilt: 0.45, size: 0.8 },
+  ];
+  const start = (k, now) => { const g = new THREE.Group(); [].concat(SCENES[k].make()).forEach(o => g.add(o)); g.userData = { ...SCENES[k], t0: now }; g.scale.setScalar(SCENES[k].size || 0.62); rig.add(g); return g; };
+  const drop = g => { rig.remove(g); g.traverse(o => { if (o.geometry) { o.geometry.dispose(); o.material.dispose(); } }); };
+  const set = (g, now, fade) => { const t = now - g.userData.t0, reveal = RM ? 2 : t / 2.6;
+    g.traverse(o => { const m = o.material; if (!m) return;
+      if (!m.uniforms) { m.opacity = 0.13 * DIM * fade * Math.min(1, reveal * 2); return; }
+      m.uniforms.uPx.value = pxScale * Math.sqrt(rig.scale.x); m.uniforms.uReveal.value = reveal; m.uniforms.uFade.value = fade; if (m.uniforms.uTime) m.uniforms.uTime.value = RM ? 0 : t; });
+    const S = g.userData; g.rotation.set(S.tilt + pointer.y * 0.12, (S.yaw || 0) + (RM ? 0.35 : S.spin ? now * 0.1 : Math.sin(now * 0.2) * 0.3) + pointer.x * 0.18, 0); };
+  let cur = null, old = null, shown = -1, tOld = 0;
+  return now => {
+    const [i, t] = where(), k = t > 0.5 ? Math.min(panels.length - 1, i + 1) : i;
+    if (k !== shown) { if (old) drop(old); old = cur; tOld = now; cur = start(k, now); shown = k; } // a new panel: the old scene fades as the new one arrives
+    set(cur, now, 1);
+    if (old) { const f = 1 - (now - tOld) / 0.6; if (f <= 0) { drop(old); old = null; } else set(old, now, f); }
+  };
+}
+
+layout(); addEventListener("resize", layout);
+const tick = mixed();
+renderer.setAnimationLoop(ms => { tick(ms / 1000); renderer.render(scene, camera); });
+</script>
+</body>
+</html>
