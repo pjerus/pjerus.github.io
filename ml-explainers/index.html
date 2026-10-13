@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Machine Learning Explainers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explainer pages and visualizations that show how machine learning ideas work, each tied to the ideas it covers on the Machine Learning Lineage.">
+<link rel="canonical" href="https://pjerus.github.io/ml-explainers/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root {
+  /* same surfaces, ink and lane colours as the Machine Learning Lineage page */
+  --bg: #eef2f6;
+  --panel: #ffffff;
+  --ink: #0f2e3d;
+  --ink-2: #3d5a70;
+  --ink-3: #52687a;
+  --rule: #cdd6df;
+  --rule-2: #dfe6ec;
+  --lane-foundations: #2a78d6;
+  --lane-neural: #eb6834;
+  --lane-rl: #1baf7a;
+  --lane-lm: #4a3aa7;
+  --lane-alignment: #e87ba4;
+  --lane-agents: #8a6d1e;
+  --bar: #0f2e3d;
+  --bar-ink: #ffffff;
+  --focus: #1059e5;
+  --sans: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #121a22; --panel: #1e2a36; --ink: #e8eef3; --ink-2: #b3c2cf; --ink-3: #8ea1b1;
+    --rule: #2e3d4b; --rule-2: #22303c; --bar: #0b1d27; --bar-ink: #e8eef3;
+    --lane-foundations: #3987e5; --lane-neural: #d95926; --lane-rl: #199e70; --lane-lm: #9085e9; --lane-alignment: #d55181; --lane-agents: #a88a3c;
+    --focus: #86b6ef;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; }
+a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 2px; }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-weight: 600; }
+
+/* ---------- top bar ---------- */
+.bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 6px 20px; flex-wrap: wrap; padding: 8px clamp(16px, 2vw, 24px); background: var(--bar); color: var(--bar-ink); min-height: 56px; }
+.bar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: linear-gradient(90deg, var(--lane-agents) 0 16.6%, var(--lane-alignment) 0 33.3%, var(--lane-lm) 0 50%, var(--lane-rl) 0 66.6%, var(--lane-neural) 0 83.3%, var(--lane-foundations) 0); }
+.bar h1 { font-size: 17px; letter-spacing: 0.01em; }
+.bar .links { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13.5px; }
+.bar .links a { color: var(--bar-ink); text-decoration-color: rgba(255,255,255,0.45); }
+.bar :focus-visible { outline-color: #ffffff; }
+
+/* ---------- page ---------- */
+main { max-width: 1040px; margin: 0 auto; padding: clamp(28px, 5vw, 56px) clamp(16px, 3vw, 32px) 40px; }
+.intro { max-width: 62ch; font: 18px/1.55 var(--serif); color: var(--ink-2); }
+.intro b { font-weight: 500; color: var(--ink); }
+
+.group { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px 40px; padding-top: 28px; margin-top: 36px; border-top: 1px solid var(--rule); }
+.group-head { align-self: start; position: sticky; top: 84px; display: grid; gap: 6px; }
+.group-head h2 { font-size: 20px; line-height: 1.2; }
+.group-head p { font-size: 14px; color: var(--ink-3); }
+.entries { display: grid; gap: 14px; }
+
+.entry { background: var(--panel); border: 1px solid var(--rule-2); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; }
+.entry h3 { font-size: 19px; line-height: 1.25; }
+.entry h3 a { text-decoration-thickness: 1px; }
+.entry h3 a::after { content: " \2197"; font-family: var(--mono); font-size: 0.8em; color: var(--ink-3); }
+.by { font: 12px var(--mono); color: var(--ink-3); letter-spacing: 0.01em; }
+.by .kind { text-transform: uppercase; letter-spacing: 0.06em; }
+.what { font: 15.5px/1.6 var(--serif); color: var(--ink-2); max-width: 64ch; }
+.tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.tags .lead { font: 11px var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 2px; }
+.tag { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; padding: 0 11px 0 9px; border: 1px solid var(--rule); border-radius: 999px; font: 500 13px var(--sans); text-decoration: none; white-space: nowrap; }
+.tag:hover { border-color: var(--ink-3); }
+.tag::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
+.tag .yr { font: 11px var(--mono); color: var(--ink-3); }
+.foundations { --c: var(--lane-foundations); }
+.neural { --c: var(--lane-neural); }
+.lm { --c: var(--lane-lm); }
+.alignment { --c: var(--lane-alignment); }
+
+footer { max-width: 1040px; margin: 0 auto; padding: 8px clamp(16px, 3vw, 32px) 56px; font-size: 13.5px; color: var(--ink-3); }
+footer p { padding-top: 20px; border-top: 1px solid var(--rule); max-width: none; }
+
+@media (max-width: 760px) {
+  .group { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .group-head { position: static; }
+  .intro { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1>Machine Learning Explainers</h1>
+  <nav class="links" aria-label="Site"><a href="../ml-lineage/">Machine Learning Lineage</a><a href="../">pjerus.github.io</a></nav>
+</header>
+
+<main>
+  <p class="intro"><b>Other people's pages that show how these ideas work.</b> The <a href="../ml-lineage/">Machine Learning Lineage</a> says what each idea is and what it built on. These explainers and visualizations let you watch the ideas run. Each one lists the Lineage ideas it covers.</p>
+
+  <section class="group" aria-labelledby="g-basics">
+    <div class="group-head"><h2 id="g-basics">Neural network basics</h2><p>What a network is and how it learns.</p></div>
+    <div class="entries">
+      <article class="entry">
+        <h3><a href="https://playground.tensorflow.org/">A Neural Network Playground</a></h3>
+        <p class="by">Daniel Smilkov and Shan Carter, TensorFlow · <span class="kind">interactive</span></p>
+        <p class="what">A small neural network that trains in your browser. Add layers and neurons, change the learning rate, and watch the boundary it draws bend to fit the data.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag neural" href="../ml-lineage/#perceptron">Perceptron <span class="yr">1958</span></a></li>
+          <li><a class="tag neural" href="../ml-lineage/#backprop">Backpropagation <span class="yr">1986</span></a></li>
+          <li><a class="tag foundations" href="../ml-lineage/#sgd">SGD <span class="yr">1951</span></a></li>
+        </ul>
+      </article>
+      <article class="entry">
+        <h3><a href="https://www.3blue1brown.com/">3Blue1Brown</a></h3>
+        <p class="by">Grant Sanderson · <span class="kind">video</span></p>
+        <p class="what">Animated maths lessons. The neural networks series starts with what a network is, moves through gradient descent and backpropagation, and ends with how attention and transformers work.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag neural" href="../ml-lineage/#backprop">Backpropagation <span class="yr">1986</span></a></li>
+          <li><a class="tag foundations" href="../ml-lineage/#sgd">SGD <span class="yr">1951</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#attention">Attention <span class="yr">2014</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#transformer">Transformer <span class="yr">2017</span></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="group" aria-labelledby="g-transformers">
+    <div class="group-head"><h2 id="g-transformers">How transformers work</h2><p>The design behind today's language models, step by step.</p></div>
+    <div class="entries">
+      <article class="entry">
+        <h3><a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a></h3>
+        <p class="by">Polo Club of Data Science, Georgia Tech · <span class="kind">interactive</span></p>
+        <p class="what">GPT-2 running live in your browser. Type your own text and follow it through embedding and attention to the probabilities for the next word.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#transformer">Transformer <span class="yr">2017</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#attention">Attention <span class="yr">2014</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#gpt">GPT <span class="yr">2018</span></a></li>
+        </ul>
+      </article>
+      <article class="entry">
+        <h3><a href="https://bbycroft.net/llm">LLM Visualization</a></h3>
+        <p class="by">Brendan Bycroft · <span class="kind">interactive 3D</span></p>
+        <p class="what">A 3D model of a small GPT with every number in view. A guided walkthrough follows a tiny network as it sorts six letters, one step at a time.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#transformer">Transformer <span class="yr">2017</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#gpt">GPT <span class="yr">2018</span></a></li>
+        </ul>
+      </article>
+      <article class="entry">
+        <h3><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a></h3>
+        <p class="by">Jay Alammar · <span class="kind">article</span></p>
+        <p class="what">The drawn walkthrough many people learned the transformer from. It starts with a translation example and builds up through self-attention, multiple heads and positional encoding to the full encoder and decoder.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#transformer">Transformer <span class="yr">2017</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#attention">Attention <span class="yr">2014</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#seq2seq">Seq2seq <span class="yr">2014</span></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="group" aria-labelledby="g-variations">
+    <div class="group-head"><h2 id="g-variations">Variations on the design</h2><p>How recent models rework the parts.</p></div>
+    <div class="entries">
+      <article class="entry">
+        <h3><a href="https://magazine.sebastianraschka.com/p/visual-attention-variants">A Visual Guide to Attention Variants in Modern LLMs</a></h3>
+        <p class="by">Sebastian Raschka · <span class="kind">article</span></p>
+        <p class="what">Drawings of how attention has been reworked in recent models: multi-head, grouped-query, sliding-window and multi-head latent attention, then sparse attention and hybrid designs.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#attention">Attention <span class="yr">2014</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#deepseek-v2">DeepSeek-V2/V3 <span class="yr">2024</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#ssm">State-space models <span class="yr">2021</span></a></li>
+        </ul>
+      </article>
+      <article class="entry">
+        <h3><a href="https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-mixture-of-experts">A Visual Guide to Mixture of Experts (MoE)</a></h3>
+        <p class="by">Maarten Grootendorst · <span class="kind">article</span></p>
+        <p class="what">More than 50 illustrations of how a model splits its work among specialist sub-networks, with a router choosing a few of them for each token. Covers language models and vision models.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag neural" href="../ml-lineage/#moe">Mixture of experts <span class="yr">1991</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#sparse-moe">Sparse MoE <span class="yr">2017</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#mixtral">Mixtral <span class="yr">2024</span></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="group" aria-labelledby="g-running">
+    <div class="group-head"><h2 id="g-running">Running a model</h2><p>What happens after training, when a model answers a request.</p></div>
+    <div class="entries">
+      <article class="entry">
+        <h3><a href="https://handbook.modular.com/llm-inference-basics/what-is-llm-inference/">LLM Inference Handbook</a></h3>
+        <p class="by">Modular · <span class="kind">handbook</span></p>
+        <p class="what">An animated visualizer follows one prompt through the tokenizer, scheduling and prefill to the streamed answer. Later chapters cover the metrics that matter, planning a deployment and making inference faster.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#bpe">BPE tokenisation <span class="yr">2015</span></a></li>
+          <li><a class="tag lm" href="../ml-lineage/#transformer">Transformer <span class="yr">2017</span></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="group" aria-labelledby="g-inside">
+    <div class="group-head"><h2 id="g-inside">Looking inside</h2><p>Tools for seeing what a model has learned.</p></div>
+    <div class="entries">
+      <article class="entry">
+        <h3><a href="https://www.neuronpedia.org/">Neuronpedia</a></h3>
+        <p class="by">Neuronpedia · <span class="kind">tool</span></p>
+        <p class="what">An open-source platform for interpretability, the study of what happens inside a model. Browse the features that sparse autoencoders find in real models, see the text that sets each one off, and steer a model with them.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag alignment" href="../ml-lineage/#monosemanticity">Towards Monosemanticity <span class="yr">2023</span></a></li>
+        </ul>
+      </article>
+      <article class="entry">
+        <h3><a href="https://apple.github.io/embedding-atlas/">Embedding Atlas</a></h3>
+        <p class="by">Apple · <span class="kind">tool</span></p>
+        <p class="what">A tool for exploring large sets of embeddings, where each item is placed as a point so that similar items sit close together. Search, filter and zoom across the whole map in your browser.</p>
+        <ul class="tags"><li class="lead">On the Lineage</li>
+          <li><a class="tag lm" href="../ml-lineage/#word2vec">word2vec <span class="yr">2013</span></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer><p>Every page listed here belongs to its authors. Links checked October 2026.</p></footer>
+</body>
+</html>
