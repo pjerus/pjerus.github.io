@@ -157,9 +157,20 @@ const hex = h => { const c = new THREE.Color(h); return [c.r, c.g, c.b]; };
 const DIM = 0.5;
 const SPRITE = `float d = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, d) * ${DIM}; if (a < 0.005) discard;`;
 
+// SHARP: how sharply the picture is drawn, as a share of the screen's own sharpness. A machine that falls behind steps down the list
+const SHARP = [1, 0.75, 0.5], SLOW_MS = 22;
+let level = 0, last = 0, avg = 16, rest = 0;
+function pace(ms) {
+  const d = ms - last; last = ms;
+  if (d > 250) rest = ms + 1000; // just loaded, or back from another tab: let it settle before timing
+  if (ms < rest) return;
+  avg += (d - avg) * 0.02; // the usual gap between frames over the last second or so
+  if (avg > SLOW_MS && level < SHARP.length - 1) { level++; avg = 16; rest = ms + 1000; layout(); }
+}
+
 let pxScale = 1;
 function layout() {
-  const w = innerWidth, h = innerHeight, dpr = Math.min(2, devicePixelRatio || 1);
+  const w = innerWidth, h = innerHeight, dpr = Math.min(2, devicePixelRatio || 1) * SHARP[level];
   renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
   camera.aspect = w / h; camera.updateProjectionMatrix();
   const halfH = 16 * Math.tan(THREE.MathUtils.degToRad(22.5));
@@ -318,7 +329,7 @@ function mixed() {
 
 layout(); addEventListener("resize", layout);
 const tick = mixed();
-renderer.setAnimationLoop(ms => { tick(ms / 1000); renderer.render(scene, camera); });
+renderer.setAnimationLoop(ms => { pace(ms); tick(ms / 1000); renderer.render(scene, camera); });
 </script>
 </body>
 </html>
