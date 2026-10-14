@@ -283,6 +283,16 @@ function mixed() {
       line(add, M[k], M[(k + 1) % M.length], 260, [0.7, 0.8, 1], 0.05, 0.3, 0, 1, [0, 0.8, 0]); });
     for (let gx = 0; gx < 85; gx++) for (let gz = 0; gz < 85; gz++) { const X = (gx / 84 - 0.5) * 13, Z = (gz / 84 - 0.5) * 13;
       add([X, -0.9 - M.reduce((d, [x, , z, m]) => d + m * 0.42 / Math.sqrt((X - x) ** 2 + (Z - z) ** 2 + 0.12), 0), Z], [0.16, 0.24, 0.5], 0.04); } });
+  // Lineage, second pattern: a strange attractor. One thread of light loops round two wings and never retraces itself; glints race along it
+  const lorenz = () => cloud(add => { const SG = 10, RHO = 28, B = 8 / 3, dt = 0.002, N = 20000, K = 0.17;
+    const f = ([x, y, z]) => [SG * (y - x), x * (RHO - z) - y, x * y - B * z];
+    let p = [0.1, 0, 0];
+    const step = () => { const k1 = f(p), k2 = f(p.map((v, j) => v + k1[j] * dt / 2)), k3 = f(p.map((v, j) => v + k2[j] * dt / 2)), k4 = f(p.map((v, j) => v + k3[j] * dt));
+      p = p.map((v, j) => v + (k1[j] + 2 * k2[j] + 2 * k3[j] + k4[j]) * dt / 6); };
+    for (let i = 0; i < 3000; i++) step(); // settle onto the attractor before drawing
+    for (let i = 0; i < N; i++) { step(); const w = Math.min(1, Math.max(0, (p[0] + 15) / 30)); // one wing cyan, the other amber
+      add([p[0] * K, (p[2] - 25) * K, p[1] * K], CYAN.map((v, j) => v + (AMBER[j] - v) * w), 0.05, 2, [0, 0, 0, 0], i / N * 30, 0.2); }
+    const e = Math.sqrt(B * (RHO - 1)); [e, -e].forEach(x => blob(add, [x * K, (RHO - 1 - 25) * K, x * K], 0.1, 220, WARM, 0.1)); }); // the two still points each wing circles
   // Explainers: an embedding space. Similar things sit close together; ten bright points are the pages, linked to their nearest neighbours
   const embed = () => cloud(add => { const cs = [...Array(14)].map(() => [gauss() * 3.6, gauss() * 2.6, gauss() * 2.6]);
     cs.forEach((c, k) => blob(add, c, 0.42, 520, LANES[k % 6].map(v => v * 0.8), 0.045));
@@ -306,12 +316,15 @@ function mixed() {
     add([X, -0.6, Z], sea ? [0.2, 0.55, 0.9] : [0.95, 0.8, 0.55], 0.05, sea ? 3 : 0); } });
 
   // size: how much of the page the scene fills. tilt: how far it leans toward you. spin: a steady turn, or a gentle sway when the scene has a front
+  // a panel with a list of scenes picks one at random on load and moves to the next each time you come back to it
   const SCENES = [
     { make: () => [kit.rings(), kit.build(0)], tilt: -0.28, spin: true, size: 1 },
-    { make: gravity, tilt: 0.5, spin: true, size: 0.9 }, { make: embed, tilt: 0.1, spin: true, size: 1 }, { make: transformer, tilt: 0 },
+    [{ make: gravity, tilt: 0.5, spin: true, size: 0.9 }, { make: lorenz, tilt: 0.1, spin: true, size: 0.9 }], { make: embed, tilt: 0.1, spin: true, size: 1 }, { make: transformer, tilt: 0 },
     { make: lattice, tilt: 0.15, yaw: 0.6, size: 0.8 }, { make: pigment, tilt: 1.0, spin: true }, { make: wave, tilt: 0.45, size: 0.8 },
   ];
-  const start = (k, now) => { const g = new THREE.Group(); [].concat(SCENES[k].make()).forEach(o => g.add(o)); g.userData = { ...SCENES[k], t0: now }; g.scale.setScalar(SCENES[k].size || 0.62); rig.add(g); return g; };
+  const turn = [];
+  const start = (k, now) => { const all = [].concat(SCENES[k]), S = all[turn[k] = turn[k] === undefined ? Math.floor(Math.random() * all.length) : (turn[k] + 1) % all.length];
+    const g = new THREE.Group(); [].concat(S.make()).forEach(o => g.add(o)); g.userData = { ...S, t0: now }; g.scale.setScalar(S.size || 0.62); rig.add(g); return g; };
   const drop = g => { rig.remove(g); g.traverse(o => { if (o.geometry) { o.geometry.dispose(); o.material.dispose(); } }); };
   const set = (g, now, fade) => { const t = now - g.userData.t0, reveal = RM ? 2 : t / 2.6;
     g.traverse(o => { const m = o.material; if (!m) return;
